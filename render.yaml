@@ -1,0 +1,28 @@
+# Render Blueprint for Pura Esencia — Free tier deployment
+# This file allows one-click deploy on Render via "New > Blueprint"
+# https://render.com/docs/blueprint-spec
+#
+# IMPORTANT: This blueprint assumes you also have a free PostgreSQL database
+# from Neon (https://neon.tech) or Supabase (https://supabase.com).
+# Set DATABASE_URL in the Render dashboard as an environment variable.
+# Render no longer offers free PostgreSQL (free tier discontinued).
+
+services:
+  - type: web
+    name: pura-esencia-catalog
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false  # Set this manually in Render dashboard with your Neon/Supabase URL
+      - key: ADMIN_SESSION_SECRET
+        generateValue: true  # Render will auto-generate a secure secret
+    # Render free tier: 512MB RAM, 0.1 CPU, sleeps after 15 min inactivity
+    # The app will wake up on first request after sleep (~30s cold start)

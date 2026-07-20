@@ -1,0 +1,53 @@
+// Pura Esencia - Prisma schema
+// Database: PostgreSQL (compatible with Neon free tier, Render Postgres, Supabase)
+// This allows data persistence on cloud platforms where SQLite would be ephemeral.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Restaurant {
+  id        String   @id @default(cuid())
+  name      String   @default("Pura Esencia")
+  phone     String   @default("")
+  whatsapp  String   @default("")
+  logo      String   @default("")
+  password  String   @default("admin123")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id        String     @id @default(cuid())
+  name      String
+  image     String     @default("")
+  sortOrder Int        @default(0)
+  menuItems MenuItem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@index([sortOrder])
+}
+
+model MenuItem {
+  id          String   @id @default(cuid())
+  name        String
+  price       Int      @default(0)
+  description String   @default("")
+  images      String   @default("[]")
+  likes       Int      @default(0)
+  isFeatured  Boolean  @default(false)
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([categoryId])
+  @@index([isFeatured])
+  @@index([likes])
+}
