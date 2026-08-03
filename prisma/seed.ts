@@ -21,7 +21,7 @@ async function seed() {
     data: {
       name: "Pura Esencia",
       phone: "+573023087321",
-      whatsapp: "+573023087321",
+      whatsapp: "+573023087321", // WhatsApp real de Pura Esencia (Jhonier)
       logo: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=200&h=200&fit=crop",
       password: hashedPassword,
     },
