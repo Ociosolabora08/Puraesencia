@@ -10,6 +10,8 @@ import {
   Loader2,
   Star,
   Search,
+  Eye,
+  EyeOff,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,6 +28,7 @@ interface MenuItemWithCategory {
   images: string[];
   likes: number;
   isFeatured: boolean;
+  isHidden: boolean;
   categoryId: string;
   category: { id: string; name: string };
 }
@@ -315,12 +318,21 @@ export function MenuItemManager({ onDataChange }: MenuItemManagerProps) {
             {form.images.length < 5 && (
               <ImageUploader
                 purpose="menuItem"
-                onUploadComplete={(url) =>
-                  setForm({
-                    ...form,
-                    images: [...form.images, url],
-                  })
-                }
+                onUploadComplete={(url) => {
+                  const newImages = [...form.images, url];
+                  setForm({ ...form, images: newImages });
+                  // Guardado automatico: si ya existe el producto, hacemos PUT
+                  // inmediato para que la imagen persista sin esperar a "Guardar".
+                  if (editingId) {
+                    fetch("/api/menu-items", {
+                      method: "PUT",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ id: editingId, images: newImages }),
+                    })
+                      .then(() => onDataChange())
+                      .catch(() => {});
+                  }
+                }}
               />
             )}
           </div>
@@ -378,6 +390,11 @@ export function MenuItemManager({ onDataChange }: MenuItemManagerProps) {
                 {item.isFeatured && (
                   <Star className="h-3 w-3 text-amber-500 fill-amber-500 flex-shrink-0" />
                 )}
+                {item.isHidden && (
+                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground">
+                    Oculto
+                  </span>
+                )}
               </div>
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
                 <span>{formatPrice(item.price)}</span>
@@ -389,6 +406,26 @@ export function MenuItemManager({ onDataChange }: MenuItemManagerProps) {
             </div>
 
             <div className="flex items-center gap-1">
+              <Button
+                size="sm"
+                variant="ghost"
+                className="h-8 w-8 p-0"
+                title={item.isHidden ? "Mostrar" : "Ocultar"}
+                onClick={async () => {
+                  await fetch("/api/menu-items", {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      id: item.id,
+                      isHidden: !item.isHidden,
+                    }),
+                  });
+                  fetchData();
+                  onDataChange();
+                }}
+              >
+                {item.isHidden ? <Eye className="h-3.5 w-3.5" /> : <EyeOff className="h-3.5 w-3.5" />}
+              </Button>
               <Button
                 size="sm"
                 variant="ghost"

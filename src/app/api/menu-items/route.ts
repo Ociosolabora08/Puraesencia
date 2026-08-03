@@ -20,6 +20,7 @@ const menuItemUpdateSchema = z.object({
   images: z.array(z.string().max(500)).max(5).optional(),
   likes: z.number().int().min(0).optional(),
   isFeatured: z.boolean().optional(),
+  isHidden: z.boolean().optional(),
   categoryId: z.string().min(1).optional(),
 });
 

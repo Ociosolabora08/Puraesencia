@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { Settings, Heart, Sparkles } from "lucide-react";
 import { StickyHeader } from "@/components/menu/sticky-header";
 import { CategoryNav } from "@/components/menu/category-nav";
@@ -48,6 +48,8 @@ export default function MenuPage() {
   const [storeInfo, setStoreInfo] = useState<StoreInfo | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
+  const isProgrammaticScroll = useRef(false);
+  const programmaticTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const fetchData = useCallback(async () => {
     try {
@@ -74,6 +76,9 @@ export default function MenuPage() {
 
   useEffect(() => {
     const handleScroll = () => {
+      // Si el scroll lo provocó un clic en una categoría, ignoramos este ciclo
+      // para no auto-alimentar el cambio de categoria activa (evita rebote/bucle).
+      if (isProgrammaticScroll.current) return;
       for (let i = categories.length - 1; i >= 0; i--) {
         const el = document.getElementById(`category-${categories[i].id}`);
         if (el) {
@@ -90,32 +95,37 @@ export default function MenuPage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [categories]);
 
-  const handleCategoryClick = useCallback((categoryId: string) => {
-    setActiveCategory(categoryId);
+  const scrollToCategory = useCallback((categoryId: string) => {
     const el = document.getElementById(`category-${categoryId}`);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      // Marcamos el scroll como programatico para que el listener no reaccione
+      // durante este desplazamiento y no se genere el bucle de rebote.
+      isProgrammaticScroll.current = true;
+      if (programmaticTimer.current) clearTimeout(programmaticTimer.current);
+      programmaticTimer.current = setTimeout(() => {
+        isProgrammaticScroll.current = false;
+      }, 600);
+      el.scrollIntoView({ behavior: "auto", block: "start" });
     }
   }, []);
+
+  const handleCategoryClick = useCallback((categoryId: string) => {
+    setActiveCategory(categoryId);
+    scrollToCategory(categoryId);
+  }, [scrollToCategory]);
 
   const handleFeaturedClick = useCallback(
     (categoryId: string, itemId: string) => {
       setActiveCategory(categoryId);
-      const el = document.getElementById(`menu-item-${itemId}`);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
+      scrollToCategory(categoryId);
     },
-    []
+    [scrollToCategory]
   );
 
   const handleNextCategory = useCallback((categoryId: string) => {
     setActiveCategory(categoryId);
-    const el = document.getElementById(`category-${categoryId}`);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }, []);
+    scrollToCategory(categoryId);
+  }, [scrollToCategory]);
 
   const handleAdminDataChange = useCallback(() => {
     fetchData();

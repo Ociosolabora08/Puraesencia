@@ -10,6 +10,8 @@ import {
   X,
   Loader2,
   UtensilsCrossed,
+  Eye,
+  EyeOff,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,6 +22,7 @@ interface CategoryWithCount {
   id: string;
   name: string;
   image: string;
+  isHidden: boolean;
   sortOrder: number;
   _count: { menuItems: number };
 }
@@ -253,9 +256,33 @@ export function CategoryManager({ onDataChange }: CategoryManagerProps) {
                   <p className="text-xs text-muted-foreground">
                     {cat._count.menuItems} producto
                     {cat._count.menuItems !== 1 ? "s" : ""}
+                    {cat.isHidden && " · Oculta"}
                   </p>
                 </div>
                 <div className="flex items-center gap-1">
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="h-8 w-8 p-0"
+                    title={cat.isHidden ? "Mostrar" : "Ocultar"}
+                    onClick={async () => {
+                      await fetch("/api/categories", {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                          id: cat.id,
+                          name: cat.name,
+                          image: cat.image,
+                          sortOrder: cat.sortOrder,
+                          isHidden: !cat.isHidden,
+                        }),
+                      });
+                      fetchCategories();
+                      onDataChange();
+                    }}
+                  >
+                    {cat.isHidden ? <Eye className="h-3.5 w-3.5" /> : <EyeOff className="h-3.5 w-3.5" />}
+                  </Button>
                   <Button
                     size="sm"
                     variant="ghost"

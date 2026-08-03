@@ -34,6 +34,18 @@ yarn-error.log*
 .env.production
 .env.development
 
+# === Pura Esencia LOCAL DATA (NO subir a Git: son datos, no codigo) ===
+# Base de datos SQLite local (tus 23 productos + fotos referenciadas)
+*.db
+*.db-journal
+prisma/dev.db
+dev.db
+# Imagenes subidas por el usuario (se sirven en runtime, no van al repo)
+public/uploads/
+# Lockfiles de gestores que no usamos (npm es el oficial aqui)
+pnpm-lock.yaml
+pnpm-workspace.yaml
+
 # Vercel
 .vercel
 

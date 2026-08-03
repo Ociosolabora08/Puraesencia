@@ -13,6 +13,7 @@ const categoryUpdateSchema = z.object({
   name: z.string().min(1).max(100),
   image: z.string().max(500).optional().default(""),
   sortOrder: z.number().int().min(0).optional().default(0),
+  isHidden: z.boolean().optional(),
 });
 
 export async function GET() {

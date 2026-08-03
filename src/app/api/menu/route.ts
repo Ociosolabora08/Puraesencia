@@ -2,13 +2,16 @@ import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
 // Combined endpoint: returns all menu data in one request
+// Filtramos lo oculto (isHidden) para que el publico no lo vea.
 export async function GET() {
   try {
     const [categories, items, restaurant] = await Promise.all([
       db.category.findMany({
+        where: { isHidden: false },
         orderBy: { sortOrder: "asc" },
       }),
       db.menuItem.findMany({
+        where: { isHidden: false },
         orderBy: { createdAt: "desc" },
         include: { category: true },
       }),

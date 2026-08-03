@@ -1,6 +1,5 @@
 "use client";
 
-import { useRef, useEffect } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Leaf } from "lucide-react";
 
@@ -18,26 +17,19 @@ interface CategoryNavProps {
 }
 
 export function CategoryNav({ categories, activeCategory, onCategoryClick }: CategoryNavProps) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const activeEl = document.getElementById(`cat-nav-${activeCategory}`);
-    if (activeEl) {
-      activeEl.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
-    }
-  }, [activeCategory]);
-
   return (
     <div className="border-b border-rosa-suave/60 bg-crema/50">
       <ScrollArea className="w-full">
-        <div className="flex gap-4 px-4 py-4" ref={scrollRef}>
+        <div className="flex gap-4 px-4 py-4">
           {categories.map((cat) => {
             const isActive = activeCategory === cat.id;
             return (
               <button
                 key={cat.id}
                 id={`cat-nav-${cat.id}`}
-                onClick={() => onCategoryClick(cat.id)}
+                onClick={() => {
+                  onCategoryClick(cat.id);
+                }}
                 className="flex flex-col items-center gap-1.5 flex-shrink-0"
               >
                 <div
