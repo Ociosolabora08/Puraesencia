@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ejercicio #3 de Análisis de Circuito Mixto - SENA</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Tahoma, sans-serif; background:#f4f6fb; color:#1f2937; padding:24px; }
+  .hoja { max-width:1000px; margin:0 auto; background:#fff; border-radius:14px; overflow:hidden; box-shadow:0 8px 30px rgba(0,0,0,0.12); }
+  .header { background:linear-gradient(135deg,#0b3d91,#1453c4); color:#fff; padding:18px 28px; text-align:center; }
+  .header h1 { font-size:23px; letter-spacing:1px; }
+  .banner { background:#fef3c7; color:#92400e; padding:10px 28px; font-size:15px; text-align:center; border-bottom:2px solid #fde68a; }
+  .content { display:flex; }
+  .left { flex:1.4; padding:18px 22px; border-right:2px dashed #e5e7eb; }
+  .right { flex:1; padding:18px 22px; background:#fff7ed; }
+  .caja-titulo { display:inline-block; background:#0b3d91; color:#fff; padding:5px 13px; border-radius:8px; font-size:13.5px; font-weight:700; margin-bottom:10px; }
+  .right .caja-titulo { background:#ea580c; }
+  svg { width:100%; height:auto; background:#fff; border:1px solid #e5e7eb; border-radius:10px; }
+  .tarea { background:#fff; border:1px solid #ccc; border-radius:10px; padding:10px 12px; margin-bottom:10px; display:flex; align-items:center; gap:10px; }
+  .tarea .icon { width:34px; height:34px; border-radius:50%; flex:0 0 34px; display:flex; align-items:center; justify-content:center; font-weight:bold; color:#fff; }
+  .icon.rt{background:#2563eb;} .icon.it{background:#16a34a;} .icon.pt{background:#dc2626;}
+  .tarea b{color:#111827;} .tarea span{display:block; font-size:12.5px; color:#4b5563;}
+  .cuadros { display:flex; border-top:2px solid #e5e7eb; }
+  .cuadro { flex:1; padding:14px 18px; border-right:2px solid #e5e7eb; font-size:13px; line-height:1.65; }
+  .cuadro:last-child{border-right:none;}
+  .cuadro h4{font-size:13.5px; margin-bottom:6px;}
+  .c-verde{background:#f0fdf4;} .c-verde h4{color:#15803d;}
+  .c-morado{background:#faf5ff;} .c-morado h4{color:#7e22ce;}
+  .c-azul{background:#eff6ff;} .c-azul h4{color:#1d4ed8;}
+  .cuadro code{background:#e5e7eb; padding:1px 6px; border-radius:4px; font-size:12.5px;}
+  .solucion { padding:20px 28px; background:#fafafa; border-top:3px solid #0b3d91; }
+  .solucion h2{color:#0b3d91; font-size:19px; margin-bottom:10px;}
+  .paso{background:#fff; border-left:4px solid #2563eb; border-radius:8px; padding:10px 14px; margin-bottom:8px; font-size:14px; line-height:1.7;}
+  .paso .n{font-weight:800; color:#2563eb;}
+  .paso .formula{font-family:'Courier New',monospace; background:#f1f5f9; padding:2px 6px; border-radius:4px;}
+  .consejo{background:#fffbeb; border-left:4px solid #f59e0b; border-radius:8px; padding:12px 15px; margin:12px 0; font-size:13.5px; line-height:1.75;}
+  .consejo h3{color:#b45309; font-size:14.5px; margin-bottom:6px;}
+  .consejo li{margin-bottom:5px;}
+  .resultados{display:flex; gap:12px; margin-top:12px; flex-wrap:wrap;}
+  .res{flex:1; min-width:160px; text-align:center; border-radius:12px; padding:14px; color:#fff; box-shadow:0 4px 12px rgba(0,0,0,0.15);}
+  .res.rt{background:linear-gradient(135deg,#2563eb,#1e40af);}
+  .res.it{background:linear-gradient(135deg,#16a34a,#15803d);}
+  .res.pt{background:linear-gradient(135deg,#dc2626,#b91c1c);}
+  .res .lab{font-size:12.5px; opacity:0.9;} .res .val{font-size:23px; font-weight:800; margin-top:4px;}
+  .footer{background:#0b3d91; color:#fde68a; padding:12px 28px; font-size:13px; text-align:center; display:flex; align-items:center; justify-content:center; gap:10px;}
+</style>
+</head>
+<body>
+<div class="hoja">
+  <div class="header"><h1>EJERCICIO #3 DE ANÁLISIS DE CIRCUITO MIXTO</h1></div>
+  <div class="banner">🔍 Analice el siguiente circuito y determine los valores solicitados.</div>
+
+  <div class="content">
+    <div class="left">
+      <span class="caja-titulo">CIRCUITO A ANALIZAR</span>
+      <svg viewBox="0 0 480 400" xmlns="http://www.w3.org/2000/svg">
+        <!-- Linea principal -->
+        <line x1="50" y1="60" x2="50" y2="340" stroke="#111" stroke-width="2.5"/>
+        <line x1="50" y1="60" x2="110" y2="60" stroke="#111" stroke-width="2.5"/>
+        <line x1="110" y1="60" x2="110" y2="340" stroke="#111" stroke-width="2.5"/>
+        <line x1="110" y1="340" x2="50" y2="340" stroke="#111" stroke-width="2.5"/>
+
+        <!-- Fuente 18V -->
+        <line x1="50" y1="195" x2="50" y2="175" stroke="#111" stroke-width="2.5"/>
+        <line x1="38" y1="175" x2="62" y2="175" stroke="#111" stroke-width="3"/>
+        <line x1="43" y1="190" x2="57" y2="190" stroke="#111" stroke-width="3"/>
+        <line x1="38" y1="205" x2="62" y2="205" stroke="#111" stroke-width="3"/>
+        <text x="10" y="193" font-size="12" font-weight="bold">V</text>
+        <text x="6" y="218" font-size="12" fill="#dc2626" font-weight="bold">18 V</text>
+
+        <!-- R1 arriba (68) -->
+        <rect x="68" y="48" width="44" height="24" rx="3" fill="#fff" stroke="#111" stroke-width="2"/>
+        <text x="70" y="64" font-size="11" font-weight="bold">R1 68Ω</text>
+
+        <!-- Nodo tras R1 -->
+        <line x1="110" y1="60" x2="170" y2="60" stroke="#111" stroke-width="2.5"/>
+        <!-- R2 diagonal/baja al negativo -->
+        <line x1="140" y1="60" x2="140" y2="90" stroke="#111" stroke-width="2.5"/>
+        <rect x="118" y="90" width="44" height="24" rx="3" fill="#fff" stroke="#111" stroke-width="2"/>
+        <text x="120" y="106" font-size="11" font-weight="bold">R2 120Ω</text>
+        <line x1="140" y1="114" x2="140" y2="340" stroke="#111" stroke-width="2.5"/>
+
+        <!-- Rama B: bloque paralelo sup R3/R4/R5 -->
+        <line x1="170" y1="60" x2="210" y2="60" stroke="#111" stroke-width="2.5"/>
+        <!-- R3 -->
+        <line x1="210" y1="60" x2="210" y2="95" stroke="#111" stroke-width="2.5"/>
+        <rect x="188" y="95" width="44" height="24" rx="3" fill="#fff" stroke="#111" stroke-width="2"/>
+        <text x="190" y="111" font-size="11" font-weight="bold">R3 150Ω</text>
+        <line x1="210" y1="119" x2="210" y2="150" stroke="#111" stroke-width="2.5"/>
+        <!-- R4 -->
+        <line x1="290" y1="60" x2="290" y2="95" stroke="#111" stroke-width="2.5"/>
+        <rect x="268" y="95" width="44" height="24" rx="3" fill="#fff" stroke="#111" stroke-width="2"/>
+        <text x="270" y="111" font-size="11" font-weight="bold">R4 330Ω</text>
+        <line x1="290" y1="119" x2="290" y2="150" stroke="#111" stroke-width="2.5"/>
+        <!-- R5 -->
+        <line x1="370" y1="60" x2="370" y2="95" stroke="#111" stroke-width="2.5"/>
+        <rect x="348" y="95" width="44" height="24" rx="3" fill="#fff" stroke="#111" stroke-width="2"/>
+        <text x="350" y="111" font-size="11" font-weight="bold">R5 470Ω</text>
+        <line x1="370" y1="119" x2="370" y2="150" stroke="#111" stroke-width="2.5"/>
+        <!-- union superior paralelo -->
+        <line x1="210" y1="150" x2="370" y2="150" stroke="#16a34a" stroke-width="3"/>
+        <text x="280" y="145" font-size="12" fill="#16a34a" font-weight="bold">∥</text>
+
+        <!-- Nodo despues del bloque sup -->
+        <line x1="290" y1="150" x2="290" y2="175" stroke="#111" stroke-width="2.5"/>
+        <!-- R6 vertical en serie -->
+        <rect x="268" y="175" width="44" height="24" rx="3" fill="#fff" stroke="#111" stroke-width="2"/>
+        <text x="270" y="191" font-size="11" font-weight="bold">R6 220Ω</text>
+        <line x1="290" y1="199" x2="290" y2="225" stroke="#111" stroke-width="2.5"/>
+
+        <!-- Bloque paralelo inf R7/R8/R9 -->
+        <line x1="290" y1="225" x2="290" y2="250" stroke="#111" stroke-width="2.5"/>
+        <!-- R7 -->
+        <line x1="210" y1="250" x2="210" y2="285" stroke="#111" stroke-width="2.5"/>
+        <rect x="188" y="285" width="44" height="24" rx="3" fill="#fff" stroke="#111" stroke-width="2"/>
+        <text x="190" y="301" font-size="11" font-weight="bold">R7 82Ω</text>
+        <line x1="210" y1="309" x2="210" y2="340" stroke="#111" stroke-width="2.5"/>
+        <!-- R8 -->
+        <line x1="290" y1="250" x2="290" y2="285" stroke="#111" stroke-width="2.5"/>
+        <rect x="268" y="285" width="44" height="24" rx="3" fill="#fff" stroke="#111" stroke-width="2"/>
+        <text x="270" y="301" font-size="11" font-weight="bold">R8 180Ω</text>
+        <line x1="290" y1="309" x2="290" y2="340" stroke="#111" stroke-width="2.5"/>
+        <!-- R9 horizontal abajo -->
+        <line x1="370" y1="250" x2="370" y2="290" stroke="#111" stroke-width="2.5"/>
+        <rect x="348" y="290" width="44" height="22" rx="3" fill="#fff" stroke="#111" stroke-width="2"/>
+        <text x="350" y="305" font-size="11" font-weight="bold">R9 100Ω</text>
+        <line x1="370" y1="312" x2="370" y2="340" stroke="#111" stroke-width="2.5"/>
+        <!-- union inferior paralelo -->
+        <line x1="210" y1="340" x2="370" y2="340" stroke="#16a34a" stroke-width="3"/>
+        <text x="280" y="335" font-size="12" fill="#16a34a" font-weight="bold">∥</text>
+
+        <!-- conexion inferior al negativo -->
+        <line x1="140" y1="340" x2="210" y2="340" stroke="#111" stroke-width="2.5"/>
+      </svg>
+      <p style="font-size:12px;color:#6b7280;margin-top:8px;">Diagrama fiel al original: R1 en serie; división en R2 (baja) y bloque paralelo R3∥R4∥R5; luego R6 en serie; luego bloque paralelo R7∥R8∥R9; R9 horizontal al fondo.</p>
+    </div>
+
+    <div class="right">
+      <span class="caja-titulo">SE DEBE HALLAR</span>
+      <div class="tarea"><div class="icon rt">Ω</div><div><b>RESISTENCIA TOTAL (RT)</b><span>Resistencia equivalente total del circuito.</span></div></div>
+      <div class="tarea"><div class="icon it">A</div><div><b>CORRIENTE TOTAL (IT)</b><span>Corriente total suministrada por la fuente.</span></div></div>
+      <div class="tarea"><div class="icon pt">P</div><div><b>POTENCIA DISIPADA (PT)</b><span>Potencia total disipada en el circuito.</span></div></div>
+    </div>
+  </div>
+
+  <div class="cuadros">
+    <div class="cuadro c-verde">
+      <h4>✅ DATOS DEL CIRCUITO</h4>
+      Fuente: <b>V = 18 V DC</b><br>
+      R1 = 68 Ω<br>R2 = 120 Ω<br>R3 = 150 Ω<br>
+      R4 = 330 Ω<br>R5 = 470 Ω<br>R6 = 220 Ω<br>
+      R7 = 82 Ω<br>R8 = 180 Ω<br>R9 = 100 Ω
+    </div>
+    <div class="cuadro c-morado">
+      <h4>💡 INDICACIONES</h4>
+      • Análisis paso a paso.<br>
+      • Simplificar por etapas.<br>
+      • Mostrar cálculos.<br>
+      • Escribir unidades.
+    </div>
+    <div class="cuadro c-azul">
+      <h4>🔗 RECUERDE</h4>
+      <div style="font-family:'Courier New',monospace;font-size:12px;background:#eff6ff;padding:5px 8px;border-radius:6px;">V = I·R<br>I = V/R<br>P = V·I<br>P = I²·R</div>
+    </div>
+  </div>
+
+  <div class="solucion">
+    <h2>📐 RESOLUCIÓN PASO A PASO</h2>
+    <div class="paso"><span class="n">Paso 1.</span> Paralelo superior (R3 ∥ R4 ∥ R5):
+      <span class="formula">1/Rps = 1/150 + 1/330 + 1/470 = 0,01182 → Rps = 84,57 Ω</span></div>
+    <div class="paso"><span class="n">Paso 2.</span> Paralelo inferior (R7 ∥ R8 ∥ R9):
+      <span class="formula">1/Rpi = 1/82 + 1/180 + 1/100 = 0,02775 → Rpi = 36,04 Ω</span></div>
+    <div class="paso"><span class="n">Paso 3.</span> Rama B (Rps + R6 + Rpi, en serie):
+      <span class="formula">RB = 84,57 + 220 + 36,04 = 340,60 Ω</span></div>
+    <div class="paso"><span class="n">Paso 4.</span> Red paralela (R2 ∥ RB):
+      <span class="formula">Rred = (120 × 340,60)/(120 + 340,60) = 40872/460,60 = 88,74 Ω</span></div>
+    <div class="paso"><span class="n">Paso 5.</span> <b>RESISTENCIA TOTAL</b> (R1 en serie):
+      <span class="formula">RT = 68 + 88,74 = 156,74 Ω</span></div>
+    <div class="paso"><span class="n">Paso 6.</span> <b>CORRIENTE TOTAL</b> (Ley de Ohm):
+      <span class="formula">IT = V/RT = 18/156,74 = 0,11484 A = 114,84 mA</span></div>
+    <div class="paso"><span class="n">Paso 7.</span> <b>POTENCIA TOTAL</b>:
+      <span class="formula">PT = V × IT = 18 × 0,11484 = 2,07 W</span></div>
+
+    <div class="consejo">
+      <h3>💡 CÓMO LO RACIONÉ (consejos para el examen)</h3>
+      <ul>
+        <li><b>1. No te asustes por la cantidad de resistores.</b> Un circuito grande es solo muchos "paquetes" pequeños. Estrategia: <b>empieza por lo más adentro</b> y ve saliendo hacia afuera.</li>
+        <li><b>2. Identifica serie vs paralelo viendo el camino de la corriente.</b> Si la corriente se <b>divide</b> en caminos que luego se reúnen → <b>paralelo</b>. Si debe pasar por uno y luego por otro → <b>serie</b>. Aquí R3/R4/R5 están en paralelo (la corriente se reparte), igual que R7/R8/R9 abajo.</li>
+        <li><b>3. Resuelve el paralelo de 3 con la fórmula de inversas:</b> 1/Rp = 1/R3 + 1/R4 + 1/R5. El paralelo SIEMPRE da menos que la resistencia más pequeña (84,57 &lt; 150, ¡correcto!).</li>
+        <li><b>4. Luego une en serie lo que está "en fila":</b> el bloque paralelo superior + R6 + el bloque paralelo inferior van sumando porque la corriente los atraviesa uno tras otro.</li>
+        <li><b>5. La rama principal (R2) está en paralelo con toda esa rama B</b> — por eso usamos R2 ∥ RB.</li>
+        <li><b>6. Ve reduciendo a UNA sola RT antes de usar Ohm.</b> Orden: primero RT, luego IT, luego PT (lo que pide la hoja).</li>
+        <li><b>7. Truco de verificación:</b> en paralelo el valor baja; en serie sube. Si tu "paralelo" te da MÁS que sus partes, revisa la fórmula.</li>
+        <li><b>8. Deja el procedimiento limpio y justifica</b> (la hoja exige "sin tachones"). Escribir por qué usaste serie o paralelo suma puntos.</li>
+      </ul>
+    </div>
+
+    <div class="resultados">
+      <div class="res rt"><div class="lab">RESISTENCIA TOTAL</div><div class="val">156,74 Ω</div></div>
+      <div class="res it"><div class="lab">CORRIENTE TOTAL</div><div class="val">114,84 mA</div></div>
+      <div class="res pt"><div class="lab">POTENCIA TOTAL</div><div class="val">2,07 W</div></div>
+    </div>
+  </div>
+
+  <div class="footer">📋 ENTREGUE ESTE EJERCICIO CON PROCEDIMIENTO COMPLETO, ORDENADO Y SIN TACHONES.</div>
+</div>
+</body>
+</html>

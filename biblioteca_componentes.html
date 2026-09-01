@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Biblioteca de Componentes Electronicos - SENA</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI',Tahoma,sans-serif;background:#0f172a;color:#e2e8f0;padding:20px;}
+  h1{text-align:center;color:#38bdf8;margin-bottom:6px;font-size:24px;}
+  .sub{text-align:center;color:#94a3b8;margin-bottom:22px;font-size:14px;}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1000px;margin:0 auto;}
+  .card{background:#1e293b;border-radius:12px;padding:12px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.35);}
+  .card h3{font-size:15px;color:#fbbf24;margin-bottom:8px;}
+  .card svg{width:100%;height:130px;background:#0b1120;border-radius:8px;}
+  .card .sym{font-size:12px;color:#94a3b8;margin-top:6px;}
+  .card .pol{font-size:11.5px;margin-top:3px;color:#fca5a5;}
+  .footer{text-align:center;color:#64748b;font-size:12px;margin-top:24px;}
+  @media(max-width:700px){.grid{grid-template-columns:repeat(2,1fr);}}
+</style>
+</head>
+<body>
+<h1>🔧 Biblioteca de Componentes Electrónicos</h1>
+<div class="sub">Símbolos esquemáticos normalizados (IEC) + apariencia física para SMD — SENA Electrónica</div>
+<div class="grid">
+
+  <!-- 1 RESISTOR -->
+  <div class="card"><h3>1. RESISTOR (R)</h3>
+  <svg viewBox="0 0 160 120"><line x1="10" y1="60" x2="45" y2="60" stroke="#38bdf8" stroke-width="2.5"/><rect x="45" y="45" width="70" height="30" fill="none" stroke="#38bdf8" stroke-width="2.5"/><line x1="115" y1="60" x2="150" y2="60" stroke="#38bdf8" stroke-width="2.5"/></svg>
+  <div class="sym">Símbolo IEC: rectángulo</div><div class="pol">Sin polaridad · Pasivo · Ω</div></div>
+
+  <!-- 2 FUSIBLE -->
+  <div class="card"><h3>2. FUSIBLE (F)</h3>
+  <svg viewBox="0 0 160 120"><line x1="10" y1="60" x2="45" y2="60" stroke="#38bdf8" stroke-width="2.5"/><rect x="45" y="44" width="70" height="32" fill="none" stroke="#38bdf8" stroke-width="2.5"/><line x1="58" y1="60" x2="102" y2="60" stroke="#38bdf8" stroke-width="2.5"/><line x1="115" y1="60" x2="150" y2="60" stroke="#38bdf8" stroke-width="2.5"/></svg>
+  <div class="sym">Caja con línea central</div><div class="pol">Sin polaridad · Pasivo · A</div></div>
+
+  <!-- 3 VARISTOR -->
+  <div class="card"><h3>3. VARISTOR (VDR)</h3>
+  <svg viewBox="0 0 160 120"><line x1="10" y1="60" x2="45" y2="60" stroke="#38bdf8" stroke-width="2.5"/><rect x="45" y="42" width="70" height="36" fill="none" stroke="#38bdf8" stroke-width="2.5"/><line x1="45" y1="42" x2="115" y2="78" stroke="#f87171" stroke-width="2.5"/><line x1="115" y1="60" x2="150" y2="60" stroke="#38bdf8" stroke-width="2.5"/></svg>
+  <div class="sym">Resistor con flecha diagonal (V dependiente)</div><div class="pol">Sin polaridad · Pasivo</div></div>
+
+  <!-- 4 TERMISTOR -->
+  <div class="card"><h3>4. TERMISTOR</h3>
+  <svg viewBox="0 0 160 120"><line x1="10" y1="60" x2="45" y2="60" stroke="#38bdf8" stroke-width="2.5"/><rect x="45" y="42" width="70" height="36" fill="none" stroke="#38bdf8" stroke-width="2.5"/><line x1="45" y1="78" x2="115" y2="42" stroke="#fbbf24" stroke-width="2.5"/><line x1="115" y1="60" x2="150" y2="60" stroke="#38bdf8" stroke-width="2.5"/></svg>
+  <div class="sym">Resistor con línea oblicua (T dependiente)</div><div class="pol">Sin polaridad · Pasivo</div></div>
+
+  <!-- 5 BOBINA/INDUCTOR -->
+  <div class="card"><h3>5. BOBINA / INDUCTOR (L)</h3>
+  <svg viewBox="0 0 160 120"><line x1="10" y1="60" x2="40" y2="60" stroke="#38bdf8" stroke-width="2.5"/><path d="M40 60 q8 -22 18 0 q8 -22 18 0 q8 -22 18 0 q8 -22 18 0" fill="none" stroke="#38bdf8" stroke-width="2.5"/><line x1="120" y1="60" x2="150" y2="60" stroke="#38bdf8" stroke-width="2.5"/></svg>
+  <div class="sym">Serie de espiras</div><div class="pol">Sin polaridad · Pasivo · H</div></div>
+
+  <!-- 6 CAP CERAMICO -->
+  <div class="card"><h3>6. CAP. CERÁMICO</h3>
+  <svg viewBox="0 0 160 120"><line x1="10" y1="60" x2="60" y2="60" stroke="#38bdf8" stroke-width="2.5"/><line x1="60" y1="38" x2="60" y2="82" stroke="#38bdf8" stroke-width="3"/><line x1="100" y1="38" x2="100" y2="82" stroke="#38bdf8" stroke-width="3"/><line x1="100" y1="60" x2="150" y2="60" stroke="#38bdf8" stroke-width="2.5"/></svg>
+  <div class="sym">Dos placas (no polarizado)</div><div class="pol">Sin polaridad · Pasivo · F</div></div>
+
+  <!-- 7 CAP ELECTROLITICO -->
+  <div class="card"><h3>7. CAP. ELECTROLÍTICO</h3>
+  <svg viewBox="0 0 160 120"><line x1="10" y1="60" x2="60" y2="60" stroke="#38bdf8" stroke-width="2.5"/><line x1="60" y1="38" x2="60" y2="82" stroke="#38bdf8" stroke-width="3"/><path d="M100 38 q-14 22 0 44" fill="none" stroke="#38bdf8" stroke-width="3"/><line x1="100" y1="60" x2="150" y2="60" stroke="#38bdf8" stroke-width="2.5"/><text x="118" y="40" fill="#f87171" font-size="11">+</text></svg>
+  <div class="sym">Placa recta (+) y curva (–)</div><div class="pol">CON polaridad (+/−) · Pasivo</div></div>
+
+  <!-- 8 DIODO RECTIFICADOR -->
+  <div class="card"><h3>8. DIODO RECTIFICADOR</h3>
+  <svg viewBox="0 0 160 120"><line x1="10" y1="60" x2="62" y2="60" stroke="#38bdf8" stroke-width="2.5"/><path d="M62 40 L62 80 L98 60 Z" fill="#38bdf8"/><line x1="98" y1="40" x2="98" y2="80" stroke="#38bdf8" stroke-width="2.5"/><line x1="98" y1="60" x2="150" y2="60" stroke="#38bdf8" stroke-width="2.5"/></svg>
+  <div class="sym">Triángulo + barra (cátodo)</div><div class="pol">CON polaridad (ánodo→cátodo) · Activo</div></div>
+
+  <!-- 9 PUENTE RECTIFICADOR -->
+  <div class="card"><h3>9. PUENTE RECTIFICADOR</h3>
+  <svg viewBox="0 0 160 120"><path d="M80 40 L80 70 L110 55 Z" fill="#38bdf8"/><line x1="110" y1="40" x2="110" y2="70" stroke="#38bdf8" stroke-width="2.5"/><path d="M80 80 L80 110 L110 95 Z" fill="#38bdf8"/><line x1="110" y1="80" x2="110" y2="110" stroke="#38bdf8" stroke-width="2.5"/><path d="M50 55 L50 95 L80 80 Z" fill="#38bdf8"/><line x1="80" y1="55" x2="80" y2="95" stroke="#38bdf8" stroke-width="2.5"/><path d="M50 95 L50 125 L80 110 Z" fill="#38bdf8"/><line x1="80" y1="95" x2="80" y2="125" stroke="#38bdf8" stroke-width="2.5"/></svg>
+  <div class="sym">4 diodos en config. puente</div><div class="pol">CON polaridad (AC in / DC out) · Activo</div></div>
+
+  <!-- 10 MOSFET -->
+  <div class="card"><h3>10. TRANSISTOR MOSFET (Q)</h3>
+  <svg viewBox="0 0 160 120"><line x1="40" y1="50" x2="70" y2="50" stroke="#38bdf8" stroke-width="2.5"/><line x1="40" y1="70" x2="70" y2="70" stroke="#38bdf8" stroke-width="2.5"/><line x1="40" y1="90" x2="70" y2="90" stroke="#38bdf8" stroke-width="2.5"/><line x1="70" y1="50" x2="70" y2="90" stroke="#38bdf8" stroke-width="2.5"/><line x1="70" y1="50" x2="110" y2="50" stroke="#38bdf8" stroke-width="2.5"/><line x1="70" y1="70" x2="110" y2="70" stroke="#38bdf8" stroke-width="2.5"/><line x1="70" y1="90" x2="110" y2="90" stroke="#38bdf8" stroke-width="2.5"/><line x1="110" y1="30" x2="110" y2="50" stroke="#fbbf24" stroke-width="2.5"/><text x="116" y="38" fill="#fbbf24" font-size="11">G</text><text x="114" y="54" fill="#38bdf8" font-size="10">D</text><text x="114" y="92" fill="#38bdf8" font-size="10">S</text></svg>
+  <div class="sym">3 terminales: G(D/S)</div><div class="pol">CON polaridad (D/G/S) · Activo</div></div>
+
+  <!-- 11 TRANSFORMADOR -->
+  <div class="card"><h3>11. TRANSFORMADOR (T)</h3>
+  <svg viewBox="0 0 160 120"><path d="M40 45 q8 -16 16 0 q8 -16 16 0 q8 -16 16 0" fill="none" stroke="#38bdf8" stroke-width="2.5"/><path d="M90 45 q8 -16 16 0 q8 -16 16 0 q8 -16 16 0" fill="none" stroke="#38bdf8" stroke-width="2.5"/><line x1="68" y1="35" x2="68" y2="85" stroke="#fbbf24" stroke-width="2.5"/><line x1="92" y1="35" x2="92" y2="85" stroke="#fbbf24" stroke-width="2.5"/></svg>
+  <div class="sym">2 bobinas + núcleo (líneas)</div><div class="pol">Sin polaridad · Pasivo</div></div>
+
+  <!-- 12 OPTOACOPLADOR -->
+  <div class="card"><h3>12. OPTOACOPLADOR (U)</h3>
+  <svg viewBox="0 0 160 120"><rect x="30" y="25" width="100" height="70" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="5 4"/><path d="M55 75 L55 60 L75 67 Z" fill="#38bdf8"/><line x1="75" y1="60" x2="75" y2="75" stroke="#38bdf8" stroke-width="2.5"/><rect x="95" y="45" width="10" height="30" fill="none" stroke="#38bdf8" stroke-width="2.5"/><line x1="55" y1="75" x2="40" y2="75" stroke="#38bdf8" stroke-width="2.5"/><line x1="100" y1="45" x2="100" y2="30" stroke="#38bdf8" stroke-width="2.5"/></svg>
+  <div class="sym">LED + foto-transistor (caja punteada)</div><div class="pol">CON polaridad · Activo</div></div>
+
+  <!-- 13 CIRCUITO INTEGRADO -->
+  <div class="card"><h3>13. CIRCUITO INTEGRADO (U)</h3>
+  <svg viewBox="0 0 160 120"><rect x="55" y="30" width="50" height="60" fill="none" stroke="#38bdf8" stroke-width="2.5"/><line x1="40" y1="45" x2="55" y2="45" stroke="#38bdf8" stroke-width="2.5"/><line x1="40" y1="60" x2="55" y2="60" stroke="#38bdf8" stroke-width="2.5"/><line x1="40" y1="75" x2="55" y2="75" stroke="#38bdf8" stroke-width="2.5"/><line x1="105" y1="45" x2="120" y2="45" stroke="#38bdf8" stroke-width="2.5"/><line x1="105" y1="60" x2="120" y2="60" stroke="#38bdf8" stroke-width="2.5"/><line x1="105" y1="75" x2="120" y2="75" stroke="#38bdf8" stroke-width="2.5"/></svg>
+  <div class="sym">Caja con pines (DIP)</div><div class="pol">Según tipo · Activo</div></div>
+
+  <!-- 14 DIODO ZENER -->
+  <div class="card"><h3>14. DIODO ZENER</h3>
+  <svg viewBox="0 0 160 120"><line x1="10" y1="60" x2="62" y2="60" stroke="#38bdf8" stroke-width="2.5"/><path d="M62 40 L62 80 L98 60 Z" fill="#38bdf8"/><line x1="90" y1="42" x2="106" y2="78" stroke="#38bdf8" stroke-width="2.5"/><line x1="98" y1="60" x2="150" y2="60" stroke="#38bdf8" stroke-width="2.5"/></svg>
+  <div class="sym">Diodo con catodo doblado</div><div class="pol">CON polaridad · Activo</div></div>
+
+  <!-- 15 REGULADOR PRECISION (TL431) -->
+  <div class="card"><h3>15. REG. PRECISIÓN (TL431)</h3>
+  <svg viewBox="0 0 160 120"><path d="M50 40 L110 40 L110 80 L80 95 L50 80 Z" fill="none" stroke="#38bdf8" stroke-width="2.5"/><line x1="50" y1="50" x2="35" y2="50" stroke="#38bdf8" stroke-width="2.5"/><line x1="50" y1="70" x2="35" y2="70" stroke="#38bdf8" stroke-width="2.5"/><line x1="110" y1="60" x2="125" y2="60" stroke="#38bdf8" stroke-width="2.5"/></svg>
+  <div class="sym">Triángulo tipo regulador (3 patas)</div><div class="pol">CON polaridad · Activo</div></div>
+
+  <!-- 16 DIODO LED -->
+  <div class="card"><h3>16. DIODO LED</h3>
+  <svg viewBox="0 0 160 120"><line x1="10" y1="60" x2="62" y2="60" stroke="#38bdf8" stroke-width="2.5"/><path d="M62 40 L62 80 L98 60 Z" fill="#38bdf8"/><line x1="98" y1="40" x2="98" y2="80" stroke="#38bdf8" stroke-width="2.5"/><line x1="98" y1="55" x2="120" y2="35" stroke="#f87171" stroke-width="2"/><line x1="108" y1="65" x2="130" y2="45" stroke="#f87171" stroke-width="2"/><line x1="98" y1="60" x2="150" y2="60" stroke="#38bdf8" stroke-width="2.5"/></svg>
+  <div class="sym">Diodo + flechas de luz</div><div class="pol">CON polaridad (+ largo/– corto) · Activo</div></div>
+
+  <!-- 17 CONECTORES -->
+  <div class="card"><h3>17. CONECTORES (J/CN)</h3>
+  <svg viewBox="0 0 160 120"><rect x="40" y="50" width="35" height="35" fill="none" stroke="#38bdf8" stroke-width="2.5"/><rect x="85" y="50" width="35" height="35" fill="none" stroke="#38bdf8" stroke-width="2.5"/><line x1="57" y1="50" x2="57" y2="35" stroke="#38bdf8" stroke-width="2.5"/><line x1="103" y1="50" x2="103" y2="35" stroke="#38bdf8" stroke-width="2.5"/></svg>
+  <div class="sym">Hembra + macho (mate)</div><div class="pol">Depende del tipo · Pasivo</div></div>
+
+  <!-- 18 PUENTE DE ALAMBRE -->
+  <div class="card"><h3>18. PUENTE DE ALAMBRE</h3>
+  <svg viewBox="0 0 160 120"><circle cx="35" cy="60" r="6" fill="#38bdf8"/><path d="M41 60 q40 -40 80 0" fill="none" stroke="#38bdf8" stroke-width="2.5"/><circle cx="125" cy="60" r="6" fill="#38bdf8"/></svg>
+  <div class="sym">Cable uniendo 2 puntos</div><div class="pol">Sin polaridad · Pasivo</div></div>
+
+  <!-- 19 DISIPADOR ALUMINIO -->
+  <div class="card"><h3>19. DISIPADOR ALUMINIO</h3>
+  <svg viewBox="0 0 160 120"><rect x="45" y="30" width="70" height="65" fill="none" stroke="#94a3b8" stroke-width="2.5"/><line x1="55" y1="30" x2="55" y2="95" stroke="#94a3b8" stroke-width="2"/><line x1="65" y1="30" x2="65" y2="95" stroke="#94a3b8" stroke-width="2"/><line x1="75" y1="30" x2="75" y2="95" stroke="#94a3b8" stroke-width="2"/><line x1="85" y1="30" x2="85" y2="95" stroke="#94a3b8" stroke-width="2"/><line x1="95" y1="30" x2="95" y2="95" stroke="#94a3b8" stroke-width="2"/><line x1="105" y1="30" x2="105" y2="95" stroke="#94a3b8" stroke-width="2"/></svg>
+  <div class="sym">Bloque con aletas (físico)</div><div class="pol">Sin polaridad · Mecánico</div></div>
+
+  <!-- 20 RESISTENCIA SMD -->
+  <div class="card"><h3>20. RESISTENCIA SMD</h3>
+  <svg viewBox="0 0 160 120"><rect x="45" y="45" width="70" height="30" fill="#d97706" stroke="#fbbf24" stroke-width="2"/><rect x="35" y="50" width="12" height="20" fill="#cbd5e1"/><rect x="113" y="50" width="12" height="20" fill="#cbd5e1"/></svg>
+  <div class="sym">Chip rectangular + 2 terminales</div><div class="pol">Sin polaridad · Pasivo · Ω</div></div>
+
+  <!-- 21 CONDENSADOR SMD -->
+  <div class="card"><h3>21. CONDENSADOR SMD</h3>
+  <svg viewBox="0 0 160 120"><rect x="50" y="45" width="60" height="30" fill="#475569" stroke="#38bdf8" stroke-width="2"/><rect x="40" y="50" width="12" height="20" fill="#cbd5e1"/><rect x="108" y="50" width="12" height="20" fill="#cbd5e1"/></svg>
+  <div class="sym">Chip gris + 2 terminales</div><div class="pol">Según tipo · Pasivo · F</div></div>
+
+  <!-- 22 TRANSISTOR SMD -->
+  <div class="card"><h3>22. TRANSISTOR SMD</h3>
+  <svg viewBox="0 0 160 120"><rect x="55" y="40" width="50" height="40" fill="#1e293b" stroke="#fbbf24" stroke-width="2"/><line x1="55" y1="48" x2="40" y2="48" stroke="#38bdf8" stroke-width="2.5"/><line x1="55" y1="60" x2="40" y2="60" stroke="#38bdf8" stroke-width="2.5"/><line x1="55" y1="72" x2="40" y2="72" stroke="#38bdf8" stroke-width="2.5"/></svg>
+  <div class="sym">SOT-23 (3 patas)</div><div class="pol">CON polaridad · Activo</div></div>
+
+  <!-- 23 DIODO SMD -->
+  <div class="card"><h3>23. DIODO SMD</h3>
+  <svg viewBox="0 0 160 120"><rect x="55" y="42" width="50" height="36" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/><line x1="55" y1="52" x2="40" y2="52" stroke="#38bdf8" stroke-width="2.5"/><line x1="55" y1="68" x2="40" y2="68" stroke="#38bdf8" stroke-width="2.5"/></svg>
+  <div class="sym">SOD (2 patas)</div><div class="pol">CON polaridad · Activo</div></div>
+
+  <!-- 24 CIRCUITO INTEGRADO SMD -->
+  <div class="card"><h3>24. CI SMD (SOIC)</h3>
+  <svg viewBox="0 0 160 120"><rect x="55" y="40" width="50" height="40" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/><line x1="55" y1="46" x2="42" y2="46" stroke="#38bdf8" stroke-width="2"/><line x1="55" y1="54" x2="42" y2="54" stroke="#38bdf8" stroke-width="2"/><line x1="55" y1="62" x2="42" y2="62" stroke="#38bdf8" stroke-width="2"/><line x1="55" y1="70" x2="42" y2="70" stroke="#38bdf8" stroke-width="2"/><line x1="105" y1="46" x2="118" y2="46" stroke="#38bdf8" stroke-width="2"/><line x1="105" y1="54" x2="118" y2="54" stroke="#38bdf8" stroke-width="2"/><line x1="105" y1="62" x2="118" y2="62" stroke="#38bdf8" stroke-width="2"/><line x1="105" y1="70" x2="118" y2="70" stroke="#38bdf8" stroke-width="2"/></svg>
+  <div class="sym">SOIC con patas tipo "gaviota"</div><div class="pol">Según tipo · Activo</div></div>
+
+</div>
+<div class="footer">Biblioteca de componentes — símbolos IEC + apariencia física SMD. Elaborado como guía de estudio SENA.</div>
+</body>
+</html>

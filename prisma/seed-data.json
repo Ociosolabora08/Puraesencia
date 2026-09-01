@@ -1,0 +1,349 @@
+{
+  "exportedAt": "2026-09-01T19:51:40.483Z",
+  "restaurant": {
+    "name": "Pura Esencia",
+    "phone": "573023087321",
+    "whatsapp": "573023087321",
+    "logo": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=200&h=200&fit=crop"
+  },
+  "categories": [
+    {
+      "id": "cmscjy0jz000118rylh3pq63s",
+      "name": "testcat",
+      "image": "",
+      "sortOrder": 0,
+      "isHidden": false
+    },
+    {
+      "id": "cmscjy0k2000218ryn976l14l",
+      "name": "Velas Aromáticas",
+      "image": "/uploads/1785725590373-dviqho.jpeg",
+      "sortOrder": 2,
+      "isHidden": false
+    },
+    {
+      "id": "cmscjy0k5000318ry4naborsm",
+      "name": "Cuidado Facial",
+      "image": "https://images.unsplash.com/photo-1556228852-80b6e5eeff06?w=200&h=200&fit=crop",
+      "sortOrder": 3,
+      "isHidden": false
+    },
+    {
+      "id": "cmscjy0k8000418rya53qrs22",
+      "name": "Aceites Corporales",
+      "image": "/api/uploads/1785726560865-p9y17j.webp",
+      "sortOrder": 4,
+      "isHidden": true
+    },
+    {
+      "id": "cmscjy0kb000518ryz7t5yedi",
+      "name": "Infusiones y Tés",
+      "image": "https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=200&h=200&fit=crop",
+      "sortOrder": 5,
+      "isHidden": true
+    },
+    {
+      "id": "cmscjy0ke000618ry1pbzzitk",
+      "name": "Sales y Baños",
+      "image": "https://images.unsplash.com/photo-1599751449628-9d4a93b8b0a4?w=200&h=200&fit=crop",
+      "sortOrder": 6,
+      "isHidden": true
+    },
+    {
+      "id": "cmscjy0kh000718ry53fwlpcc",
+      "name": "Aromaterapia",
+      "image": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=200&h=200&fit=crop",
+      "sortOrder": 7,
+      "isHidden": true
+    },
+    {
+      "id": "cmscjy0kk000818ryd787p1m3",
+      "name": "Sets de Regalo",
+      "image": "https://images.unsplash.com/photo-1549887534-1541e9326642?w=200&h=200&fit=crop",
+      "sortOrder": 8,
+      "isHidden": true
+    }
+  ],
+  "items": [
+    {
+      "id": "cmscjy0kn000a18ryn1874qhd",
+      "categoryId": "cmscjy0jz000118rylh3pq63s",
+      "name": "Jabón de Lavanda y Avena",
+      "price": 12,
+      "description": "Jabón artesanal de lavanda y avena, 100g. Hecho a mano en lotes de 30 unidades, con aceites esenciales de lavanda orgánica y avena coloidal. Sin fragancias sintéticas, sin colorantes artificiales. Para piel sensible y reactiva. Cada barra es única.",
+      "images": [
+        "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?w=800&h=800&fit=crop",
+        "https://images.unsplash.com/photo-1599751449708-9d4a93b8b0a4?w=800&h=800&fit=crop"
+      ],
+      "isFeatured": true,
+      "isHidden": false
+    },
+    {
+      "id": "cmscjy0kp000c18ryy95ewyk2",
+      "categoryId": "cmscjy0jz000118rylh3pq63s",
+      "name": "Jabón de Carbón Activado",
+      "price": 14,
+      "description": "Jabón purificante con carbón activado, arcilla bentonita y aceite de árbol de té. Ideal para piel mixta o grasa. Profundiza la limpieza sin resecar.",
+      "images": [
+        "/api/uploads/1785724937761-flo4gz.jpeg"
+      ],
+      "isFeatured": false,
+      "isHidden": false
+    },
+    {
+      "id": "cmscjy0ks000e18ryt6jxks4l",
+      "categoryId": "cmscjy0jz000118rylh3pq63s",
+      "name": "Jabón de Miel y Leche de Cabra",
+      "price": 13,
+      "description": "Jabón nutritivo con miel cruda de apiario local y leche de cabra fresca. Rico en vitaminas y enzimas naturales. Hidrata mientras limpia.",
+      "images": [
+        "/api/uploads/1785725648075-z5g3j5.jpeg"
+      ],
+      "isFeatured": false,
+      "isHidden": false
+    },
+    {
+      "id": "cmscjy0kv000g18ry53ox1k11",
+      "categoryId": "cmscjy0k2000218ryn976l14l",
+      "name": "Vela de Soya - Aura Citrus",
+      "price": 22,
+      "description": "Vela artesanal de cera de soya 100% natural, con mecha de algodón. Aroma cítrico de toronja, naranja y hierbabuena. 40 horas de duración. Hecha a mano en frasco de vidrio reutilizable. Sin parafina.",
+      "images": [
+        "https://images.unsplash.com/photo-1602874801006-094b8a3b3c6f?w=800&h=800&fit=crop",
+        "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800&h=800&fit=crop"
+      ],
+      "isFeatured": true,
+      "isHidden": false
+    },
+    {
+      "id": "cmscjy0ky000i18ryrkc8cs8v",
+      "categoryId": "cmscjy0k2000218ryn976l14l",
+      "name": "Vela de Cera de Abeja - Equilibrio",
+      "price": 28,
+      "description": "Vela de cera de abeja pura con aceites esenciales de lavanda, geranio y vetiver. La cera de abeja purifica el aire de forma natural. 50 horas de duración.",
+      "images": [
+        "https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=800&h=800&fit=crop"
+      ],
+      "isFeatured": false,
+      "isHidden": false
+    },
+    {
+      "id": "cmscjy0l1000k18rys0ane59w",
+      "categoryId": "cmscjy0k2000218ryn976l14l",
+      "name": "Vela Mini - Nectar Vainilla",
+      "price": 14,
+      "description": "Vela pequeña de cera de soya con vainilla bourbon de Madagascar y un toque de cacao. 18 horas de duración. Mecha de madera que crepita suavemente.",
+      "images": [
+        "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800&h=800&fit=crop"
+      ],
+      "isFeatured": false,
+      "isHidden": false
+    },
+    {
+      "id": "cmscjy0l3000m18ry8klg5odr",
+      "categoryId": "cmscjy0k5000318ry4naborsm",
+      "name": "Crema Facial de Rosa Mosqueta",
+      "price": 32,
+      "description": "Crema facial hidratante con aceite de rosa mosqueta prensado en frío, ácido hialurónico vegetal y extracto de manzanilla. Para piel sensible. Recipiente de vidrio 50ml.",
+      "images": [
+        "https://images.unsplash.com/photo-1556228852-80b6e5eeff06?w=800&h=800&fit=crop",
+        "https://images.unsplash.com/photo-1570194065650-d99fb4bedf0a?w=800&h=800&fit=crop"
+      ],
+      "isFeatured": true,
+      "isHidden": false
+    },
+    {
+      "id": "cmscjy0l6000o18rytmyc8d28",
+      "categoryId": "cmscjy0k5000318ry4naborsm",
+      "name": "Tónico Facial de Hamamelis y Rosas",
+      "price": 19,
+      "description": "Tónico facial a base de hidrosol de rosas, hamamelis orgánico y glicerina vegetal. Equilibra el pH y refresca. Frasco de vidrio 100ml.",
+      "images": [
+        "https://images.unsplash.com/photo-1570194065650-d99fb4bedf0a?w=800&h=800&fit=crop"
+      ],
+      "isFeatured": false,
+      "isHidden": false
+    },
+    {
+      "id": "cmscjy0l8000q18ryoy4e71kc",
+      "categoryId": "cmscjy0k5000318ry4naborsm",
+      "name": "Mascarilla de Arcilla Rosa",
+      "price": 24,
+      "description": "Mascarilla facial purificante con arcilla rosa, polvo de rosa de Damasco y extracto de manzanilla. Para piel sensible o con rojeces. Frasco de vidrio 60g.",
+      "images": [
+        "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&h=800&fit=crop"
+      ],
+      "isFeatured": false,
+      "isHidden": false
+    },
+    {
+      "id": "cmscjy0lb000s18ry755mfhdx",
+      "categoryId": "cmscjy0k8000418rya53qrs22",
+      "name": "Aceite Corporal Nourishing",
+      "price": 28,
+      "description": "Aceite corporal nutritivo con aceites de almendras dulces, jojoba y vitamina E. Absorción rápida. Con aceite esencial de geranio. Frasco de vidrio 120ml.",
+      "images": [
+        "https://images.unsplash.com/photo-1608580083606-1dadeec3d1a9?w=800&h=800&fit=crop"
+      ],
+      "isFeatured": false,
+      "isHidden": false
+    },
+    {
+      "id": "cmscjy0ld000u18ry6k2lfxu9",
+      "categoryId": "cmscjy0k8000418rya53qrs22",
+      "name": "Aceite Seco Bruma Citrus",
+      "price": 26,
+      "description": "Aceite seco en bruma con aceites de coco fraccionado, argán y bergamota. Toque cítrico y energizante. Frasco atomizador 100ml.",
+      "images": [
+        "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800&h=800&fit=crop"
+      ],
+      "isFeatured": true,
+      "isHidden": false
+    },
+    {
+      "id": "cmscjy0lg000w18ry7pi7pqcu",
+      "categoryId": "cmscjy0k8000418rya53qrs22",
+      "name": "Aceite de Masaje Relajante",
+      "price": 30,
+      "description": "Aceite de masaje con base de almendras dulces y aceites esenciales de lavanda, mejorana y romero. Relaja músculos tensionados. Frasco de vidrio 150ml.",
+      "images": [
+        "https://images.unsplash.com/photo-1606922293935-bb1e22e8d3a7?w=800&h=800&fit=crop"
+      ],
+      "isFeatured": false,
+      "isHidden": false
+    },
+    {
+      "id": "cmscjy0lj000y18rywc2ccfqk",
+      "categoryId": "cmscjy0kb000518ryz7t5yedi",
+      "name": "Infusión Noche Serena",
+      "price": 15,
+      "description": "Mezcla de hierbas relajantes: manzanilla, pasiflora, melisa y un toque de lavanda. Cosechadas en seco y envasadas a mano. Caja de 20 bolsitas biodegradables.",
+      "images": [
+        "https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=800&h=800&fit=crop"
+      ],
+      "isFeatured": false,
+      "isHidden": false
+    },
+    {
+      "id": "cmscjy0lm001018ryw4fckm86",
+      "categoryId": "cmscjy0kb000518ryz7t5yedi",
+      "name": "Té Verde con Menta y Jengibre",
+      "price": 17,
+      "description": "Té verde sencha con menta piperita fresca y jengibre deshidratado. Energizante sin ser estimulante en exceso. Lata de 50g, 25 tazas.",
+      "images": [
+        "https://images.unsplash.com/photo-1597318236338-d4c14c1ee9b9?w=800&h=800&fit=crop"
+      ],
+      "isFeatured": true,
+      "isHidden": false
+    },
+    {
+      "id": "cmscjy0ls001218ryrv8g8c9s",
+      "categoryId": "cmscjy0kb000518ryz7t5yedi",
+      "name": "Infusión Cítrica Matinal",
+      "price": 14,
+      "description": "Mezcla de cáscara de naranja, limón, manzanilla y un toque de hibisco. Energía suave sin cafeína. Caja de 20 bolsitas biodegradables.",
+      "images": [
+        "https://images.unsplash.com/photo-1563911892437-1feda0179e1b?w=800&h=800&fit=crop"
+      ],
+      "isFeatured": false,
+      "isHidden": false
+    },
+    {
+      "id": "cmscjy0lv001418ryrm2f9k0t",
+      "categoryId": "cmscjy0ke000618ry1pbzzitk",
+      "name": "Sal de Baño Lavanda y Romero",
+      "price": 18,
+      "description": "Sal marina gruesa con sales de Epsom, flores de lavanda secas, romero y aceite esencial de lavanda. Relaja músculos. Frasco de vidrio 400g.",
+      "images": [
+        "https://images.unsplash.com/photo-1599751449628-9d4a93b8b0a4?w=800&h=800&fit=crop"
+      ],
+      "isFeatured": false,
+      "isHidden": false
+    },
+    {
+      "id": "cmscjy0ly001618ryw1k8rbnp",
+      "categoryId": "cmscjy0ke000618ry1pbzzitk",
+      "name": "Sales Detox de Carbón y Eucalipto",
+      "price": 21,
+      "description": "Sal de baño detoxificante con carbón activado, sal de Epsom, arcilla negra y eucalipto. Para limpieza profunda. Frasco de vidrio 400g.",
+      "images": [
+        "https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=800&h=800&fit=crop"
+      ],
+      "isFeatured": false,
+      "isHidden": false
+    },
+    {
+      "id": "cmscjy0m1001818ry2cw7xe7n",
+      "categoryId": "cmscjy0kh000718ry53fwlpcc",
+      "name": "Roll-on Relajante Pulse",
+      "price": 16,
+      "description": "Roll-on de aromaterapia con aceites esenciales de lavanda, manzanilla y vetiver en aceite de jojoba. Frasco de vidrio 10ml con roller de piedra natural.",
+      "images": [
+        "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800&h=800&fit=crop"
+      ],
+      "isFeatured": true,
+      "isHidden": false
+    },
+    {
+      "id": "cmscjy0m4001a18rytm53lq82",
+      "categoryId": "cmscjy0kh000718ry53fwlpcc",
+      "name": "Difusor de Aroma Esencial",
+      "price": 35,
+      "description": "Difusor de cerámica porosa con aceite esencial de lavanda, bergamota y sándalo. Libera aroma suave durante 6-8 semanas. Recargable.",
+      "images": [
+        "https://images.unsplash.com/photo-1602874801006-094b8a3b3c6f?w=800&h=800&fit=crop"
+      ],
+      "isFeatured": false,
+      "isHidden": false
+    },
+    {
+      "id": "cmscjy0m7001c18rypacacsez",
+      "categoryId": "cmscjy0kh000718ry53fwlpcc",
+      "name": "Spray de Almohada Sueños",
+      "price": 18,
+      "description": "Spray de aromaterapia para almohada con lavanda, manzanilla y vainilla. Pulveriza sobre la almohada antes de dormir. Frasco atomizador 100ml.",
+      "images": [
+        "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&h=800&fit=crop"
+      ],
+      "isFeatured": false,
+      "isHidden": false
+    },
+    {
+      "id": "cmscjy0m9001e18ry9l87eze7",
+      "categoryId": "cmscjy0kk000818ryd787p1m3",
+      "name": "Set Ritual Noche Serena",
+      "price": 58,
+      "description": "Set de regalo con vela Aura Citrus, infusión Noche Serena, spray de almohada Sueños y roll-on Relajante. Empacado en caja kraft con papel tisú y nota manuscrita. Edición limitada, lotes de 15 unidades.",
+      "images": [
+        "https://images.unsplash.com/photo-1549887534-1541e9326642?w=800&h=800&fit=crop",
+        "https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=800&h=800&fit=crop"
+      ],
+      "isFeatured": true,
+      "isHidden": false
+    },
+    {
+      "id": "cmscjy0mc001g18rywh6og6qy",
+      "categoryId": "cmscjy0kk000818ryd787p1m3",
+      "name": "Set Cuidado Facial Esencial",
+      "price": 65000,
+      "description": "Set completo de skincare: crema facial de rosa mosqueta, tónico de hamamelis y mascarilla de arcilla rosa. Para piel sensible. Empacado en bolsa de tela orgánica.",
+      "images": [
+        "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&h=800&fit=crop"
+      ],
+      "isFeatured": false,
+      "isHidden": false
+    },
+    {
+      "id": "cmscjy0mf001i18ryaygixnl7",
+      "categoryId": "cmscjy0kk000818ryd787p1m3",
+      "name": "Mini Set Descubre Pura Esencia1",
+      "price": 42,
+      "description": "Set de descubrimiento con jabón de lavanda, vela mini Nectar, aceite seco mini y roll-on Relajante. Empacado en caja kraft pequeña con notas a mano.",
+      "images": [
+        "/api/uploads/1785725324448-hx583e.jpg"
+      ],
+      "isFeatured": false,
+      "isHidden": false
+    }
+  ]
+}

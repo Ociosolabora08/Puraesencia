@@ -1,13 +1,13 @@
-// Pura Esencia - Prisma schema (MODO LOCAL VALIDACION)
-// Cambiado a SQLite para validar el catalogo sin servidores externos ($0).
-// Para produccion en la nube, volver a postgresql + DATABASE_URL (Neon/Supabase).
+// Pura Esencia - Prisma schema (PostgreSQL)
+// Producción: Neon (serverless, tier gratis). Local: Postgres con socket.
+// price: Int en pesos COP (enteros, sin decimales).
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -38,9 +38,11 @@ model Category {
 model MenuItem {
   id          String   @id @default(cuid())
   name        String
+  slug        String?  @unique
   price       Int      @default(0)
   description String   @default("")
   images      String   @default("[]")
+  imageBlur   String   @default("")
   likes       Int      @default(0)
   isFeatured  Boolean  @default(false)
   isHidden    Boolean  @default(false)

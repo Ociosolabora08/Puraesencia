@@ -1,12 +1,14 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { z } from "zod";
+import { uniqueSlug } from "@/lib/slug";
 
 const menuItemCreateSchema = z.object({
   name: z.string().min(1).max(200),
   price: z.number().int().min(0),
   description: z.string().max(1000).optional().default(""),
   images: z.array(z.string().max(500)).max(5).optional().default([]),
+  imageBlur: z.string().max(20000).optional().default(""),
   likes: z.number().int().min(0).optional().default(0),
   isFeatured: z.boolean().optional().default(false),
   categoryId: z.string().min(1),
@@ -18,6 +20,7 @@ const menuItemUpdateSchema = z.object({
   price: z.number().int().min(0).optional(),
   description: z.string().max(1000).optional(),
   images: z.array(z.string().max(500)).max(5).optional(),
+  imageBlur: z.string().max(20000).optional(),
   likes: z.number().int().min(0).optional(),
   isFeatured: z.boolean().optional(),
   isHidden: z.boolean().optional(),
@@ -49,12 +52,15 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const validated = menuItemCreateSchema.parse(body);
+    const slug = await uniqueSlug(validated.name);
     const item = await db.menuItem.create({
       data: {
         name: validated.name,
+        slug,
         price: validated.price,
         description: validated.description,
         images: JSON.stringify(validated.images),
+        imageBlur: validated.imageBlur,
         likes: validated.likes,
         isFeatured: validated.isFeatured,
         categoryId: validated.categoryId,
@@ -82,6 +88,10 @@ export async function PUT(request: Request) {
     const updateData: Record<string, unknown> = { ...data };
     if (data.images) {
       updateData.images = JSON.stringify(data.images);
+    }
+    // Si cambia el nombre, regenerar slug (la URL pública sigue siendo consistente)
+    if (data.name) {
+      updateData.slug = await uniqueSlug(data.name, id);
     }
 
     const item = await db.menuItem.update({
