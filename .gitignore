@@ -1,73 +1,50 @@
-# Dependencies
-node_modules/
-.pnp
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
-
-# Testing
-/coverage
-
-# Next.js
-/.next/
-/out/
-next-env.d.ts
-
-# Production
-/build
-
-# Misc
-.DS_Store
-*.pem
-
-# Debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# Env files (NEVER commit secrets)
+```
+# Environment variables
 .env
 .env.local
-.env.production
-.env.development
+.env.*
 
-# === Pura Esencia LOCAL DATA (NO subir a Git: son datos, no codigo) ===
-# Base de datos SQLite local (tus 23 productos + fotos referenciadas)
-*.db
-*.db-journal
-prisma/dev.db
-dev.db
-# Imagenes subidas por el usuario (se sirven en runtime, no van al repo)
-public/uploads/
-# Lockfiles de gestores que no usamos (npm es el oficial aqui)
-pnpm-lock.yaml
-pnpm-workspace.yaml
+# Compiled Python files
+*.pyc
+__pycache__/
 
-# Vercel
-.vercel
+# Virtual environments
+venv/
+.venv/
+env/
+.ENV/
 
-# Typescript
-*.tsbuildinfo
+# Build artifacts
+build/
+dist/
+*.egg-info/
 
-# Local dev artifacts
-local-*
-.claude
-.z-ai-config
+# Logs
 *.log
-dev.log
-server.log
 
-# SQLite (legacy - we use PostgreSQL now)
-db/*.db
-db/*.db-journal
-
-# Skills directory
-/skills/
-
-# IDE
+# IDE files
 .vscode/
 .idea/
 *.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Coverage reports
+.coverage
+coverage/
+htmlcov/
+
+# Dependency cache
+.mypy_cache/
+.pytest_cache/
+node_modules/
+target/
+.gradle/
+
+# Temporary files
+*.tmp
+*.temp
+```
