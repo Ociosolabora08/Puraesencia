@@ -3,7 +3,6 @@
 import { useState } from "react";
 import {
   Phone,
-  Bookmark,
   Share2,
   ChevronDown,
   MessageCircle,
@@ -36,7 +35,6 @@ interface StickyHeaderProps {
 
 export function StickyHeader({ restaurantInfo }: StickyHeaderProps) {
   const [selectedLang, setSelectedLang] = useState(languages[0]); // Español default
-  const [isBookmarked, setIsBookmarked] = useState(false);
 
   const info = restaurantInfo || { name: "Pura Esencia", phone: "", whatsapp: "", logo: "" };
 
@@ -135,21 +133,6 @@ export function StickyHeader({ restaurantInfo }: StickyHeaderProps) {
               </a>
             </Button>
           )}
-
-          {/* Bookmark */}
-          <Button
-            variant="ghost"
-            size="sm"
-            className={`p-2 hover:bg-rosa-suave/60 rounded-full h-auto ${
-              isBookmarked ? "text-primary" : ""
-            }`}
-            onClick={() => setIsBookmarked(!isBookmarked)}
-            aria-label="Guardar"
-          >
-            <Bookmark
-              className={`h-5 w-5 ${isBookmarked ? "fill-current" : ""}`}
-            />
-          </Button>
 
           {/* Share */}
           <Button

@@ -1,165 +1,94 @@
-"use client";
-
-import { useState, useCallback, useEffect, useRef } from "react";
-import { Settings, Heart, Sparkles } from "lucide-react";
+// FASE 3.2 — Home como Server Component: datos directos de Prisma, ISR 60s.
+// El HTML inicial contiene el catálogo completo (SEO + LCP sin cascada cliente-API-DB).
+import { Heart, Sparkles } from "lucide-react";
 import { StickyHeader } from "@/components/menu/sticky-header";
-import { CategoryNav } from "@/components/menu/category-nav";
-import { FeaturedItems } from "@/components/menu/featured-items";
-import { MenuSection } from "@/components/menu/menu-section";
-import { BackToTop } from "@/components/menu/back-to-top";
-import { AdminPanel } from "@/components/admin/admin-panel";
-import {
-  BrandLogo,
-  DecorativeHeart,
-  DecorativeStar,
-  DecorativeDrop,
-  WatercolorBackground,
-} from "@/components/brand/decorative";
+import { CatalogShell } from "@/components/menu/catalog-shell";
+import { BrandLogo, DecorativeHeart, DecorativeStar, DecorativeDrop, WatercolorBackground } from "@/components/brand/decorative";
+import { db } from "@/lib/db";
+import { SOCIAL_LINKS, type CatalogCategory, type CatalogItem } from "@/lib/types";
 
-interface Category {
-  id: string;
-  name: string;
-  image: string;
-  sortOrder: number;
-}
+export const revalidate = 60; // ISR: re-render cada 60s o tras revalidación
 
-interface MenuItem {
-  id: string;
-  name: string;
-  price: number;
-  description: string;
-  images: string[];
-  likes: number;
-  isFeatured: boolean;
-  categoryId: string;
-}
+async function getCatalogData() {
+  const [categories, items, restaurant] = await Promise.all([
+    db.category.findMany({
+      where: { isHidden: false },
+      orderBy: { sortOrder: "asc" },
+      select: { id: true, name: true, image: true, sortOrder: true },
+    }),
+    db.menuItem.findMany({
+      where: { isHidden: false },
+      orderBy: { createdAt: "desc" },
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        price: true,
+        description: true,
+        images: true,
+        imageBlur: true,
+        isFeatured: true,
+        categoryId: true,
+      },
+    }),
+    db.restaurant.findFirst({
+      select: { name: true, whatsapp: true, phone: true, logo: true },
+    }),
+  ]);
 
-interface StoreInfo {
-  name: string;
-  phone: string;
-  whatsapp: string;
-  logo: string;
-}
-
-export default function MenuPage() {
-  const [activeCategory, setActiveCategory] = useState<string>("");
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
-  const [storeInfo, setStoreInfo] = useState<StoreInfo | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isAdminOpen, setIsAdminOpen] = useState(false);
-  const isProgrammaticScroll = useRef(false);
-  const programmaticTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const fetchData = useCallback(async () => {
+  const parsedItems: CatalogItem[] = items.map((item) => {
+    let images: string[] = [];
     try {
-      const res = await fetch("/api/menu");
-      if (!res.ok) throw new Error("Failed to load");
-      const data = await res.json();
-
-      setCategories(data.categories);
-      setMenuItems(data.items);
-      setStoreInfo(data.restaurant);
-      if (data.categories.length > 0 && !activeCategory) {
-        setActiveCategory(data.categories[0].id);
-      }
+      images = JSON.parse(item.images || "[]");
     } catch {
-      // Error handled by loading state
-    } finally {
-      setIsLoading(false);
+      images = [];
     }
-  }, [activeCategory]);
+    return { ...item, images };
+  });
 
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+  return {
+    categories: categories as CatalogCategory[],
+    items: parsedItems,
+    restaurant,
+  };
+}
 
-  useEffect(() => {
-    const handleScroll = () => {
-      // Si el scroll lo provocó un clic en una categoría, ignoramos este ciclo
-      // para no auto-alimentar el cambio de categoria activa (evita rebote/bucle).
-      if (isProgrammaticScroll.current) return;
-      for (let i = categories.length - 1; i >= 0; i--) {
-        const el = document.getElementById(`category-${categories[i].id}`);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= 120) {
-            setActiveCategory(categories[i].id);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [categories]);
-
-  const scrollToCategory = useCallback((categoryId: string) => {
-    const el = document.getElementById(`category-${categoryId}`);
-    if (el) {
-      // Marcamos el scroll como programatico para que el listener no reaccione
-      // durante este desplazamiento y no se genere el bucle de rebote.
-      isProgrammaticScroll.current = true;
-      if (programmaticTimer.current) clearTimeout(programmaticTimer.current);
-      programmaticTimer.current = setTimeout(() => {
-        isProgrammaticScroll.current = false;
-      }, 600);
-      el.scrollIntoView({ behavior: "auto", block: "start" });
-    }
-  }, []);
-
-  const handleCategoryClick = useCallback((categoryId: string) => {
-    setActiveCategory(categoryId);
-    scrollToCategory(categoryId);
-  }, [scrollToCategory]);
-
-  const handleFeaturedClick = useCallback(
-    (categoryId: string, itemId: string) => {
-      setActiveCategory(categoryId);
-      scrollToCategory(categoryId);
-    },
-    [scrollToCategory]
+// JSON-LD: Organization + WebSite (datos estructurados para buscadores)
+function OrganizationJsonLd({ name, whatsapp }: { name: string; whatsapp: string }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name,
+    url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+    description:
+      "Cosmética natural artesanal: jabones, velas, cremas y aceites en pequeños lotes hechos a mano.",
+    contactPoint: whatsapp
+      ? [
+          {
+            "@type": "ContactPoint",
+            contactType: "sales",
+            telephone: `+${whatsapp.replace(/^(\d{2})/, "$1")}`,
+            availableLanguage: "Spanish",
+          },
+        ]
+      : undefined,
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
   );
+}
 
-  const handleNextCategory = useCallback((categoryId: string) => {
-    setActiveCategory(categoryId);
-    scrollToCategory(categoryId);
-  }, [scrollToCategory]);
-
-  const handleAdminDataChange = useCallback(() => {
-    fetchData();
-  }, [fetchData]);
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-crema-texture">
-        <div className="text-center space-y-4">
-          <BrandLogo size="lg" />
-          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto" />
-          <p
-            className="text-base text-muted-foreground font-script"
-            style={{ fontFamily: "var(--font-caveat), cursive" }}
-          >
-            Cargando nuestras esencias...
-          </p>
-        </div>
-      </div>
-    );
-  }
+export default async function MenuPage() {
+  const { categories, items, restaurant } = await getCatalogData();
 
   return (
     <div className="min-h-screen flex flex-col bg-crema-texture">
-      {/* Admin toggle button */}
-      <button
-        onClick={() => setIsAdminOpen(true)}
-        className="fixed top-1/2 -translate-y-1/2 right-0 z-40 btn-rosa p-2 rounded-l-lg shadow-soft-lg hover:shadow-lg transition-all"
-        aria-label="Abrir administración"
-      >
-        <Settings className="h-4 w-4" />
-      </button>
+      <OrganizationJsonLd name={restaurant?.name || "Pura Esencia"} whatsapp={restaurant?.whatsapp || ""} />
 
-      <StickyHeader restaurantInfo={storeInfo} />
+      <StickyHeader restaurantInfo={restaurant} />
 
       <main className="flex-1 max-w-xl mx-auto w-full">
         {/* Hero Section - Pura Esencia brand intro */}
@@ -187,49 +116,25 @@ export default function MenuPage() {
           </div>
         </section>
 
-        {/* Category Navigation (Instagram Stories style) */}
-        <CategoryNav
+        {/* Catálogo interactivo (isla cliente) */}
+        <CatalogShell
           categories={categories}
-          activeCategory={activeCategory}
-          onCategoryClick={handleCategoryClick}
+          items={items}
+          whatsapp={restaurant?.whatsapp}
+          storeName={restaurant?.name || "Pura Esencia"}
         />
-
-        {/* Featured Items */}
-        <FeaturedItems
-          items={menuItems.filter((item) => item.isFeatured)}
-          onItemClick={handleFeaturedClick}
-        />
-
-        {/* Menu Sections */}
-        <div className="p-4">
-          {categories.map((cat) => {
-            const catItems = menuItems.filter(
-              (item) => item.categoryId === cat.id
-            );
-            return (
-              <MenuSection
-                key={cat.id}
-                category={cat}
-                items={catItems}
-                onNextCategory={handleNextCategory}
-                categories={categories}
-                whatsapp={storeInfo?.whatsapp}
-              />
-            );
-          })}
-        </div>
 
         {/* Brand Story Section */}
         <section className="px-6 py-10 text-center space-y-4 bg-rosa-suave/30">
           <div className="flex items-center justify-center gap-2">
-            <Sparkles className="h-4 w-4 text-amarillo" />
+            <Sparkles className="h-4 w-4 text-amarillo" aria-hidden="true" />
             <h3
               className="text-2xl font-bold text-primary"
               style={{ fontFamily: "var(--font-dancing), cursive" }}
             >
               Nuestra Esencia
             </h3>
-            <Sparkles className="h-4 w-4 text-amarillo" />
+            <Sparkles className="h-4 w-4 text-amarillo" aria-hidden="true" />
           </div>
           <p
             className="text-base text-marron font-serif-italic leading-relaxed max-w-md mx-auto"
@@ -243,38 +148,60 @@ export default function MenuPage() {
             es hecho a mano, con ingredientes que conocemos por nombre.
           </p>
           <div className="flex items-center justify-center gap-1.5 pt-2 text-sm text-primary">
-            <Heart className="h-3 w-3 fill-current" />
-            <span className="font-script" style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "1.1rem" }}>
+            <Heart className="h-3 w-3 fill-current" aria-hidden="true" />
+            <span
+              className="font-script"
+              style={{ fontFamily: "var(--font-caveat), cursive", fontSize: "1.1rem" }}
+            >
               Gracias por estar, de verdad
             </span>
-            <Heart className="h-3 w-3 fill-current" />
+            <Heart className="h-3 w-3 fill-current" aria-hidden="true" />
           </div>
         </section>
       </main>
 
-      {/* Footer */}
+      {/* Footer con redes sociales */}
       <footer className="mt-auto py-8 px-4 text-center bg-crema-calido">
         <BrandLogo size="md" className="mb-3" />
         <p
-          className="text-sm text-muted-foreground font-script mb-2"
+          className="text-sm text-muted-foreground font-script mb-3"
           style={{ fontFamily: "var(--font-caveat), cursive" }}
         >
           La esencia no se fabrica, se cuida.
         </p>
+        <div className="flex items-center justify-center gap-4 mb-3">
+          <a
+            href={SOCIAL_LINKS.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram de Pura Esencia"
+            className="text-sm text-primary hover:underline min-h-11 flex items-center"
+          >
+            Instagram
+          </a>
+          <a
+            href={SOCIAL_LINKS.tiktok}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="TikTok de Pura Esencia"
+            className="text-sm text-primary hover:underline min-h-11 flex items-center"
+          >
+            TikTok
+          </a>
+          <a
+            href={SOCIAL_LINKS.whatsapp}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="WhatsApp de Pura Esencia"
+            className="text-sm text-primary hover:underline min-h-11 flex items-center"
+          >
+            WhatsApp
+          </a>
+        </div>
         <p className="text-xs text-muted-foreground/80">
           © {new Date().getFullYear()} Pura Esencia · Cosmética natural artesanal
         </p>
       </footer>
-
-      {/* Back to Top */}
-      <BackToTop />
-
-      {/* Admin Panel */}
-      <AdminPanel
-        isOpen={isAdminOpen}
-        onClose={() => setIsAdminOpen(false)}
-        onDataChange={handleAdminDataChange}
-      />
     </div>
   );
 }

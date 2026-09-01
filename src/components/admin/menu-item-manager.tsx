@@ -26,6 +26,7 @@ interface MenuItemWithCategory {
   price: number;
   description: string;
   images: string[];
+  imageBlur?: string;
   likes: number;
   isFeatured: boolean;
   isHidden: boolean;
@@ -47,6 +48,7 @@ const emptyForm = {
   price: 0,
   description: "",
   images: [] as string[],
+  imageBlur: "",
   isFeatured: false,
   categoryId: "",
 };
@@ -135,6 +137,7 @@ export function MenuItemManager({ onDataChange }: MenuItemManagerProps) {
       price: item.price,
       description: item.description,
       images: item.images,
+      imageBlur: item.imageBlur || "",
       isFeatured: item.isFeatured,
       categoryId: item.categoryId,
     });
@@ -318,16 +321,26 @@ export function MenuItemManager({ onDataChange }: MenuItemManagerProps) {
             {form.images.length < 5 && (
               <ImageUploader
                 purpose="menuItem"
-                onUploadComplete={(url) => {
+                onUploadComplete={(url, blurDataURL) => {
                   const newImages = [...form.images, url];
-                  setForm({ ...form, images: newImages });
+                  const newForm = {
+                    ...form,
+                    images: newImages,
+                    // blur del primer insertado (placeholder de la tarjeta)
+                    imageBlur: form.imageBlur || blurDataURL || "",
+                  };
+                  setForm(newForm);
                   // Guardado automatico: si ya existe el producto, hacemos PUT
                   // inmediato para que la imagen persista sin esperar a "Guardar".
                   if (editingId) {
                     fetch("/api/menu-items", {
                       method: "PUT",
                       headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({ id: editingId, images: newImages }),
+                      body: JSON.stringify({
+                        id: editingId,
+                        images: newImages,
+                        imageBlur: newForm.imageBlur,
+                      }),
                     })
                       .then(() => onDataChange())
                       .catch(() => {});

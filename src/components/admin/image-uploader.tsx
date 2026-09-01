@@ -10,7 +10,8 @@ const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 interface ImageUploaderProps {
   purpose: "category" | "menuItem" | "logo";
   currentImage?: string;
-  onUploadComplete: (url: string) => void;
+  // url + blurDataURL (placeholder blur-up generado con sharp en el upload)
+  onUploadComplete: (url: string, blurDataURL?: string) => void;
   onRemove?: () => void;
 }
 
@@ -66,7 +67,7 @@ export function ImageUploader({
         }
 
         setOptimizationResult(data.optimization);
-        onUploadComplete(data.url);
+        onUploadComplete(data.url, data.blurDataURL);
       } catch {
         setError("Error de conexión al subir imagen");
       } finally {

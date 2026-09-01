@@ -1,35 +1,18 @@
 "use client";
 
+import Link from "next/link";
+import Image from "next/image";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { Sparkles } from "lucide-react";
-
-interface MenuItem {
-  id: string;
-  name: string;
-  price: number;
-  description: string;
-  images: string[];
-  likes: number;
-  isFeatured: boolean;
-  categoryId: string;
-}
+import { formatPrice } from "@/lib/format";
+import type { CatalogItem } from "@/lib/types";
 
 interface FeaturedItemsProps {
-  items: MenuItem[];
-  onItemClick: (categoryId: string, itemId: string) => void;
+  items: CatalogItem[];
 }
 
-function formatPrice(price: number): string {
-  return new Intl.NumberFormat("es-CO", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(price);
-}
-
-export function FeaturedItems({ items, onItemClick }: FeaturedItemsProps) {
+export function FeaturedItems({ items }: FeaturedItemsProps) {
   if (items.length === 0) return null;
 
   return (
@@ -43,23 +26,37 @@ export function FeaturedItems({ items, onItemClick }: FeaturedItemsProps) {
           Nuestras Favoritas
         </h2>
       </div>
-      <p className="px-4 mb-3 text-sm text-muted-foreground font-script" style={{ fontFamily: "var(--font-caveat), cursive" }}>
+      <p
+        className="px-4 mb-3 text-sm text-muted-foreground font-script"
+        style={{ fontFamily: "var(--font-caveat), cursive" }}
+      >
         Hechas a mano con cariño, en pequeños lotes
       </p>
       <ScrollArea className="w-full">
         <div className="flex gap-3 px-4 pb-4">
-          {items.map((item) => (
-            <button
+          {items.map((item, idx) => (
+            <Link
               key={item.id}
-              onClick={() => onItemClick(item.categoryId, item.id)}
-              className="w-36 h-52 relative rounded-2xl overflow-hidden border-2 border-rosa-suave hover:border-primary hover:scale-105 transition-all flex-shrink-0 focus:ring-2 focus:ring-primary shadow-soft hover:shadow-soft-lg"
+              href={item.slug ? `/producto/${item.slug}` : "#"}
+              className="w-36 h-52 relative rounded-2xl overflow-hidden border-2 border-rosa-suave hover:border-primary hover:scale-105 transition-all flex-shrink-0 focus:ring-2 focus:ring-primary shadow-soft hover:shadow-soft-lg bg-rosa-suave/30"
+              aria-label={`${item.name} — ${formatPrice(item.price)}`}
             >
-              <img
-                src={item.images[0] || "/placeholder.png"}
-                alt={item.name}
-                className="absolute inset-0 w-full h-full object-cover"
-                loading="lazy"
-              />
+              {item.images[0] ? (
+                <Image
+                  src={item.images[0]}
+                  alt={item.name}
+                  fill
+                  sizes="144px"
+                  className="object-cover"
+                  priority={idx === 0}
+                  placeholder={item.imageBlur && idx === 0 ? "blur" : "empty"}
+                  blurDataURL={item.imageBlur}
+                />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center text-primary/40">
+                  <Sparkles className="h-8 w-8" aria-hidden="true" />
+                </div>
+              )}
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-marron/85 via-marron/40 to-transparent p-3">
                 <p
                   className="text-white text-base font-semibold truncate leading-tight"
@@ -75,7 +72,7 @@ export function FeaturedItems({ items, onItemClick }: FeaturedItemsProps) {
                 <Sparkles className="h-2.5 w-2.5" />
                 Favorito
               </Badge>
-            </button>
+            </Link>
           ))}
         </div>
         <ScrollBar orientation="horizontal" className="invisible" />

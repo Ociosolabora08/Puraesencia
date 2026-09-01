@@ -2,49 +2,32 @@
 
 import { useState } from "react";
 import { MessageCircle, X, Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
-
-interface CartItem {
-  itemId: string;
-  name: string;
-  price: number;
-  quantity: number;
-}
+import { formatPrice } from "@/lib/format";
+import { useCart } from "@/lib/cart-store";
 
 interface WhatsAppOrderButtonProps {
-  cart: CartItem[];
   whatsapp: string;
   restaurantName: string;
-  onUpdateQuantity: (itemId: string, quantity: number) => void;
-  onRemoveItem: (itemId: string) => void;
-  onClearCart: () => void;
 }
 
-function formatPrice(price: number): string {
-  return new Intl.NumberFormat("es-CO", {
-    style: "currency",
-    currency: "COP",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(price);
-}
-
-export function WhatsAppOrderButton({
-  cart,
-  whatsapp,
-  restaurantName,
-  onUpdateQuantity,
-  onRemoveItem,
-  onClearCart,
-}: WhatsAppOrderButtonProps) {
+// Carrito flotante: lee el store compartido (persistido en localStorage).
+// Visible en cuanto hay ≥1 producto agregado; envía UN mensaje con todo el pedido.
+export function WhatsAppOrderButton({ whatsapp, restaurantName }: WhatsAppOrderButtonProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const items = useCart((s) => s.items);
+  const setQuantity = useCart((s) => s.setQuantity);
+  const removeItem = useCart((s) => s.remove);
+  const clearCart = useCart((s) => s.clear);
 
-  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
+  const totalPrice = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  if (totalItems === 0) return null;
 
   const buildWhatsAppMessage = () => {
     let message = `Hola, me gustaría hacer un pedido de *${restaurantName}*:\n\n`;
 
-    cart.forEach((item, index) => {
+    items.forEach((item, index) => {
       message += `${index + 1}. *${item.name}*\n   Cantidad: ${item.quantity} x ${formatPrice(item.price)} = ${formatPrice(item.price * item.quantity)}\n`;
     });
 
@@ -65,11 +48,13 @@ export function WhatsAppOrderButton({
           <div
             className="absolute bottom-0 left-0 right-0 bg-background rounded-t-2xl shadow-2xl max-h-[70vh] flex flex-col animate-in slide-in-from-bottom duration-300"
             onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-label="Tu pedido"
           >
             {/* Cart header */}
             <div className="flex items-center justify-between p-4 border-b">
               <div className="flex items-center gap-2">
-                <ShoppingBag className="h-5 w-5 text-primary" />
+                <ShoppingBag className="h-5 w-5 text-primary" aria-hidden="true" />
                 <h3 className="font-semibold">Tu Pedido</h3>
                 <span className="text-xs bg-primary text-primary-foreground px-2 py-0.5 rounded-full">
                   {totalItems} {totalItems === 1 ? "item" : "items"}
@@ -77,15 +62,16 @@ export function WhatsAppOrderButton({
               </div>
               <button
                 onClick={() => setIsExpanded(false)}
-                className="p-1 hover:bg-muted rounded-full"
+                className="p-2 min-w-11 min-h-11 flex items-center justify-center hover:bg-muted rounded-full"
+                aria-label="Cerrar pedido"
               >
-                <X className="h-5 w-5" />
+                <X className="h-5 w-5" aria-hidden="true" />
               </button>
             </div>
 
             {/* Cart items */}
             <div className="flex-1 overflow-y-auto p-4 space-y-3">
-              {cart.map((item) => (
+              {items.map((item) => (
                 <div
                   key={item.itemId}
                   className="flex items-center gap-3 p-3 rounded-lg border bg-card"
@@ -98,29 +84,32 @@ export function WhatsAppOrderButton({
                   </div>
                   <div className="flex items-center gap-2">
                     <button
-                      onClick={() => onUpdateQuantity(item.itemId, item.quantity - 1)}
-                      className="w-7 h-7 flex items-center justify-center rounded-full border hover:bg-muted transition-colors"
+                      onClick={() => setQuantity(item.itemId, item.quantity - 1)}
+                      className="w-11 h-11 flex items-center justify-center rounded-full border hover:bg-muted transition-colors"
+                      aria-label={`Quitar una unidad de ${item.name}`}
                     >
-                      <Minus className="h-3 w-3" />
+                      <Minus className="h-4 w-4" aria-hidden="true" />
                     </button>
                     <span className="text-sm font-semibold w-6 text-center">
                       {item.quantity}
                     </span>
                     <button
-                      onClick={() => onUpdateQuantity(item.itemId, item.quantity + 1)}
-                      className="w-7 h-7 flex items-center justify-center rounded-full border hover:bg-muted transition-colors"
+                      onClick={() => setQuantity(item.itemId, item.quantity + 1)}
+                      className="w-11 h-11 flex items-center justify-center rounded-full border hover:bg-muted transition-colors"
+                      aria-label={`Agregar una unidad de ${item.name}`}
                     >
-                      <Plus className="h-3 w-3" />
+                      <Plus className="h-4 w-4" aria-hidden="true" />
                     </button>
                   </div>
                   <p className="text-sm font-semibold w-20 text-right">
                     {formatPrice(item.price * item.quantity)}
                   </p>
                   <button
-                    onClick={() => onRemoveItem(item.itemId)}
-                    className="p-1 text-muted-foreground hover:text-destructive transition-colors"
+                    onClick={() => removeItem(item.itemId)}
+                    className="p-2 text-muted-foreground hover:text-destructive transition-colors"
+                    aria-label={`Eliminar ${item.name} del pedido`}
                   >
-                    <Trash2 className="h-4 w-4" />
+                    <Trash2 className="h-4 w-4" aria-hidden="true" />
                   </button>
                 </div>
               ))}
@@ -134,7 +123,7 @@ export function WhatsAppOrderButton({
               </div>
               <div className="flex gap-2">
                 <button
-                  onClick={onClearCart}
+                  onClick={clearCart}
                   className="flex-1 py-3 rounded-xl border text-sm font-medium hover:bg-muted transition-colors"
                 >
                   Vaciar
@@ -143,7 +132,7 @@ export function WhatsAppOrderButton({
                   onClick={handleSendOrder}
                   className="flex-[2] py-3 rounded-xl bg-[#25D366] hover:bg-[#20BD5A] text-white font-semibold text-sm flex items-center justify-center gap-2 transition-colors active:scale-[0.98] touch-manipulation"
                 >
-                  <MessageCircle className="h-4 w-4" />
+                  <MessageCircle className="h-4 w-4" aria-hidden="true" />
                   Enviar Pedido por WhatsApp
                 </button>
               </div>
@@ -156,9 +145,9 @@ export function WhatsAppOrderButton({
       <button
         onClick={() => setIsExpanded(true)}
         className="fixed bottom-4 left-4 z-50 flex items-center gap-2 pl-4 pr-3 py-3 rounded-full bg-[#25D366] hover:bg-[#20BD5A] text-white shadow-lg hover:shadow-xl transition-all active:scale-[0.96] touch-manipulation"
-        aria-label="Ver pedido"
+        aria-label={`Ver pedido: ${totalItems} productos, total ${formatPrice(totalPrice)}`}
       >
-        <ShoppingBag className="h-5 w-5" />
+        <ShoppingBag className="h-5 w-5" aria-hidden="true" />
         <span className="text-sm font-semibold">{totalItems}</span>
         <span className="text-sm">{formatPrice(totalPrice)}</span>
       </button>

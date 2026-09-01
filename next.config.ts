@@ -1,16 +1,16 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Standard build output - works with `next start` on Render, Vercel, etc.
-  // We use this instead of "standalone" because Render handles node_modules via npm install.
-  reactStrictMode: false,
-  // Sharp is used for image upload optimization
+  // M1/M2 reactivados: strict mode + errores de TS rompen el build (no se enmascaran)
+  reactStrictMode: true,
   images: {
     formats: ["image/webp"],
-  },
-  // Skip type errors during build (existing project may have minor type issues)
-  typescript: {
-    ignoreBuildErrors: true,
+    remotePatterns: [
+      // Vercel Blob (los uploads viven aquí en producción)
+      { protocol: "https", hostname: "pb.datalbpgexbtyzrfgndqg.supabase.co" },
+      // Imágenes de categorías/logo del seed
+      { protocol: "https", hostname: "images.unsplash.com" },
+    ],
   },
 };
 

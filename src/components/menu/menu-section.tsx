@@ -3,31 +3,13 @@
 import { MenuCard } from "./menu-card";
 import { NextCategoryButton } from "./next-category-button";
 import { DecorativeHeart } from "@/components/brand/decorative";
-
-interface Category {
-  id: string;
-  name: string;
-  image: string;
-  sortOrder: number;
-}
-
-interface MenuItem {
-  id: string;
-  name: string;
-  price: number;
-  description: string;
-  images: string[];
-  likes: number;
-  isFeatured: boolean;
-  categoryId: string;
-}
+import type { CatalogCategory, CatalogItem } from "@/lib/types";
 
 interface MenuSectionProps {
-  category: Category;
-  items: MenuItem[];
+  category: CatalogCategory;
+  items: CatalogItem[];
   onNextCategory: (categoryId: string) => void;
-  categories: Category[];
-  whatsapp?: string;
+  categories: CatalogCategory[];
 }
 
 export function MenuSection({
@@ -35,7 +17,6 @@ export function MenuSection({
   items,
   onNextCategory,
   categories,
-  whatsapp,
 }: MenuSectionProps) {
   if (items.length === 0) return null;
 
@@ -57,7 +38,6 @@ export function MenuSection({
             item={item}
             categoryImage={category.image}
             categoryName={category.name}
-            whatsapp={whatsapp}
           />
         ))}
       </div>

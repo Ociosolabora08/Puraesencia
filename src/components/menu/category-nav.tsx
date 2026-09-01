@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Leaf } from "lucide-react";
 
@@ -40,9 +41,11 @@ export function CategoryNav({ categories, activeCategory, onCategoryClick }: Cat
                   }`}
                 >
                   {cat.image ? (
-                    <img
+                    <Image
                       src={cat.image}
                       alt={cat.name}
+                      width={64}
+                      height={64}
                       className="w-full h-full rounded-full object-cover"
                     />
                   ) : (

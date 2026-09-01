@@ -32,8 +32,14 @@ const cormorant = Cormorant_Garamond({
   display: "swap",
 });
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
 export const metadata: Metadata = {
-  title: "Pura Esencia | Cosmética Natural Hecha a Mano",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Pura Esencia | Cosmética Natural Hecha a Mano",
+    template: "%s | Pura Esencia",
+  },
   description:
     "Productos artesanales con ingredientes honestos, hechos a mano con cariño. Jabones, velas, cremas y aceites naturales en pequeños lotes.",
   keywords: [
@@ -46,20 +52,37 @@ export const metadata: Metadata = {
     "Pura Esencia",
   ],
   authors: [{ name: "Pura Esencia" }],
+  alternates: { canonical: "/" },
   openGraph: {
     title: "Pura Esencia | Cosmética Natural Hecha a Mano",
     description:
       "Productos artesanales con ingredientes honestos, hechos a mano con cariño — para cuidarte sin sacrificar la belleza, ni el planeta.",
     type: "website",
     locale: "es_ES",
+    url: SITE_URL,
+    siteName: "Pura Esencia",
+    images: [
+      {
+        url: "/og-default.png",
+        width: 1200,
+        height: 630,
+        alt: "Pura Esencia — Cosmética natural hecha a mano",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Pura Esencia | Cosmética Natural Hecha a Mano",
+    description:
+      "Jabones, velas, cremas y aceites naturales en pequeños lotes hechos a mano.",
+    images: ["/og-default.png"],
   },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1.0,
-  maximumScale: 1.0,
-  userScalable: false,
+  // Sin maximumScale/userScalable: el zoom es derecho de quien lo necesita (WCAG 1.4.4)
   themeColor: "#FF5A8F",
 };
 

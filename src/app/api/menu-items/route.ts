@@ -73,7 +73,7 @@ export async function POST(request: Request) {
     );
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: "Datos inválidos", details: error.errors }, { status: 400 });
+      return NextResponse.json({ error: "Datos inválidos", details: error.issues }, { status: 400 });
     }
     return NextResponse.json({ error: "Failed to create menu item" }, { status: 500 });
   }
@@ -102,7 +102,7 @@ export async function PUT(request: Request) {
     return NextResponse.json({ ...item, images: JSON.parse(item.images || "[]") });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: "Datos inválidos", details: error.errors }, { status: 400 });
+      return NextResponse.json({ error: "Datos inválidos", details: error.issues }, { status: 400 });
     }
     return NextResponse.json({ error: "Failed to update menu item" }, { status: 500 });
   }
