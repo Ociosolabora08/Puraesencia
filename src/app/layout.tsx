@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Quicksand, Dancing_Script, Caveat, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { Footer } from "@/components/brand/footer";
 
 const quicksand = Quicksand({
   variable: "--font-quicksand",
@@ -98,6 +99,7 @@ export default function RootLayout({
         className={`${quicksand.variable} ${dancingScript.variable} ${caveat.variable} ${cormorant.variable} antialiased bg-background text-foreground`}
       >
         {children}
+        <Footer />
         <Toaster />
       </body>
     </html>
