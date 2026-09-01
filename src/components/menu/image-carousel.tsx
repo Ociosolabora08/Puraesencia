@@ -109,18 +109,18 @@ export function ImageCarousel({ images, alt, blurDataURL, priority = false }: Im
       </button>
 
       {/* Dots con área táctil ampliada */}
-      <div className="absolute bottom-1 left-0 right-0 flex justify-center">
+      <div className="absolute bottom-2 left-0 right-0 flex justify-center">
         {images.map((_, i) => (
           <button
             key={i}
             onClick={() => goTo(i)}
-            className="p-2 flex items-center justify-center"
+            className="p-3 flex items-center justify-center min-w-11 min-h-11"
             aria-label={`Ir a imagen ${i + 1}`}
             aria-current={i === current}
           >
             <span
-              className={`h-1.5 rounded-full transition-all ${
-                i === current ? "w-4 bg-white" : "w-1.5 bg-white/50 hover:bg-white/75"
+               className={`h-2 rounded-full transition-all ${
+                i === current ? "w-4 bg-white" : "w-2 bg-white/50 hover:bg-white/75"
               }`}
             />
           </button>
