@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GFPI-F-135 Guía de Aprendizaje — El Osciloscopio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1a237e;
+  --primary-light: #3949ab;
+  --accent: #00acc1;
+  --accent-warm: #ff7043;
+  --bg: #f5f6fa;
+  --surface: #ffffff;
+  --text: #1a1a2e;
+  --text-muted: #546e7a;
+  --border: #e0e0e0;
+  --success: #2e7d32;
+  --warning: #f57f17;
+  --grid-line: #e8eaf6;
+  --osc-bg: #0a0a1a;
+  --osc-grid: #1a237e;
+  --osc-trace: #00e676;
+  --osc-trace2: #ffea00;
+}
+@page {
+  size: A4;
+  margin: 1.2cm 1.5cm;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.65;
+  color: var(--text);
+  background: var(--bg);
+  padding: 24px;
+}
+.page {
+  max-width: 800px;
+  margin: 0 auto;
+  background: var(--surface);
+  padding: 48px 52px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+  border-radius: 4px;
+}
+
+/* HEADER */
+.header {
+  text-align: center;
+  border-bottom: 3px solid var(--primary);
+  padding-bottom: 24px;
+  margin-bottom: 32px;
+}
+.header-badge {
+  display: inline-block;
+  background: var(--primary);
+  color: white;
+  font-size: 8pt;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 5px 16px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+}
+.header h1 {
+  font-size: 16pt;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 4px;
+  letter-spacing: -0.3px;
+}
+.header h2 {
+  font-size: 12pt;
+  font-weight: 500;
+  color: var(--primary-light);
+  margin-bottom: 4px;
+}
+.header h3 {
+  font-size: 14pt;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 12px;
+}
+.header-meta {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  font-size: 8.5pt;
+  color: var(--text-muted);
+}
+.header-meta span {
+  background: var(--bg);
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+
+/* INFO GRID */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  background: var(--bg);
+  padding: 18px 20px;
+  border-radius: 8px;
+  margin-bottom: 28px;
+  font-size: 9.5pt;
+  border: 1px solid var(--border);
+}
+.info-grid .label { font-weight: 600; color: var(--primary); font-size: 8pt; text-transform: uppercase; letter-spacing: 0.5px; }
+.info-grid .value { border-bottom: 1.5px dotted var(--border); min-height: 20px; margin-top: 2px; }
+
+/* SECTIONS */
+.section {
+  margin-bottom: 28px;
+  page-break-inside: avoid;
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px 8px 0 0;
+  font-size: 11pt;
+  font-weight: 600;
+}
+.section-header .icon {
+  font-size: 14pt;
+}
+.section-body {
+  border: 2px solid var(--primary);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  padding: 24px;
+}
+
+/* TABLES */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 9.5pt;
+  border-radius: 6px;
+  overflow: hidden;
+}
+thead th {
+  background: var(--primary);
+  color: white;
+  font-weight: 600;
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 8.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+tbody td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--border);
+}
+tbody tr:nth-child(even) { background: #f8f9fa; }
+tbody tr:last-child td { border-bottom: none; }
+td:first-child { font-weight: 600; }
+
+/* FORMULA BOX */
+.formula-box {
+  background: linear-gradient(135deg, #e3f2fd, #e8eaf6);
+  border-left: 4px solid var(--primary);
+  padding: 14px 18px;
+  margin: 14px 0;
+  border-radius: 0 8px 8px 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10pt;
+  line-height: 1.8;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+/* RESULT BOX */
+.result-box {
+  background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+  border-left: 4px solid var(--success);
+  padding: 12px 18px;
+  margin: 12px 0;
+  border-radius: 0 8px 8px 0;
+  font-weight: 500;
+  font-size: 10pt;
+}
+
+/* NOTE BOX */
+.note-box {
+  background: linear-gradient(135deg, #fff8e1, #fff3e0);
+  border-left: 4px solid var(--warning);
+  padding: 12px 18px;
+  margin: 12px 0;
+  border-radius: 0 8px 8px 0;
+  font-size: 9.5pt;
+}
+
+/* SVG CONTAINERS */
+.diagram-container {
+  background: #fafbfc;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px 0;
+  text-align: center;
+}
+.diagram-container svg {
+  max-width: 100%;
+  height: auto;
+}
+.diagram-caption {
+  font-size: 8.5pt;
+  color: var(--text-muted);
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* OSCILLOSCOPE PANEL */
+.osc-panel {
+  background: linear-gradient(180deg, #2d2d2d, #1a1a1a);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 16px 0;
+  display: inline-block;
+}
+.osc-screen {
+  background: var(--osc-bg);
+  border-radius: 8px;
+  padding: 4px;
+  border: 2px solid #333;
+  box-shadow: inset 0 0 30px rgba(0,230,118,0.05);
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  margin-top: 36px;
+  padding-top: 18px;
+  border-top: 2px solid var(--primary);
+  font-size: 8pt;
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+
+/* PRINT */
+@media print {
+  body { background: white; padding: 0; }
+  .page { box-shadow: none; padding: 0; border-radius: 0; }
+  .section { page-break-inside: avoid; }
+  .section-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  thead th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ==================== HEADER ==================== -->
+<div class="header">
+  <div class="header-badge">SENA — GFPI-F-135 V01</div>
+  <h1>PROCESO DE GESTIÓN DE FORMACIÓN PROFESIONAL INTEGRAL</h1>
+  <h2>FORMATO GUÍA DE APRENDIZAJE</h2>
+  <h3>El Osciloscopio — Visualización y Análisis de Señales Eléctricas</h3>
+  <div class="header-meta">
+    <span><strong>Programa:</strong> Electrónica Tecnólogo</span>
+    <span><strong>Código:</strong> 3115695</span>
+    <span><strong>Fase:</strong> Análisis</span>
+    <span><strong>Duración:</strong> 8 horas</span>
+  </div>
+</div>
+
+<!-- ==================== INFO APRENDIZ ==================== -->
+<div class="info-grid">
+  <div>
+    <div class="label">Nombre del Aprendiz</div>
+    <div class="value"></div>
+  </div>
+  <div>
+    <div class="label">Documento de Identidad</div>
+    <div class="value"></div>
+  </div>
+  <div>
+    <div class="label">Ficha</div>
+    <div class="value"></div>
+  </div>
+  <div>
+    <div class="label">Fecha de Desarrollo</div>
+    <div class="value"></div>
+  </div>
+  <div>
+    <div class="label">Instructor</div>
+    <div class="value"></div>
+  </div>
+  <div>
+    <div class="label">Centro de Formación</div>
+    <div class="value"></div>
+  </div>
+</div>
+
+<!-- ==================== OBJETIVO ==================== -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">🎯</span>
+    Objetivo de Aprendizaje
+  </div>
+  <div class="section-body">
+    <p>Comprender y aplicar el funcionamiento básico del osciloscopio como instrumento de medición para visualizar y analizar señales eléctricas en función del tiempo, desarrollando habilidades prácticas para su correcta operación en el diagnóstico y prueba de circuitos electrónicos.</p>
+    <p style="margin-top: 10px;"><strong>Objetivos específicos:</strong></p>
+    <ul style="margin-left: 20px; margin-top: 8px; font-size: 9.5pt;">
+      <li>Identificar las partes y características técnicas del osciloscopio para su correcto uso.</li>
+      <li>Comprender el funcionamiento básico del osciloscopio como instrumento de medición.</li>
+      <li>Aprender a realizar la calibración y ajuste básico del osciloscopio.</li>
+      <li>Medir parámetros eléctricos como tensión, frecuencia y fase de señales electrónicas.</li>
+      <li>Interpretar formas de onda para detectar posibles fallas en circuitos.</li>
+      <li>Aplicar técnicas de medición avanzada con osciloscopios de doble canal o digitales.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ==================== ACTIVIDAD 1 ==================== -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">🧮</span>
+    Actividad 1 — Evidencia 1: Componentes de una Señal AC
+  </div>
+  <div class="section-body">
+    <p><strong>Enunciado:</strong> Calcule el valor de las componentes de una señal AC de <strong>220V — 60 Hz</strong>.</p>
+    
+    <table>
+      <thead>
+        <tr><th>Componente</th><th>Fórmula</th><th>Sustitución</th><th>Resultado</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Voltaje RMS (Vrms)</td>
+          <td>Dato directo</td>
+          <td>—</td>
+          <td><strong>220 V</strong></td>
+        </tr>
+        <tr>
+          <td>Frecuencia (F)</td>
+          <td>Dato directo</td>
+          <td>—</td>
+          <td><strong>60 Hz</strong></td>
+        </tr>
+        <tr>
+          <td>Periodo (T)</td>
+          <td>T = 1 / F</td>
+          <td>1 / 60</td>
+          <td><strong>16.67 ms</strong></td>
+        </tr>
+        <tr>
+          <td>Voltaje Pico (Vp)</td>
+          <td>Vp = Vrms × √2</td>
+          <td>220 × 1.4142</td>
+          <td><strong>311.1 V</strong></td>
+        </tr>
+        <tr>
+          <td>Voltaje Pico a Pico (Vpp)</td>
+          <td>Vpp = 2 × Vp</td>
+          <td>2 × 311.1</td>
+          <td><strong>622.2 V</strong></td>
+        </tr>
+        <tr>
+          <td>Voltaje DC (Vdc)</td>
+          <td>Señal AC simétrica</td>
+          <td>—</td>
+          <td><strong>0 V</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="formula-box">HOJA DE CÁLCULOS — Señal AC 220V / 60Hz
+
+  ▸ Periodo:
+    T = 1 / F = 1 / 60 = 0.01667 s = 16.67 ms
+
+  ▸ Voltaje Pico:
+    Vp = Vrms × √2 = 220 × 1.4142 = 311.1 V
+
+  ▸ Voltaje Pico a Pico:
+    Vpp = 2 × Vp = 2 × 311.1 = 622.2 V
+
+  ▸ Voltaje DC:
+    Vdc = 0 V (señal AC pura, sin componente continua)</div>
+
+    <p style="margin-top: 16px;"><strong>Dónde se miden estas componentes en la señal:</strong></p>
+    
+    <div class="diagram-container">
+      <svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg">
+        <!-- Fondo tipo osciloscopio -->
+        <rect width="600" height="320" fill="#0a0a1a"/>
+        
+        <!-- Retícula -->
+        <defs>
+          <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+            <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1a237e" stroke-width="0.5" opacity="0.4"/>
+          </pattern>
+          <pattern id="gridSub" width="6" height="6" patternUnits="userSpaceOnUse">
+            <path d="M 6 0 L 0 0 0 6" fill="none" stroke="#1a237e" stroke-width="0.2" opacity="0.2"/>
+          </pattern>
+        </defs>
+        <rect width="600" height="320" fill="url(#gridSub)"/>
+        <rect width="600" height="320" fill="url(#grid)"/>
+        
+        <!-- Ejes principales -->
+        <line x1="60" y1="160" x2="560" y2="160" stroke="#3949ab" stroke-width="1.5"/>
+        <line x1="310" y1="20" x2="310" y2="300" stroke="#3949ab" stroke-width="1.5"/>
+        
+        <!-- Escala vertical -->
+        <text x="50" y="45" fill="#ffea00" font-size="11" text-anchor="middle" font-family="JetBrains Mono">+311V</text>
+        <line x1="56" y1="40" x2="60" y2="40" stroke="#ffea00" stroke-width="1"/>
+        <text x="50" y="165" fill="#78909c" font-size="11" text-anchor="middle" font-family="JetBrains Mono">0V</text>
+        <text x="50" y="290" fill="#ffea00" font-size="11" text-anchor="middle" font-family="JetBrains Mono">-311V</text>
+        <line x1="56" y1="285" x2="60" y2="285" stroke="#ffea00" stroke-width="1"/>
+        
+        <!-- Escala horizontal -->
+        <text x="85" y="310" fill="#78909c" font-size="10" text-anchor="middle" font-family="JetBrains Mono">0</text>
+        <text x="148" y="310" fill="#00e676" font-size="10" text-anchor="middle" font-family="JetBrains Mono">T/4</text>
+        <text x="215" y="310" fill="#00e676" font-size="10" text-anchor="middle" font-family="JetBrains Mono">T/2</text>
+        <text x="278" y="310" fill="#00e676" font-size="10" text-anchor="middle" font-family="JetBrains Mono">3T/4</text>
+        <text x="345" y="310" fill="#00e676" font-size="10" text-anchor="middle" font-family="JetBrains Mono">T</text>
+        <text x="408" y="310" fill="#78909c" font-size="10" text-anchor="middle" font-family="JetBrains Mono">1.25T</text>
+        <text x="472" y="310" fill="#78909c" font-size="10" text-anchor="middle" font-family="JetBrains Mono">1.5T</text>
+        <text x="536" y="310" fill="#78909c" font-size="10" text-anchor="middle" font-family="JetBrains Mono">1.75T</text>
+        
+        <!-- Líneas de tiempo verticales destacadas -->
+        <line x1="148" y1="20" x2="148" y2="300" stroke="#00e676" stroke-width="0.5" stroke-dasharray="4,4" opacity="0.5"/>
+        <line x1="215" y1="20" x2="215" y2="300" stroke="#00e676" stroke-width="0.5" stroke-dasharray="4,4" opacity="0.5"/>
+        <line x1="278" y1="20" x2="278" y2="300" stroke="#00e676" stroke-width="0.5" stroke-dasharray="4,4" opacity="0.5"/>
+        <line x1="345" y1="20" x2="345" y2="300" stroke="#00e676" stroke-width="0.5" stroke-dasharray="4,4" opacity="0.5"/>
+        
+        <!-- Onda sinusoidal -->
+        <path d="M 75 160 
+                 C 75 160, 95 40, 115 40 
+                 C 135 40, 135 160, 148 160
+                 C 160 160, 172 280, 185 280
+                 C 198 280, 198 160, 215 160
+                 C 230 160, 242 40, 255 40
+                 C 268 40, 268 160, 278 160
+                 C 290 160, 302 280, 315 280
+                 C 328 280, 328 160, 345 160
+                 C 360 160, 372 40, 385 40
+                 C 398 40, 398 160, 408 160
+                 C 420 160, 432 280, 445 280
+                 C 458 280, 458 160, 472 160
+                 C 485 160, 497 40, 510 40
+                 C 523 40, 523 160, 536 160
+                 C 548 160, 560 280, 572 280"
+              fill="none" stroke="#00e676" stroke-width="2.5"/>
+        
+        <!-- Líneas de medición Vp -->
+        <line x1="115" y1="160" x2="115" y2="40" stroke="#ffea00" stroke-width="1" stroke-dasharray="3,3" opacity="0.7"/>
+        <line x1="105" y1="160" x2="125" y2="160" stroke="#ffea00" stroke-width="1.5"/>
+        <line x1="105" y1="40" x2="125" y2="40" stroke="#ffea00" stroke-width="1.5"/>
+        <text x="130" y="105" fill="#ffea00" font-size="10" font-family="JetBrains Mono">Vp = 311.1V</text>
+        
+        <!-- Líneas de medición Vpp -->
+        <line x1="255" y1="40" x2="255" y2="280" stroke="#ff7043" stroke-width="1.5" stroke-dasharray="5,3" opacity="0.8"/>
+        <line x1="240" y1="40" x2="270" y2="40" stroke="#ff7043" stroke-width="1.5"/>
+        <line x1="240" y1="280" x2="270" y2="280" stroke="#ff7043" stroke-width="1.5"/>
+        <text x="275" y="165" fill="#ff7043" font-size="10" font-family="JetBrains Mono">Vpp = 622.2V</text>
+        
+        <!-- Línea de medición T -->
+        <line x1="215" y1="305" x2="345" y2="305" stroke="#00acc1" stroke-width="2"/>
+        <polygon points="215,302 215,308 222,305" fill="#00acc1"/>
+        <polygon points="345,302 345,308 338,305" fill="#00acc1"/>
+        <text x="280" y="298" fill="#00acc1" font-size="10" text-anchor="middle" font-family="JetBrains Mono">T = 16.67ms</text>
+        
+        <!-- Etiqueta Vdc -->
+        <text x="555" y="165" fill="#78909c" font-size="10" font-family="JetBrains Mono">Vdc=0</text>
+      </svg>
+      <div class="diagram-caption">Figura 1 — Señal sinusoidal 220V RMS / 60Hz. Se muestran las mediciones de Vp, Vpp y periodo T sobre la traza.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ACTIVIDAD 2 ==================== -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">📊</span>
+    Actividad 2 — Evidencia 2: Medición con Osciloscopio
+  </div>
+  <div class="section-body">
+
+    <p><strong>a) ¿A cuánto equivale cada subdivisión de un cuadro en la retícula de la pantalla?</strong></p>
+    <div class="resultado">
+      <strong>RTA:</strong> Cada subdivisión (cuadrito pequeño) equivale a <strong>1/5 (0.2) del valor de la división principal (cuadrito grande)</strong>.<br>
+      Ejemplo: Si VOLT/DIV = 1V, cada subdivisión = 0.2V. Si TIME/DIV = 1ms, cada subdivisión = 0.2ms.
+    </div>
+
+    <p style="margin-top: 16px;"><strong>b) Medición de señal sinusoidal:</strong></p>
+    <table>
+      <thead>
+        <tr><th>Variable</th><th>Método de Medición</th><th>Fórmula</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Vp</strong></td><td>Divisiones verticales desde eje central hasta el pico × VOLT/DIV</td><td>Vp = div_V × (V/div)</td></tr>
+        <tr><td><strong>Vpp</strong></td><td>Divisiones verticales de pico a pico × VOLT/DIV</td><td>Vpp = div_pp × (V/div)</td></tr>
+        <tr><td><strong>Vrms</strong></td><td>Vp ÷ √2</td><td>Vrms = Vp / 1.414</td></tr>
+        <tr><td><strong>T</strong></td><td>Divisiones horizontales de 1 ciclo × TIME/DIV</td><td>T = div_H × (t/div)</td></tr>
+        <tr><td><strong>F</strong></td><td>Inverso del periodo</td><td>F = 1 / T</td></tr>
+      </tbody>
+    </table>
+
+    <p style="margin-top: 16px;"><strong>c) Medición de señal cuadrada:</strong></p>
+    <table>
+      <thead>
+        <tr><th>Variable</th><th>Método de Medición</th><th>Fórmula</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Vp</strong></td><td>Divisiones verticales desde eje hasta nivel alto × VOLT/DIV</td><td>Vp = div_V × (V/div)</td></tr>
+        <tr><td><strong>Vpp</strong></td><td>Igual que Vp (si es simétrica)</td><td>Vpp = Vp</td></tr>
+        <tr><td><strong>Vrms</strong></td><td>En onda cuadrada: Vrms = Vp</td><td>Vrms = Vp</td></tr>
+        <tr><td><strong>T</strong></td><td>Divisiones horizontales de 1 ciclo (alto + bajo) × TIME/DIV</td><td>T = div_H × (t/div)</td></tr>
+        <tr><td><strong>F</strong></td><td>Inverso del periodo</td><td>F = 1 / T</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note-box">
+      <strong>⚠️ Nota:</strong> Para completar los valores numéricos de las señales sinusoidal y cuadrada, es necesario observar las imágenes del PDF original (Imagen 1) donde se muestran las señales con sus respectivas escalas. Aplique los métodos descritos arriba contando las divisiones en las imágenes.
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ACTIVIDAD 3 ==================== -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">📝</span>
+    Actividad 3 — Evidencia 3: Controles del Osciloscopio
+  </div>
+  <div class="section-body">
+
+    <!-- Panel SVG del osciloscopio -->
+    <div class="diagram-container">
+      <svg viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg">
+        <!-- Cuerpo del osciloscopio -->
+        <rect x="10" y="10" width="680" height="400" rx="12" fill="#2d2d2d" stroke="#444" stroke-width="2"/>
+        <rect x="10" y="10" width="680" height="400" rx="12" fill="url(#oscGrad)"/>
+        <defs>
+          <linearGradient id="oscGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#3d3d3d"/>
+            <stop offset="100%" style="stop-color:#1a1a1a"/>
+          </linearGradient>
+        </defs>
+        
+        <!-- Pantalla -->
+        <rect x="30" y="30" width="420" height="280" rx="6" fill="#0a0a1a" stroke="#555" stroke-width="2"/>
+        
+        <!-- Retícula en pantalla -->
+        <rect x="30" y="30" width="420" height="280" rx="6" fill="url(#screenGrid)" opacity="0.3"/>
+        <defs>
+          <pattern id="screenGrid" width="42" height="28" patternUnits="userSpaceOnUse">
+            <path d="M 42 0 L 0 0 0 28" fill="none" stroke="#1a237e" stroke-width="0.5"/>
+          </pattern>
+        </defs>
+        
+        <!-- Señal en pantalla (sinusoidal) -->
+        <path d="M 50 170 C 50 170, 65 70, 80 70 C 95 70, 95 170, 105 170 C 115 170, 125 270, 140 270 C 155 270, 155 170, 165 170 C 175 170, 185 70, 200 70 C 215 70, 215 170, 225 170 C 235 170, 245 270, 260 270 C 275 270, 275 170, 285 170 C 295 170, 305 70, 320 70 C 335 70, 335 170, 345 170 C 355 170, 365 270, 380 270 C 395 270, 395 170, 405 170 C 415 170, 425 70, 440 70"
+              fill="none" stroke="#00e676" stroke-width="2"/>
+        
+        <!-- Etiquetas de pantalla -->
+        <text x="55" y="55" fill="#00e676" font-size="9" font-family="JetBrains Mono">CH1</text>
+        <text x="380" y="55" fill="#78909c" font-size="9" font-family="JetBrains Mono">2V/div</text>
+        <text x="380" y="295" fill="#78909c" font-size="9" font-family="JetBrains Mono">0.5ms/div</text>
+        
+        <!-- Panel de controles derecho -->
+        <!-- Power -->
+        <circle cx="490" cy="60" r="18" fill="#333" stroke="#666" stroke-width="1.5"/>
+        <text x="490" y="64" fill="#fff" font-size="8" text-anchor="middle" font-family="Inter">⏻</text>
+        <text x="530" y="64" fill="#ccc" font-size="9" font-family="Inter">Power</text>
+        
+        <!-- Intensity -->
+        <circle cx="490" cy="110" r="16" fill="#444" stroke="#666" stroke-width="1.5"/>
+        <circle cx="490" cy="110" r="10" fill="#555" stroke="#777" stroke-width="1"/>
+        <text x="530" y="114" fill="#ccc" font-size="9" font-family="Inter">Intensity</text>
+        
+        <!-- Y POS -->
+        <circle cx="490" cy="160" r="16" fill="#444" stroke="#666" stroke-width="1.5"/>
+        <path d="M 490 150 L 490 170 M 480 160 L 500 160" stroke="#aaa" stroke-width="1.5"/>
+        <text x="530" y="164" fill="#ccc" font-size="9" font-family="Inter">Y POS</text>
+        
+        <!-- X POS -->
+        <circle cx="490" cy="210" r="16" fill="#444" stroke="#666" stroke-width="1.5"/>
+        <path d="M 490 200 L 490 220 M 480 210 L 500 210" stroke="#aaa" stroke-width="1.5"/>
+        <text x="530" y="214" fill="#ccc" font-size="9" font-family="Inter">X POS</text>
+        
+        <!-- TIME/DIV -->
+        <rect x="474" y="245" width="32" height="40" rx="4" fill="#333" stroke="#666" stroke-width="1.5"/>
+        <text x="490" y="262" fill="#aaa" font-size="7" text-anchor="middle" font-family="Inter">TIME</text>
+        <text x="490" y="276" fill="#aaa" font-size="7" text-anchor="middle" font-family="Inter">/DIV</text>
+        <text x="530" y="270" fill="#ccc" font-size="9" font-family="Inter">TIME/DIV</text>
+        
+        <!-- Pantalla label -->
+        <rect x="474" y="305" width="32" height="40" rx="4" fill="#333" stroke="#666" stroke-width="1.5"/>
+        <text x="490" y="322" fill="#aaa" font-size="7" text-anchor="middle" font-family="Inter">DISP</text>
+        <text x="490" y="336" fill="#aaa" font-size="7" text-anchor="middle" font-family="inter">LAY</text>
+        <text x="530" y="330" fill="#ccc" font-size="9" font-family="Inter">Pantalla</text>
+        
+        <!-- Panel inferior -->
+        <!-- Select CH1, DUAL, CH2 -->
+        <rect x="30" y="330" width="130" height="60" rx="4" fill="#333" stroke="#555" stroke-width="1"/>
+        <text x="95" y="348" fill="#aaa" font-size="8" text-anchor="middle" font-family="Inter">SELECT</text>
+        <circle cx="55" cy="370" r="10" fill="#444" stroke="#00e676" stroke-width="1.5"/>
+        <text x="55" y="373" fill="#fff" font-size="7" text-anchor="middle" font-family="Inter">CH1</text>
+        <circle cx="95" cy="370" r="10" fill="#444" stroke="#666" stroke-width="1.5"/>
+        <text x="95" y="373" fill="#fff" font-size="7" text-anchor="middle" font-family="Inter">DUAL</text>
+        <circle cx="135" cy="370" r="10" fill="#444" stroke="#666" stroke-width="1.5"/>
+        <text x="135" y="373" fill="#fff" font-size="7" text-anchor="middle" font-family="Inter">CH2</text>
+        
+        <!-- VOLT/DIV -->
+        <rect x="175" y="330" width="130" height="60" rx="4" fill="#333" stroke="#555" stroke-width="1"/>
+        <text x="240" y="348" fill="#aaa" font-size="8" text-anchor="middle" font-family="Inter">VOLT/DIV</text>
+        <rect x="195" y="358" width="90" height="22" rx="3" fill="#222" stroke="#555" stroke-width="1"/>
+        <text x="240" y="373" fill="#00e676" font-size="10" text-anchor="middle" font-family="JetBrains Mono">2 V</text>
+        
+        <!-- CH1 / CH2 inputs -->
+        <rect x="320" y="330" width="130" height="60" rx="4" fill="#333" stroke="#555" stroke-width="1"/>
+        <text x="385" y="348" fill="#aaa" font-size="8" text-anchor="middle" font-family="Inter">INPUTS</text>
+        <circle cx="355" cy="370" r="8" fill="#222" stroke="#ff9800" stroke-width="1.5"/>
+        <text x="355" y="373" fill="#ff9800" font-size="6" text-anchor="middle" font-family="Inter">CH1</text>
+        <circle cx="415" cy="370" r="8" fill="#222" stroke="#ff9800" stroke-width="1.5"/>
+        <text x="415" y="373" fill="#ff9800" font-size="6" text-anchor="middle" font-family="Inter">CH2</text>
+      </svg>
+      <div class="diagram-caption">Figura 2 — Panel de control de un osciloscopio analógico genérico. Se indican los controles principales de vertical, horizontal, trigger y display.</div>
+    </div>
+
+    <p style="margin-top: 16px;"><strong>Tabla de controles del osciloscopio:</strong></p>
+    <table>
+      <thead>
+        <tr><th>Elemento</th><th>Descripción</th><th>Función</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Power</strong></td><td>Interruptor de encendido/apagado</td><td>Enciende el equipo. En osciloscopios analógicos, espera unos segundos a que caliente el tubo.</td></tr>
+        <tr><td><strong>Intensity</strong></td><td>Perilla de brillo</td><td>Ajusta el brillo de la traza luminosa. Girar en sentido horario aumenta el brillo.</td></tr>
+        <tr><td><strong>Y POS</strong></td><td>Perilla de posición vertical</td><td>Mueve la señal hacia arriba o abajo sin alterar la medición.</td></tr>
+        <tr><td><strong>X POS</strong></td><td>Perilla de posición horizontal</td><td>Mueve la señal hacia izquierda o derecha. Útil para alinear el inicio de ciclo.</td></tr>
+        <tr><td><strong>TIME/DIV</strong></td><td>Selector de base de tiempo</td><td>Define cuánto tiempo representa cada división horizontal. Ej: 1ms/div = cada cuadro = 1 milisegundo.</td></tr>
+        <tr><td><strong>Pantalla</strong></td><td>Display con retícula</td><td>Superficie con grid donde se visualiza la señal. La retícula permite medir divisiones.</td></tr>
+        <tr><td><strong>Select CH1/CH2/DUAL</strong></td><td>Selector de canal</td><td>CH1: solo canal 1. CH2: solo canal 2. DUAL: ambos canales simultáneamente.</td></tr>
+        <tr><td><strong>VOLT/DIV</strong></td><td>Selector de sensibilidad vertical</td><td>Define cuántos voltios representa cada división vertical. Ej: 1V/div = cada cuadro = 1 voltio.</td></tr>
+        <tr><td><strong>CH1 / CH2</strong></td><td>Entradas BNC de señal</td><td>Conectores donde se enchufa la sonda del osciloscopio para cada canal.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== ACTIVIDAD 4 ==================== -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">📝</span>
+    Actividad 4 — Evidencia 4: Controles del Generador de Funciones
+  </div>
+  <div class="section-body">
+
+    <!-- Panel SVG del generador -->
+    <div class="diagram-container">
+      <svg viewBox="0 0 500 340" xmlns="http://www.w3.org/2000/svg">
+        <!-- Cuerpo del generador -->
+        <rect x="10" y="10" width="480" height="320" rx="10" fill="#f5f5f5" stroke="#bbb" stroke-width="2"/>
+        
+        <!-- Pantalla del generador -->
+        <rect x="30" y="30" width="440" height="80" rx="4" fill="#1a237e" stroke="#333" stroke-width="2"/>
+        <text x="55" y="60" fill="#00e676" font-size="11" font-family="JetBrains Mono">FRECUENCIA:</text>
+        <text x="180" y="60" fill="#00e676" font-size="14" font-family="JetBrains Mono" font-weight="bold">3.400 KHz</text>
+        <text x="55" y="85" fill="#ffea00" font-size="11" font-family="JetBrains Mono">AMPLITUD:</text>
+        <text x="180" y="85" fill="#ffea00" font-size="14" font-family="JetBrains Mono" font-weight="bold">6.0 Vpp</text>
+        <text x="55" y="105" fill="#78909c" font-size="9" font-family="JetBrains Mono">FORMA: SENOIDAL</text>
+        
+        <!-- Selector de banda -->
+        <rect x="30" y="130" width="130" height="50" rx="4" fill="#e0e0e0" stroke="#999" stroke-width="1.5"/>
+        <text x="95" y="148" fill="#333" font-size="8" text-anchor="middle" font-family="Inter" font-weight="600">BANDA</text>
+        <rect x="50" y="155" width="90" height="18" rx="3" fill="#333"/>
+        <text x="95" y="167" fill="#00e676" font-size="9" text-anchor="middle" font-family="JetBrains Mono">1K-100K</text>
+        
+        <!-- Selector de forma de onda -->
+        <rect x="175" y="130" width="130" height="50" rx="4" fill="#e0e0e0" stroke="#999" stroke-width="1.5"/>
+        <text x="240" y="148" fill="#333" font-size="8" text-anchor="middle" font-family="Inter" font-weight="600">FORMA DE ONDA</text>
+        <rect x="195" y="155" width="90" height="18" rx="3" fill="#333"/>
+        <text x="240" y="167" fill="#00e676" font-size="9" text-anchor="middle" font-family="JetBrains Mono">SIN</text>
+        
+        <!-- Selector de frecuencia -->
+        <rect x="320" y="130" width="130" height="50" rx="4" fill="#e0e0e0" stroke="#999" stroke-width="1.5"/>
+        <text x="385" y="148" fill="#333" font-size="8" text-anchor="middle" font-family="Inter" font-weight="600">FRECUENCIA</text>
+        <circle cx="385" cy="165" r="12" fill="#555" stroke="#777" stroke-width="1"/>
+        <line x1="385" y1="155" x2="385" y2="160" stroke="#00e676" stroke-width="2"/>
+        
+        <!-- Control de amplitud -->
+        <rect x="30" y="200" width="130" height="50" rx="4" fill="#e0e0e0" stroke="#999" stroke-width="1.5"/>
+        <text x="95" y="218" fill="#333" font-size="8" text-anchor="middle" font-family="Inter" font-weight="600">AMPLITUD</text>
+        <circle cx="95" cy="232" r="12" fill="#555" stroke="#777" stroke-width="1"/>
+        <line x1="95" y1="222" x2="95" y2="227" stroke="#ff9800" stroke-width="2"/>
+        
+        <!-- Terminal de salida -->
+        <rect x="175" y="200" width="130" height="50" rx="4" fill="#e0e0e0" stroke="#999" stroke-width="1.5"/>
+        <text x="240" y="218" fill="#333" font-size="8" text-anchor="middle" font-family="Inter" font-weight="600">OUTPUT</text>
+        <circle cx="240" cy="232" r="10" fill="#222" stroke="#ff9800" stroke-width="2"/>
+        <text x="240" y="235" fill="#ff9800" font-size="7" text-anchor="middle" font-family="Inter">OUT</text>
+        
+        <!-- TTL -->
+        <rect x="320" y="200" width="130" height="50" rx="4" fill="#e0e0e0" stroke="#999" stroke-width="1.5"/>
+        <text x="385" y="218" fill="#333" font-size="8" text-anchor="middle" font-family="Inter" font-weight="600">TTL OUT</text>
+        <circle cx="385" cy="232" r="10" fill="#222" stroke="#ff5722" stroke-width="2"/>
+        <text x="385" y="235" fill="#ff5722" font-size="7" text-anchor="middle" font-family="Inter">TTL</text>
+        
+        <!-- Interruptor -->
+        <rect x="30" y="270" width="130" height="40" rx="4" fill="#e0e0e0" stroke="#999" stroke-width="1.5"/>
+        <text x="95" y="288" fill="#333" font-size="8" text-anchor="middle" font-family="Inter" font-weight="600">POWER</text>
+        <rect x="75" y="295" width="40" height="12" rx="2" fill="#444"/>
+        <rect x="95" y="296" width="18" height="10" rx="1" fill="#00e676"/>
+        
+        <!-- Iconos de formas de onda -->
+        <rect x="175" y="270" width="275" height="40" rx="4" fill="#e0e0e0" stroke="#999" stroke-width="1.5"/>
+        <text x="312" y="286" fill="#333" font-size="8" text-anchor="middle" font-family="Inter" font-weight="600">FORMAS DISPONIBLES</text>
+        <!-- Senoidal -->
+        <path d="M 195 298 C 195 298, 200 292, 205 292 C 210 292, 210 298, 215 298 C 220 298, 220 304, 225 304 C 230 304, 230 298, 235 298"
+              fill="none" stroke="#1a237e" stroke-width="1.5"/>
+        <text x="215" y="308" fill="#1a237e" font-size="6" text-anchor="middle" font-family="Inter">SIN</text>
+        <!-- Cuadrada -->
+        <path d="M 255 298 L 255 292 L 270 292 L 270 304 L 285 304 L 285 298" fill="none" stroke="#1a237e" stroke-width="1.5"/>
+        <text x="270" y="308" fill="#1a237e" font-size="6" text-anchor="middle" font-family="Inter">SQR</text>
+        <!-- Triangular -->
+        <path d="M 315 298 L 325 292 L 335 304 L 345 298" fill="none" stroke="#1a237e" stroke-width="1.5"/>
+        <text x="330" y="308" fill="#1a237e" font-size="6" text-anchor="middle" font-family="Inter">TRI</text>
+        <!-- Diente de sierra -->
+        <path d="M 375 298 L 385 292 L 385 304 L 395 298" fill="none" stroke="#1a237e" stroke-width="1.5"/>
+        <text x="385" y="308" fill="#1a237e" font-size="6" text-anchor="middle" font-family="Inter">SAW</text>
+      </svg>
+      <div class="diagram-caption">Figura 3 — Panel de un generador de funciones genérico. Se muestran los selectores de frecuencia, amplitud, forma de onda y las salidas.</div>
+    </div>
+
+    <p style="margin-top: 16px;"><strong>Tabla de controles del generador de funciones:</strong></p>
+    <table>
+      <thead>
+        <tr><th>Elemento</th><th>Descripción</th><th>Función</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Interruptor (Power)</strong></td><td>Botón de encendido/apagado</td><td>Enciende el generador.</td></tr>
+        <tr><td><strong>Selector de banda</strong></td><td>Rango de frecuencias</td><td>Elige el rango: Hz, KHz, MHz. Define el espectro de operación.</td></tr>
+        <tr><td><strong>Selector de forma de onda</strong></td><td>Tipo de señal</td><td>Elige: senoidal (SIN), triangular (TRI), cuadrada (SQR), diente de sierra (SAW).</td></tr>
+        <tr><td><strong>Selector de frecuencia</strong></td><td>Potenciómetro</td><td>Ajusta la frecuencia exacta dentro de la banda seleccionada.</td></tr>
+        <tr><td><strong>Control de amplitud</strong></td><td>Potenciómetro</td><td>Ajusta el voltaje (Vp o Vpp) de la señal de salida.</td></tr>
+        <tr><td><strong>Terminal de salida (Output)</strong></td><td>Conector BNC</td><td>Salida principal de la señal generada.</td></tr>
+        <tr><td><strong>TTL</strong></td><td>Salida de señal TTL</td><td>Señal compatible con lógica TTL (5V).</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== ACTIVIDAD 5 ==================== -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">🔬</span>
+    Actividad 5 — Evidencia 5: Mediciones Prácticas
+  </div>
+  <div class="section-body">
+
+    <p><strong>a) Señal Senoidal: 6Vpp, 3.4 KHz</strong></p>
+    <table>
+      <thead><tr><th>Parámetro</th><th>Valor</th></tr></thead>
+      <tbody>
+        <tr><td>Vp</td><td>3 V</td></tr>
+        <tr><td>Vpp</td><td>6 V</td></tr>
+        <tr><td>Vrms</td><td>2.12 V</td></tr>
+        <tr><td>F</td><td>3.4 KHz</td></tr>
+        <tr><td>T</td><td>0.294 ms</td></tr>
+      </tbody>
+    </table>
+    <table>
+      <thead><tr><th>Instrumento</th><th>Configuración</th></tr></thead>
+      <tbody>
+        <tr><td>Generador</td><td>Forma: Senoidal | Amplitud: 6Vpp | Frecuencia: 3.4 KHz</td></tr>
+        <tr><td>Osciloscopio</td><td>VOLT/DIV: 1V | TIME/DIV: 0.1ms</td></tr>
+      </tbody>
+    </table>
+
+    <div class="diagram-container">
+      <svg viewBox="0 0 500 260" xmlns="http://www.w3.org/2000/svg">
+        <rect width="500" height="260" fill="#0a0a1a"/>
+        <defs>
+          <pattern id="gridA" width="50" height="26" patternUnits="userSpaceOnUse">
+            <path d="M 50 0 L 0 0 0 26" fill="none" stroke="#1a237e" stroke-width="0.4" opacity="0.4"/>
+          </pattern>
+        </defs>
+        <rect width="500" height="260" fill="url(#gridA)"/>
+        <line x1="50" y1="130" x2="470" y2="130" stroke="#3949ab" stroke-width="1"/>
+        <line x1="260" y1="20" x2="260" y2="240" stroke="#3949ab" stroke-width="1"/>
+        <text x="42" y="40" fill="#ffea00" font-size="10" text-anchor="middle" font-family="JetBrains Mono">3V</text>
+        <text x="42" y="135" fill="#78909c" font-size="10" text-anchor="middle" font-family="JetBrains Mono">0V</text>
+        <text x="42" y="225" fill="#ffea00" font-size="10" text-anchor="middle" font-family="JetBrains Mono">-3V</text>
+        <text x="80" y="252" fill="#78909c" font-size="9" text-anchor="middle" font-family="JetBrains Mono">0</text>
+        <text x="145" y="252" fill="#00e676" font-size="9" text-anchor="middle" font-family="JetBrains Mono">T/4</text>
+        <text x="208" y="252" fill="#00e676" font-size="9" text-anchor="middle" font-family="JetBrains Mono">T/2</text>
+        <text x="272" y="252" fill="#00e676" font-size="9" text-anchor="middle" font-family="JetBrains Mono">3T/4</text>
+        <text x="335" y="252" fill="#00e676" font-size="9" text-anchor="middle" font-family="JetBrains Mono">T</text>
+        <text x="400" y="252" fill="#78909c" font-size="9" text-anchor="middle" font-family="JetBrains Mono">1.25T</text>
+        <text x="460" y="252" fill="#78909c" font-size="9" text-anchor="middle" font-family="JetBrains Mono">1.5T</text>
+        <path d="M 60 130 C 60 130, 72 40, 85 40 C 98 40, 98 130, 110 130 C 122 130, 132 220, 145 220 C 158 220, 158 130, 170 130 C 182 130, 192 40, 205 40 C 218 40, 218 130, 230 130 C 242 130, 252 220, 265 220 C 278 220, 278 130, 290 130 C 302 130, 312 40, 325 40 C 338 40, 338 130, 350 130 C 362 130, 372 220, 385 220 C 398 220, 398 130, 410 130 C 422 130, 432 40, 445 40 C 458 40, 458 130, 470 130"
+              fill="none" stroke="#00e676" stroke-width="2.5"/>
+        <text x="250" y="15" fill="#00acc1" font-size="10" text-anchor="middle" font-family="JetBrains Mono">VOLT/DIV: 1V | TIME/DIV: 0.1ms | Vpp: 6V | F: 3.4KHz</text>
+      </svg>
+      <div class="diagram-caption">Oscilograma a — Señal senoidal 6Vpp / 3.4KHz</div>
+    </div>
+
+    <p style="margin-top: 20px;"><strong>b) Señal Triangular: 2.5Vpp, 12.3 KHz</strong></p>
+    <table>
+      <thead><tr><th>Parámetro</th><th>Valor</th></tr></thead>
+      <tbody>
+        <tr><td>Vp</td><td>1.25 V</td></tr>
+        <tr><td>Vpp</td><td>2.5 V</td></tr>
+        <tr><td>Vrms</td><td>0.72 V</td></tr>
+        <tr><td>F</td><td>12.3 KHz</td></tr>
+        <tr><td>T</td><td>81.3 µs</td></tr>
+      </tbody>
+    </table>
+    <table>
+      <thead><tr><th>Instrumento</th><th>Configuración</th></tr></thead>
+      <tbody>
+        <tr><td>Generador</td><td>Forma: Triangular | Amplitud: 2.5Vpp | Frecuencia: 12.3 KHz</td></tr>
+        <tr><td>Osciloscopio</td><td>VOLT/DIV: 0.5V | TIME/DIV: 20µs</td></tr>
+      </tbody>
+    </table>
+
+    <div class="diagram-container">
+      <svg viewBox="0 0 500 260" xmlns="http://www.w3.org/2000/svg">
+        <rect width="500" height="260" fill="#0a0a1a"/>
+        <defs>
+          <pattern id="gridB" width="50" height="26" patternUnits="userSpaceOnUse">
+            <path d="M 50 0 L 0 0 0 26" fill="none" stroke="#1a237e" stroke-width="0.4" opacity="0.4"/>
+          </pattern>
+        </defs>
+        <rect width="500" height="260" fill="url(#gridB)"/>
+        <line x1="50" y1="130" x2="470" y2="130" stroke="#3949ab" stroke-width="1"/>
+        <line x1="260" y1="20" x2="260" y2="240" stroke="#3949ab" stroke-width="1"/>
+        <text x="42" y="55" fill="#ffea00" font-size="10" text-anchor="middle" font-family="JetBrains Mono">1.25V</text>
+        <text x="42" y="135" fill="#78909c" font-size="10" text-anchor="middle" font-family="JetBrains Mono">0V</text>
+        <text x="42" y="215" fill="#ffea00" font-size="10" text-anchor="middle" font-family="JetBrains Mono">-1.25V</text>
+        <text x="80" y="252" fill="#78909c" font-size="9" text-anchor="middle" font-family="JetBrains Mono">0</text>
+        <text x="145" y="252" fill="#00e676" font-size="9" text-anchor="middle" font-family="JetBrains Mono">T/4</text>
+        <text x="208" y="252" fill="#00e676" font-size="9" text-anchor="middle" font-family="JetBrains Mono">T/2</text>
+        <text x="272" y="252" fill="#00e676" font-size="9" text-anchor="middle" font-family="JetBrains Mono">3T/4</text>
+        <text x="335" y="252" fill="#00e676" font-size="9" text-anchor="middle" font-family="JetBrains Mono">T</text>
+        <text x="400" y="252" fill="#78909c" font-size="9" text-anchor="middle" font-family="JetBrains Mono">1.25T</text>
+        <path d="M 60 130 L 110 40 L 170 220 L 230 40 L 290 220 L 350 40 L 410 220 L 470 130"
+              fill="none" stroke="#ffea00" stroke-width="2.5"/>
+        <text x="250" y="15" fill="#00acc1" font-size="10" text-anchor="middle" font-family="JetBrains Mono">VOLT/DIV: 0.5V | TIME/DIV: 20µs | Vpp: 2.5V | F: 12.3KHz</text>
+      </svg>
+      <div class="diagram-caption">Oscilograma b — Señal triangular 2.5Vpp / 12.3KHz</div>
+    </div>
+
+    <p style="margin-top: 20px;"><strong>c) Señal Cuadrada: 1.414V, T = 3.333ms</strong></p>
+    <table>
+      <thead><tr><th>Parámetro</th><th>Valor</th></tr></thead>
+      <tbody>
+        <tr><td>Vp</td><td>1.414 V</td></tr>
+        <tr><td>Vpp</td><td>1.414 V</td></tr>
+        <tr><td>Vrms</td><td>1.414 V</td></tr>
+        <tr><td>F</td><td>300 Hz</td></tr>
+        <tr><td>T</td><td>3.333 ms</td></tr>
+      </tbody>
+    </table>
+    <table>
+      <thead><tr><th>Instrumento</th><th>Configuración</th></tr></thead>
+      <tbody>
+        <tr><td>Generador</td><td>Forma: Cuadrada | Amplitud: 1.414V | Periodo: 3.333ms (F=300Hz)</td></tr>
+        <tr><td>Osciloscopio</td><td>VOLT/DIV: 0.5V | TIME/DIV: 0.5ms</td></tr>
+      </tbody>
+    </table>
+
+    <div class="diagram-container">
+      <svg viewBox="0 0 500 260" xmlns="http://www.w3.org/2000/svg">
+        <rect width="500" height="260" fill="#0a0a1a"/>
+        <defs>
+          <pattern id="gridC" width="50" height="26" patternUnits="userSpaceOnUse">
+            <path d="M 50 0 L 0 0 0 26" fill="none" stroke="#1a237e" stroke-width="0.4" opacity="0.4"/>
+          </pattern>
+        </defs>
+        <rect width="500" height="260" fill="url(#gridC)"/>
+        <line x1="50" y1="130" x2="470" y2="130" stroke="#3949ab" stroke-width="1"/>
+        <line x1="260" y1="20" x2="260" y2="240" stroke="#3949ab" stroke-width="1"/>
+        <text x="42" y="55" fill="#ffea00" font-size="10" text-anchor="middle" font-family="JetBrains Mono">1.41V</text>
+        <text x="42" y="135" fill="#78909c" font-size="10" text-anchor="middle" font-family="JetBrains Mono">0V</text>
+        <text x="80" y="252" fill="#78909c" font-size="9" text-anchor="middle" font-family="JetBrains Mono">0</text>
+        <text x="145" y="252" fill="#00e676" font-size="9" text-anchor="middle" font-family="JetBrains Mono">T/4</text>
+        <text x="208" y="252" fill="#00e676" font-size="9" text-anchor="middle" font-family="JetBrains Mono">T/2</text>
+        <text x="272" y="252" fill="#00e676" font-size="9" text-anchor="middle" font-family="JetBrains Mono">3T/4</text>
+        <text x="335" y="252" fill="#00e676" font-size="9" text-anchor="middle" font-family="JetBrains Mono">T</text>
+        <text x="400" y="252" fill="#78909c" font-size="9" text-anchor="middle" font-family="JetBrains Mono">1.25T</text>
+        <path d="M 60 130 L 60 40 L 175 40 L 175 220 L 290 220 L 290 40 L 405 40 L 405 130"
+              fill="none" stroke="#ff7043" stroke-width="2.5"/>
+        <text x="250" y="15" fill="#00acc1" font-size="10" text-anchor="middle" font-family="JetBrains Mono">VOLT/DIV: 0.5V | TIME/DIV: 0.5ms | Vp: 1.414V | F: 300Hz</text>
+      </svg>
+      <div class="diagram-caption">Oscilograma c — Señal cuadrada 1.414V / 300Hz (T=3.333ms)</div>
+    </div>
+
+    <p style="margin-top: 20px;"><strong>d) Barrido de Frecuencia</strong></p>
+    <table>
+      <thead><tr><th>Parámetro</th><th>Valor</th></tr></thead>
+      <tbody>
+        <tr><td>Tipo de señal</td><td>Cuadrada</td></tr>
+        <tr><td>Amplitud</td><td>2Vpp</td></tr>
+        <tr><td>Frecuencia inicio</td><td>1 KHz</td></tr>
+        <tr><td>Frecuencia fin</td><td>100 KHz</td></tr>
+        <tr><td>Tiempo de barrido</td><td>10 s</td></tr>
+      </tbody>
+    </table>
+    <div class="note-box">
+      <strong>Procedimiento:</strong><br>
+      1. En el generador, buscar la opción "SWEEP" o "Barrido"<br>
+      2. Configurar frecuencia inicial: 1 KHz<br>
+      3. Configurar frecuencia final: 100 KHz<br>
+      4. Tiempo de barrido: 10s<br>
+      5. En el osciloscopio, ajustar TIME/DIV para ver el barrido completo<br>
+      6. La señal irá cambiando de frecuencia automáticamente durante 10 segundos<br>
+      7. Adjuntar secuencia fotográfica del barrido y explicar el procedimiento
+    </div>
+  </div>
+</div>
+
+<!-- ==================== GLOSARIO ==================== -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">📖</span>
+    Glosario de Términos
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Término</th><th>Definición</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Amperio (A)</strong></td><td>Unidad usada para medir la cantidad de corriente eléctrica.</td></tr>
+        <tr><td><strong>Batería</strong></td><td>Dispositivo que produce corriente eléctrica como resultado de un cambio químico.</td></tr>
+        <tr><td><strong>Diagrama de circuitos</strong></td><td>Dibujo que usa símbolos para mostrar cómo están conectadas las partes de un circuito.</td></tr>
+        <tr><td><strong>Voltaje (V)</strong></td><td>Diferencia de potencial eléctrico entre dos puntos, medida en voltios.</td></tr>
+        <tr><td><strong>Corriente (I)</strong></td><td>Flujo de carga eléctrica a través de un conductor, medida en amperios.</td></tr>
+        <tr><td><strong>Resistencia (R)</strong></td><td>Oposición al flujo de corriente, medida en ohmios (Ω).</td></tr>
+        <tr><td><strong>Frecuencia (F)</strong></td><td>Número de ciclos por segundo de una señal periódica, medida en Hertz (Hz).</td></tr>
+        <tr><td><strong>Periodo (T)</strong></td><td>Tiempo que dura un ciclo completo de una señal, medido en segundos.</td></tr>
+        <tr><td><strong>Señal AC</strong></td><td>Señal de corriente alterna que cambia de polaridad periódicamente.</td></tr>
+        <tr><td><strong>Señal DC</strong></td><td>Señal de corriente continua que mantiene polaridad constante.</td></tr>
+        <tr><td><strong>Osciloscopio</strong></td><td>Instrumento que visualiza señales eléctricas en función del tiempo.</td></tr>
+        <tr><td><strong>Generador de funciones</strong></td><td>Instrumento que genera señales eléctricas de diferentes formas y frecuencias.</td></tr>
+        <tr><td><strong>VOLT/DIV</strong></td><td>Sensibilidad vertical del osciloscopio: voltios por división de pantalla.</td></tr>
+        <tr><td><strong>TIME/DIV</strong></td><td>Base de tiempo del osciloscopio: tiempo por división horizontal.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== FÓRMULAS ==================== -->
+<div class="section">
+  <div class="section-header">
+    <span class="icon">🔑</span>
+    Fórmulas Clave
+  </div>
+  <div class="section-body">
+    <table>
+      <thead><tr><th>Magnitud</th><th>Fórmula</th><th>Descripción</th></tr></thead>
+      <tbody>
+        <tr><td>Periodo</td><td>T = 1 / F</td><td>Tiempo de un ciclo completo</td></tr>
+        <tr><td>Frecuencia</td><td>F = 1 / T</td><td>Ciclos por segundo (Hz)</td></tr>
+        <tr><td>Vp (sinusoidal)</td><td>Vp = Vrms × √2</td><td>Voltaje pico a partir del RMS</td></tr>
+        <tr><td>Vpp (sinusoidal)</td><td>Vpp = 2 × Vp</td><td>Voltaje pico a pico</td></tr>
+        <tr><td>Vrms (sinusoidal)</td><td>Vrms = Vp / √2</td><td>Voltaje eficaz</td></tr>
+        <tr><td>Vrms (cuadrada)</td><td>Vrms = Vp</td><td>En onda cuadrada, RMS = Pico</td></tr>
+        <tr><td>Vrms (triangular)</td><td>Vrms = Vp / √3</td><td>En onda triangular</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== FOOTER ==================== -->
+<div class="footer">
+  <p><strong>GFPI-F-135 V01</strong> — Guía de Aprendizaje G2: El Osciloscopio</p>
+  <p>Denominación: ELECTRÓNICA TECNÓLOGO — Desarrollo de Sistemas Electrónicos Industriales 224201 V1</p>
+  <p>Código del programa: 3115695 | Fase del proyecto: Análisis | Duración: 8 horas</p>
+  <p style="margin-top: 8px; font-size: 7.5pt;">Documento generado para uso académico del Servicio Nacional de Aprendizaje — SENA</p>
+</div>
+
+</div>
+</body>
+</html>
