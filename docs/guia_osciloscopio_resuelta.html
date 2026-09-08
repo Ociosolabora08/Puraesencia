@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GFPI-F-135 Guía de Aprendizaje G2 — Osciloscopio</title>
+<style>
+@page { size: A4; margin: 1.5cm; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 11pt;
+  line-height: 1.6;
+  color: #1a1a2e;
+  background: #f0f0f5;
+  padding: 20px;
+}
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  padding: 40px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+.header {
+  text-align: center;
+  border-bottom: 3px solid #16213e;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+}
+.header h1 {
+  font-size: 18pt;
+  color: #16213e;
+  margin-bottom: 5px;
+}
+.header h2 {
+  font-size: 14pt;
+  color: #0f3460;
+  font-weight: normal;
+}
+.header .meta {
+  font-size: 9pt;
+  color: #666;
+  margin-top: 10px;
+}
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+  font-size: 10pt;
+}
+.info-grid strong { color: #16213e; }
+.actividad {
+  margin-bottom: 30px;
+  page-break-inside: avoid;
+}
+.actividad-title {
+  background: linear-gradient(135deg, #16213e, #0f3460);
+  color: white;
+  padding: 10px 18px;
+  border-radius: 6px 6px 0 0;
+  font-size: 12pt;
+  font-weight: bold;
+}
+.actividad-body {
+  border: 2px solid #16213e;
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  padding: 20px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 10pt;
+}
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px 10px;
+  text-align: left;
+}
+th {
+  background: #16213e;
+  color: white;
+  font-weight: 600;
+}
+tr:nth-child(even) { background: #f8f9fa; }
+.formula-box {
+  background: #e8f4f8;
+  border-left: 4px solid #0f3460;
+  padding: 12px 16px;
+  margin: 12px 0;
+  border-radius: 0 6px 6px 0;
+  font-family: 'Consolas', monospace;
+  font-size: 10pt;
+}
+.resultado {
+  background: #e8f5e9;
+  border-left: 4px solid #2e7d32;
+  padding: 10px 16px;
+  margin: 10px 0;
+  border-radius: 0 6px 6px 0;
+  font-weight: 600;
+}
+.diagrama {
+  background: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 15px;
+  margin: 15px 0;
+  text-align: center;
+  font-family: 'Consolas', monospace;
+  font-size: 9pt;
+  line-height: 1.3;
+  white-space: pre;
+  overflow-x: auto;
+}
+.nota {
+  background: #fff3e0;
+  border-left: 4px solid #ff9800;
+  padding: 10px 16px;
+  margin: 10px 0;
+  border-radius: 0 6px 6px 0;
+  font-size: 10pt;
+}
+.footer {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 2px solid #16213e;
+  font-size: 9pt;
+  color: #666;
+}
+@media print {
+  body { background: white; padding: 0; }
+  .container { box-shadow: none; padding: 0; }
+  .actividad { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HEADER -->
+<div class="header">
+  <h1>PROCESO DE GESTIÓN DE FORMACIÓN PROFESIONAL INTEGRAL</h1>
+  <h2>FORMATO GUÍA DE APRENDIZAJE — GFPI-F-135 V01</h2>
+  <h2 style="margin-top:8px; font-size:16pt;">El Osciloscopio</h2>
+  <div class="meta">
+    <strong>Programa:</strong> Electrónica Tecnólogo — Desarrollo de Sistemas Electrónicos Industriales &nbsp;|&nbsp;
+    <strong>Código:</strong> 3115695<br>
+    <strong>Fase:</strong> Análisis &nbsp;|&nbsp;
+    <strong>Actividad:</strong> Diagnosticar estado funcional de fuentes de poder &nbsp;|&nbsp;
+    <strong>Duración:</strong> 8h
+  </div>
+</div>
+
+<!-- DATOS DEL APRENDIZ -->
+<div class="info-grid">
+  <div><strong>Nombre del Aprendiz:</strong> ____________________________________</div>
+  <div><strong>Fecha:</strong> ____________________________________</div>
+  <div><strong>Ficha:</strong> ____________________________________</div>
+  <div><strong>Instructor:</strong> ____________________________________</div>
+</div>
+
+<!-- OBJETIVO -->
+<div class="actividad">
+  <div class="actividad-title">🎯 OBJETIVO</div>
+  <div class="actividad-body">
+    <p>Comprender y aplicar el funcionamiento básico del osciloscopio como instrumento de medición para visualizar y analizar señales eléctricas en función del tiempo, desarrollando habilidades prácticas para su correcta operación en el diagnóstico y prueba de circuitos electrónicos.</p>
+  </div>
+</div>
+
+<!-- ACTIVIDAD 1 -->
+<div class="actividad">
+  <div class="actividad-title">🧮 Actividad 1 — Evidencia 1: Componentes de una señal AC</div>
+  <div class="actividad-body">
+    <p><strong>Enunciado:</strong> Calcule el valor de las componentes de una señal AC de <strong>220V — 60 Hz</strong>.</p>
+    <p><strong>Datos:</strong> Vrms = 220V (valor estándar en Colombia) | F = 60Hz</p>
+
+    <table>
+      <tr><th>Componente</th><th>Fórmula</th><th>Sustitución</th><th>Resultado</th></tr>
+      <tr>
+        <td><strong>Voltaje RMS (Vrms)</strong></td>
+        <td>Dato directo</td>
+        <td>—</td>
+        <td><strong>220 V</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Frecuencia (F)</strong></td>
+        <td>Dato directo</td>
+        <td>—</td>
+        <td><strong>60 Hz</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Periodo (T)</strong></td>
+        <td>T = 1 / F</td>
+        <td>T = 1 / 60</td>
+        <td><strong>16.67 ms</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Voltaje Pico (Vp)</strong></td>
+        <td>Vp = Vrms × √2</td>
+        <td>Vp = 220 × 1.4142</td>
+        <td><strong>311.1 V</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Voltaje Pico a Pico (Vpp)</strong></td>
+        <td>Vpp = 2 × Vp</td>
+        <td>Vpp = 2 × 311.1</td>
+        <td><strong>622.2 V</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Voltaje DC (Vdc)</strong></td>
+        <td>Señal AC simétrica</td>
+        <td>—</td>
+        <td><strong>0 V</strong></td>
+      </tr>
+    </table>
+
+    <div class="formula-box">
+HOJA DE CÁLCULOS:
+
+  T = 1/F = 1/60 = 0.01667 s = 16.67 ms
+
+  Vp = Vrms × √2 = 220 × 1.4142 = 311.1 V
+
+  Vpp = 2 × Vp = 2 × 311.1 = 622.2 V
+
+  Vdc = 0 V (señal AC pura, sin componente DC)
+    </div>
+
+    <p><strong>Dónde se miden estas componentes en la señal:</strong></p>
+    <div class="diagrama">
+         Vp = 311.1V
+              ↑
+    311V ────┼────╱╲────────────────────
+             │  ╱    ╲
+             │╱        ╲
+    0V ──────┼──────────╲───────────────  ← eje central (Vdc = 0V)
+             │           ╲
+             │             ╲
+   -311V ────┼──────────────╲───────────
+             │               ╲╱
+             └──────────────────────→ t
+                  │     │
+                  └──┬──┘
+                T = 16.67ms
+              (un ciclo completo)
+
+    ▸ Vpp = 622.2V (de +311V a -311V)
+    ▸ Vp = 311.1V (de 0V al pico)
+    ▸ T = 16.67ms (un ciclo completo)
+    ▸ Vdc = 0V (eje central)
+    </div>
+  </div>
+</div>
+
+<!-- ACTIVIDAD 2 -->
+<div class="actividad">
+  <div class="actividad-title">📊 Actividad 2 — Evidencia 2: Medición con Osciloscopio</div>
+  <div class="actividad-body">
+
+    <p><strong>a) ¿A cuánto equivale cada subdivisión de un cuadro en la retícula de la pantalla?</strong></p>
+    <div class="resultado">
+      RTA: Cada subdivisión (cuadrito pequeño) equivale a <strong>1/5 (0.2) del valor de la división principal (cuadro grande)</strong>.<br>
+      Ejemplo: Si VOLT/DIV = 1V, cada subdivisión = 0.2V. Si TIME/DIV = 1ms, cada subdivisión = 0.2ms.
+    </div>
+
+    <p><strong>b) Medición de señal sinusoidal:</strong></p>
+    <table>
+      <tr><th>Variable</th><th>Método de Medición</th><th>Fórmula</th></tr>
+      <tr><td><strong>Vp</strong></td><td>Divisiones verticales desde eje central hasta el pico × VOLT/DIV</td><td>Vp = div_V × (V/div)</td></tr>
+      <tr><td><strong>Vpp</strong></td><td>Divisiones verticales de pico a pico × VOLT/DIV</td><td>Vpp = div_pp × (V/div)</td></tr>
+      <tr><td><strong>Vrms</strong></td><td>Vp ÷ √2</td><td>Vrms = Vp / 1.414</td></tr>
+      <tr><td><strong>T</strong></td><td>Divisiones horizontales de 1 ciclo × TIME/DIV</td><td>T = div_H × (t/div)</td></tr>
+      <tr><td><strong>F</strong></td><td>Inverso del periodo</td><td>F = 1 / T</td></tr>
+    </table>
+
+    <p><strong>c) Medición de señal cuadrada:</strong></p>
+    <table>
+      <tr><th>Variable</th><th>Método de Medición</th><th>Fórmula</th></tr>
+      <tr><td><strong>Vp</strong></td><td>Divisiones verticales desde eje hasta nivel alto × VOLT/DIV</td><td>Vp = div_V × (V/div)</td></tr>
+      <tr><td><strong>Vpp</strong></td><td>Igual que Vp (si es simétrica)</td><td>Vpp = Vp</td></tr>
+      <tr><td><strong>Vrms</strong></td><td>En onda cuadrada: Vrms = Vp</td><td>Vrms = Vp</td></tr>
+      <tr><td><strong>T</strong></td><td>Divisiones horizontales de 1 ciclo (alto + bajo) × TIME/DIV</td><td>T = div_H × (t/div)</td></tr>
+      <tr><td><strong>F</strong></td><td>Inverso del periodo</td><td>F = 1 / T</td></tr>
+    </table>
+
+    <div class="nota">
+      <strong>⚠️ Nota:</strong> Para completar los valores numéricos de las señales sinusoidal y cuadrada, es necesario observar las imágenes del PDF original (Imagen 1) donde se muestran las señales con sus respectivas escalas. Aplique los métodos descritos arriba sobre dichas imágenes.
+    </div>
+  </div>
+</div>
+
+<!-- ACTIVIDAD 3 -->
+<div class="actividad">
+  <div class="actividad-title">📝 Actividad 3 — Evidencia 3: Controles del Osciloscopio</div>
+  <div class="actividad-body">
+    <p><strong>Descripción de botones, pantalla y perillas del osciloscopio:</strong></p>
+    <table>
+      <tr><th>Elemento</th><th>Descripción</th></tr>
+      <tr><td><strong>Power</strong></td><td>Interruptor de encendido/apagado del osciloscopio. Al encender, el equipo calienta tubos (en analógicos) o inicializa sistemas (en digitales).</td></tr>
+      <tr><td><strong>Intensity</strong></td><td>Controla el brillo de la traza luminosa en la pantalla. Girar en sentido horario aumenta el brillo.</td></tr>
+      <tr><td><strong>Y POS (Posición Vertical)</strong></td><td>Permite mover la señal hacia arriba o abajo en la pantalla sin alterar la medición. Útil para posicionar la traza sobre la retícula.</td></tr>
+      <tr><td><strong>X POS (Posición Horizontal)</strong></td><td>Permite mover la señal hacia la izquierda o derecha en la pantalla. Útil para alinear el inicio de un ciclo con la retícula.</td></tr>
+      <tr><td><strong>TIME/DIV (Base de Tiempo)</strong></td><td>Selecciona cuánto tiempo representa cada división horizontal (cuadro grande). Ej: 1ms/div = cada cuadro horizontal equivale a 1 milisegundo.</td></tr>
+      <tr><td><strong>Pantalla (Display)</strong></td><td>Superficie con retícula (grid) donde se visualiza la señal. La retícula tiene cuadros principales (divisiones) y subdivisiones para medir.</td></tr>
+      <tr><td><strong>Select CH1, DUAL, CH2</strong></td><td>Selector de canal: CH1 muestra solo canal 1, CH2 muestra solo canal 2, DUAL muestra ambos canales simultáneamente (útil para comparar señales).</td></tr>
+      <tr><td><strong>VOLT/DIV (Sensibilidad Vertical)</strong></td><td>Selecciona cuántos voltios representa cada división vertical (cuadro grande). Ej: 1V/div = cada cuadro vertical equivale a 1 voltio.</td></tr>
+      <tr><td><strong>CH1 y CH2</strong></td><td>Entradas BNC de señal para cada canal. Se conecta la sonda del osciloscopio aquí. Cada canal tiene su propio control VOLT/DIV y Y POS.</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ACTIVIDAD 4 -->
+<div class="actividad">
+  <div class="actividad-title">📝 Actividad 4 — Evidencia 4: Controles del Generador de Funciones</div>
+  <div class="actividad-body">
+    <p><strong>Descripción de botones y perillas del generador de funciones:</strong></p>
+    <table>
+      <tr><th>Elemento</th><th>Descripción</th></tr>
+      <tr><td><strong>Interruptor</strong></td><td>Encendido/apagado del generador de funciones.</td></tr>
+      <tr><td><strong>Selector de banda</strong></td><td>Permite elegir el rango de frecuencias de operación (Hz, KHz, MHz). Define el espectro de frecuencias que puede generar el equipo.</td></tr>
+      <tr><td><strong>Selector de forma de onda</strong></td><td>Permite seleccionar el tipo de señal a generar: senoidal (sin), triangular (tri), cuadrada (square), etc.</td></tr>
+      <tr><td><strong>Selector de frecuencia</strong></td><td>Ajusta la frecuencia exacta de la señal generada dentro de la banda seleccionada. Puede ser un potenciómetro o teclado numérico.</td></tr>
+      <tr><td><strong>Control de amplitud</strong></td><td>Ajusta el voltaje (amplitud) de la señal de salida. Controla Vp o Vpp según la configuración.</td></tr>
+      <tr><td><strong>Terminal para señales (Output)</strong></td><td>Conector de salida de la señal generada. Se conecta al circuito bajo prueba o al osciloscopio mediante cable BNC.</td></tr>
+      <tr><td><strong>TTL</strong></td><td>Salida de señal compatible con lógica TTL (5V). Se usa para alimentar circuitos digitales con señal cuadrada.</td></tr>
+      <tr><td><strong>Terminal salida (Output)</strong></td><td>Salida principal de señal analógica. Puede tener impedancia de 50Ω o alta impedancia según el modelo.</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ACTIVIDAD 5 -->
+<div class="actividad">
+  <div class="actividad-title">🔬 Actividad 5 — Evidencia 5: Mediciones Prácticas</div>
+  <div class="actividad-body">
+
+    <p><strong>a) Señal Senoidal: 6Vpp, 3.4 KHz</strong></p>
+    <table>
+      <tr><th>Parámetro</th><th>Valor</th></tr>
+      <tr><td>Vp</td><td>3 V</td></tr>
+      <tr><td>Vpp</td><td>6 V</td></tr>
+      <tr><td>Vrms</td><td>2.12 V</td></tr>
+      <tr><td>F</td><td>3.4 KHz</td></tr>
+      <tr><td>T</td><td>0.294 ms</td></tr>
+    </table>
+    <table>
+      <tr><th>Instrumento</th><th>Configuración</th></tr>
+      <tr><td>Generador</td><td>Forma: Senoidal | Amplitud: 6Vpp | Frecuencia: 3.4 KHz</td></tr>
+      <tr><td>Osciloscopio</td><td>VOLT/DIV: 1V | TIME/DIV: 0.1ms</td></tr>
+    </table>
+    <div class="diagrama">
+ESCALA: VOLT/DIV = 1V | TIME/DIV = 0.1ms
+
+  3V ──────╱╲──────────────────────────
+         ╱    ╲
+  0V ──╱──────╲────────────────────────
+       ╱        ╲
+ -3V ─╱──────────╲─────────────────────
+     └─────────────────────────────→
+     0  0.1 0.2 0.3 0.4 0.5 0.6 ms
+
+  ▸ Vp = 3 divisiones × 1V/div = 3V
+  ▸ Vpp = 6 divisiones × 1V/div = 6V
+  ▸ T = ~3 divisiones × 0.1ms = 0.3ms ≈ 0.294ms
+    </div>
+
+    <p><strong>b) Señal Triangular: 2.5Vpp, 12.3 KHz</strong></p>
+    <table>
+      <tr><th>Parámetro</th><th>Valor</th></tr>
+      <tr><td>Vp</td><td>1.25 V</td></tr>
+      <tr><td>Vpp</td><td>2.5 V</td></tr>
+      <tr><td>Vrms</td><td>0.72 V</td></tr>
+      <tr><td>F</td><td>12.3 KHz</td></tr>
+      <tr><td>T</td><td>81.3 µs</td></tr>
+    </table>
+    <table>
+      <tr><th>Instrumento</th><th>Configuración</th></tr>
+      <tr><td>Generador</td><td>Forma: Triangular | Amplitud: 2.5Vpp | Frecuencia: 12.3 KHz</td></tr>
+      <tr><td>Osciloscopio</td><td>VOLT/DIV: 0.5V | TIME/DIV: 0.02ms (20µs)</td></tr>
+    </table>
+    <div class="diagrama">
+ESCALA: VOLT/DIV = 0.5V | TIME/DIV = 20µs
+
+1.25V ───╱╲──────────────────────────
+       ╱    ╲
+ 0V ──╱──────╲────────────────────────
+     ╱        ╲
+-1.25V ╱────────╲─────────────────────
+     └─────────────────────────────→
+     0  20  40  60  80 100 120 µs
+
+  ▸ Vp = 2.5 divisiones × 0.5V/div = 1.25V
+  ▸ Vpp = 5 divisiones × 0.5V/div = 2.5V
+  ▸ T = ~4 divisiones × 20µs = 80µs ≈ 81.3µs
+    </div>
+
+    <p><strong>c) Señal Cuadrada: 1.414V, T = 3.333ms</strong></p>
+    <table>
+      <tr><th>Parámetro</th><th>Valor</th></tr>
+      <tr><td>Vp</td><td>1.414 V</td></tr>
+      <tr><td>Vpp</td><td>1.414 V</td></tr>
+      <tr><td>Vrms</td><td>1.414 V</td></tr>
+      <tr><td>F</td><td>300 Hz</td></tr>
+      <tr><td>T</td><td>3.333 ms</td></tr>
+    </table>
+    <table>
+      <tr><th>Instrumento</th><th>Configuración</th></tr>
+      <tr><td>Generador</td><td>Forma: Cuadrada | Amplitud: 1.414V | Periodo: 3.333ms (F=300Hz)</td></tr>
+      <tr><td>Osciloscopio</td><td>VOLT/DIV: 0.5V | TIME/DIV: 0.5ms</td></tr>
+    </table>
+    <div class="diagrama">
+ESCALA: VOLT/DIV = 0.5V | TIME/DIV = 0.5ms
+
+1.4V ██████        ████████████████
+     │    │        │
+0V ──┘    └────────┘
+     └─────────────────────────────→
+     0  1  2  3  4  5  6  7  8 ms
+
+  ▸ Vp = ~2.8 divisiones × 0.5V/div = 1.4V ≈ 1.414V
+  ▸ Vrms = Vp = 1.414V (onda cuadrada)
+  ▸ T = ~6.7 divisiones × 0.5ms = 3.35ms ≈ 3.333ms
+  ▸ F = 1/T = 1/0.003333 = 300 Hz
+    </div>
+
+    <p><strong>d) Barrido de Frecuencia</strong></p>
+    <table>
+      <tr><th>Parámetro</th><th>Valor</th></tr>
+      <tr><td>Tipo de señal</td><td>Cuadrada</td></tr>
+      <tr><td>Amplitud</td><td>2Vpp</td></tr>
+      <tr><td>Frecuencia inicio</td><td>1 KHz</td></tr>
+      <tr><td>Frecuencia fin</td><td>100 KHz</td></tr>
+      <tr><td>Tiempo de barrido</td><td>10 s</td></tr>
+    </table>
+    <div class="nota">
+      <strong>Procedimiento:</strong><br>
+      1. En el generador, buscar la opción "SWEEP" o "Barrido"<br>
+      2. Configurar frecuencia inicial: 1 KHz<br>
+      3. Configurar frecuencia final: 100 KHz<br>
+      4. Tiempo de barrido: 10s<br>
+      5. En el osciloscopio, ajustar TIME/DIV para ver el barrido completo<br>
+      6. La señal irá cambiando de frecuencia automáticamente durante 10 segundos<br>
+      7. Adjuntar secuencia fotográfica del barrido y explicar el procedimiento
+    </div>
+  </div>
+</div>
+
+<!-- GLOSARIO -->
+<div class="actividad">
+  <div class="actividad-title">📖 GLOSARIO DE TÉRMINOS</div>
+  <div class="actividad-body">
+    <table>
+      <tr><th>Término</th><th>Definición</th></tr>
+      <tr><td><strong>Amperio (A)</strong></td><td>Unidad usada para medir la cantidad de corriente eléctrica.</td></tr>
+      <tr><td><strong>Batería</strong></td><td>Dispositivo que produce corriente eléctrica como resultado de un cambio químico.</td></tr>
+      <tr><td><strong>Diagrama de circuitos</strong></td><td>Dibujo que usa símbolos para mostrar cómo están conectadas las partes de un circuito.</td></tr>
+      <tr><td><strong>Voltaje (V)</strong></td><td>Diferencia de potencial eléctrico entre dos puntos, medida en voltios.</td></tr>
+      <tr><td><strong>Corriente (I)</strong></td><td>Flujo de carga eléctrica a través de un conductor, medida en amperios.</td></tr>
+      <tr><td><strong>Resistencia (R)</strong></td><td>Oposición al flujo de corriente, medida en ohmios (Ω).</td></tr>
+      <tr><td><strong>Frecuencia (F)</strong></td><td>Número de ciclos por segundo de una señal periódica, medida en Hertz (Hz).</td></tr>
+      <tr><td><strong>Periodo (T)</strong></td><td>Tiempo que dura un ciclo completo de una señal, medido en segundos.</td></tr>
+      <tr><td><strong>Señal AC</strong></td><td>Señal de corriente alterna que cambia de polaridad periódicamente.</td></tr>
+      <tr><td><strong>Señal DC</strong></td><td>Señal de corriente continua que mantiene polaridad constante.</td></tr>
+      <tr><td><strong>Osciloscopio</strong></td><td>Instrumento que visualiza señales eléctricas en función del tiempo.</td></tr>
+      <tr><td><strong>Generador de funciones</strong></td><td>Instrumento que genera señales eléctricas de diferentes formas y frecuencias.</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- FÓRMULAS CLAVE -->
+<div class="actividad">
+  <div class="actividad-title">🔑 FÓRMULAS CLAVE</div>
+  <div class="actividad-body">
+    <table>
+      <tr><th>Magnitud</th><th>Fórmula</th><th>Descripción</th></tr>
+      <tr><td>Periodo</td><td>T = 1 / F</td><td>Tiempo de un ciclo completo</td></tr>
+      <tr><td>Frecuencia</td><td>F = 1 / T</td><td>Ciclos por segundo (Hz)</td></tr>
+      <tr><td>Vp (sinusoidal)</td><td>Vp = Vrms × √2</td><td>Voltaje pico a partir del RMS</td></tr>
+      <tr><td>Vpp (sinusoidal)</td><td>Vpp = 2 × Vp</td><td>Voltaje pico a pico</td></tr>
+      <tr><td>Vrms (sinusoidal)</td><td>Vrms = Vp / √2</td><td>Voltaje eficaz</td></tr>
+      <tr><td>Vrms (cuadrada)</td><td>Vrms = Vp</td><td>En onda cuadrada, RMS = Pico</td></tr>
+      <tr><td>Vrms (triangular)</td><td>Vrms = Vp / √3</td><td>En onda triangular</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p><strong>GFPI-F-135 V01</strong> — Guía de Aprendizaje G2: El Osciloscopio</p>
+  <p>Denominación: ELECTRÓNICA TECNÓLOGO — Desarrollo de Sistemas Electrónicos Industriales</p>
+  <p>Documento generado para uso académico del SENA — Centro de Formación: ____________________</p>
+</div>
+
+</div>
+</body>
+</html>
