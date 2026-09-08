@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>5 Ejercicios de Circuitos Mixtos — Resueltos</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1a237e; --accent: #00acc1;
+  --blue: #1565c0; --green: #2e7d32; --purple: #7b1fa2; --orange: #e65100; --red: #c62828;
+  --bg: #f5f6fa; --surface: #ffffff; --text: #1a1a2e; --text-muted: #546e7a; --border: #e0e0e0;
+}
+@page { size: A4; margin: 1cm 1.2cm; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; font-size: 9.5pt; line-height: 1.55; color: var(--text); background: var(--bg); padding: 16px; }
+.page { max-width: 900px; margin: 0 auto; background: var(--surface); padding: 32px 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+.header { text-align: center; border-bottom: 3px solid var(--primary); padding-bottom: 16px; margin-bottom: 24px; }
+.header h1 { font-size: 15pt; color: var(--primary); margin-bottom: 4px; }
+.header h2 { font-size: 11pt; color: #3949ab; font-weight: 500; }
+.header p { font-size: 8.5pt; color: var(--text-muted); margin-top: 6px; }
+.ejercicio { margin-bottom: 24px; page-break-inside: avoid; border: 2px solid var(--border); border-radius: 8px; overflow: hidden; }
+.ejercicio-header { padding: 10px 16px; font-size: 10.5pt; font-weight: 600; color: white; }
+.ejercicio-header.azul { background: linear-gradient(135deg, #1565c0, #0d47a1); }
+.ejercicio-header.verde { background: linear-gradient(135deg, #2e7d32, #1b5e20); }
+.ejercicio-header.morado { background: linear-gradient(135deg, #7b1fa2, #4a148c); }
+.ejercicio-header.naranja { background: linear-gradient(135deg, #e65100, #bf360c); }
+.ejercicio-header.rojo { background: linear-gradient(135deg, #c62828, #b71c1c); }
+.ejercicio-body { padding: 16px; }
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.info-grid h4 { font-size: 8pt; text-transform: uppercase; letter-spacing: 0.5px; color: var(--primary); margin-bottom: 4px; }
+.componentes { background: var(--bg); padding: 10px 14px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 9pt; line-height: 1.7; }
+.topologia { background: #e3f2fd; padding: 10px 14px; border-radius: 6px; font-size: 8.5pt; border-left: 3px solid var(--primary); }
+.formula-box { background: linear-gradient(135deg, #e8eaf6, #e3f2fd); border-left: 4px solid var(--primary); padding: 12px 16px; margin: 12px 0; border-radius: 0 8px 8px 0; font-family: 'JetBrains Mono', monospace; font-size: 9pt; line-height: 1.7; white-space: pre-wrap; overflow-x: auto; }
+.tabla-resultados { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 9pt; border-radius: 6px; overflow: hidden; }
+.tabla-resultados thead th { background: var(--primary); color: white; font-weight: 600; padding: 8px 10px; text-align: center; font-size: 8pt; text-transform: uppercase; letter-spacing: 0.5px; }
+.tabla-resultados tbody td { padding: 6px 10px; border-bottom: 1px solid var(--border); text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 9pt; }
+.tabla-resultados tbody tr:nth-child(even) { background: #f8f9fa; }
+.tabla-resultados tbody tr:last-child td { border-bottom: none; font-weight: 700; background: #e8f5e9; }
+.diagrama-container { background: #fafbfc; border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin: 12px 0; text-align: center; }
+.diagrama-container svg { max-width: 100%; height: auto; }
+.nota { background: #fff8e1; border-left: 4px solid #f57f17; padding: 8px 14px; margin: 8px 0; border-radius: 0 6px 6px 0; font-size: 8.5pt; }
+.footer { text-align: center; margin-top: 24px; padding-top: 14px; border-top: 2px solid var(--primary); font-size: 7.5pt; color: var(--text-muted); }
+@media print { body { background: white; padding: 0; } .page { box-shadow: none; padding: 0; } .ejercicio { page-break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="header">
+  <h1>5 EJERCICIOS DE CIRCUITOS MIXTOS</h1>
+  <h2>Resistencia Equivalente — Corriente — Voltaje — Potencia</h2>
+  <p>Electrónica — SENA | Método de reducción paso a paso</p>
+</div>
+
+<!-- ==================== EJERCICIO 1 ==================== -->
+<div class="ejercicio">
+  <div class="ejercicio-header azul">⚡ Ejercicio 1 — Fuente 12V</div>
+  <div class="ejercicio-body">
+    <div class="info-grid">
+      <div>
+        <h4>Lista de Componentes</h4>
+        <div class="componentes">R1 = 220 Ω<br>R2 = 330 Ω<br>R3 = 470 Ω<br>R4 = 680 Ω<br>R5 = 1 kΩ = 1000 Ω</div>
+      </div>
+      <div>
+        <h4>Topología</h4>
+        <div class="topologia">R1 en <strong>serie</strong>.<br>R2 y R3 en <strong>paralelo</strong>.<br>R4 y R5 en <strong>serie</strong>.<br>Estructura: R1 + (R2‖R3) + R4 + R5</div>
+      </div>
+    </div>
+    <div class="formula-box">PASO 1: Paralelo R2 ‖ R3
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  R2‖R3 = (R2×R3)/(R2+R3) = (330×470)/(330+470) = 155100/800 = 193.875 Ω
+
+PASO 2: Serie R1 + (R2‖R3) + R4 + R5
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  REQ = 220 + 193.875 + 680 + 1000 = 2093.875 Ω ≈ 2094 Ω
+
+PASO 3: Corriente Total
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  IT = V/REQ = 12/2093.875 = 5.731 mA
+
+PASO 4: Voltajes (Ley de Ohm)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  VR1 = IT×R1 = 5.731mA × 220Ω = 1.261 V
+  VR2 = VR3 = IT×R2‖R3 = 5.731mA × 193.875Ω = 1.111 V
+  VR4 = IT×R4 = 5.731mA × 680Ω = 3.897 V
+  VR5 = IT×R5 = 5.731mA × 1000Ω = 5.731 V
+  Verificación: 1.261 + 1.111 + 3.897 + 5.731 = 12.000 V ✓
+
+PASO 5: Corrientes
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  IR1 = IR4 = IR5 = IT = 5.731 mA
+  IR2 = VR2/R2 = 1.111/330 = 3.367 mA
+  IR3 = VR3/R3 = 1.111/470 = 2.364 mA
+  Verificación: 3.367 + 2.364 = 5.731 mA ✓
+
+PASO 6: Potencia Total
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  PT = V×IT = 12×5.731mA = 68.77 mW</div>
+    <table class="tabla-resultados">
+      <thead><tr><th>Parámetro</th><th>Valor</th><th>Unidad</th></tr></thead>
+      <tbody>
+        <tr><td>REQ</td><td>2094</td><td>Ω</td></tr>
+        <tr><td>IT</td><td>5.731</td><td>mA</td></tr>
+        <tr><td>VR1</td><td>1.261</td><td>V</td></tr>
+        <tr><td>VR2</td><td>1.111</td><td>V</td></tr>
+        <tr><td>VR3</td><td>1.111</td><td>V</td></tr>
+        <tr><td>VR4</td><td>3.897</td><td>V</td></tr>
+        <tr><td>VR5</td><td>5.731</td><td>V</td></tr>
+        <tr><td>IR1</td><td>5.731</td><td>mA</td></tr>
+        <tr><td>IR2</td><td>3.367</td><td>mA</td></tr>
+        <tr><td>IR3</td><td>2.364</td><td>mA</td></tr>
+        <tr><td>IR4</td><td>5.731</td><td>mA</td></tr>
+        <tr><td>IR5</td><td>5.731</td><td>mA</td></tr>
+        <tr><td>PT</td><td>68.77</td><td>mW</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== EJERCICIO 2 ==================== -->
+<div class="ejercicio">
+  <div class="ejercicio-header verde">⚡ Ejercicio 2 — Fuente 15V</div>
+  <div class="ejercicio-body">
+    <div class="info-grid">
+      <div>
+        <h4>Lista de Componentes</h4>
+        <div class="componentes">R1 = 330 Ω<br>R2 = 470 Ω<br>R3 = 680 Ω<br>R4 = 1 kΩ = 1000 Ω<br>R5 = 1.5 kΩ = 1500 Ω<br>R6 = 2.2 kΩ = 2200 Ω</div>
+      </div>
+      <div>
+        <h4>Topología</h4>
+        <div class="topologia">R1 en <strong>serie</strong>.<br>Rama sup: R2+R3 (serie).<br>Rama inf: R4+R5 (serie).<br>R6 en <strong>serie</strong> al final.<br>Estructura: R1 + [(R2+R3)‖(R4+R5)] + R6</div>
+      </div>
+    </div>
+    <div class="formula-box">PASO 1: Series internas
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  R23 = R2+R3 = 470+680 = 1150 Ω
+  R45 = R4+R5 = 1000+1500 = 2500 Ω
+
+PASO 2: Paralelo R23 ‖ R45
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  R23‖45 = (1150×2500)/(1150+2500) = 2875000/3650 = 787.67 Ω
+
+PASO 3: Serie R1 + paralelo + R6
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  REQ = 330 + 787.67 + 2200 = 3317.67 Ω ≈ 3318 Ω
+
+PASO 4: Corriente Total
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  IT = V/REQ = 15/3317.67 = 4.521 mA
+
+PASO 5: Voltajes
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  VR1 = 4.521mA × 330 = 1.492 V
+  Vparalelo = 4.521mA × 787.67 = 3.561 V
+  VR6 = 4.521mA × 2200 = 9.947 V
+  Verificación: 1.492 + 3.561 + 9.947 = 15.000 V ✓
+
+PASO 6: Corrientes
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  IR1 = IR6 = IT = 4.521 mA
+  IR2 = IR3 = Vparalelo/R23 = 3.561/1150 = 3.097 mA
+  IR4 = IR5 = Vparalelo/R45 = 3.561/2500 = 1.424 mA
+  Verificación: 3.097 + 1.424 = 4.521 mA ✓
+
+PASO 7: Potencia Total
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  PT = V×IT = 15×4.521mA = 67.82 mW</div>
+    <table class="tabla-resultados">
+      <thead><tr><th>Parámetro</th><th>Valor</th><th>Unidad</th></tr></thead>
+      <tbody>
+        <tr><td>REQ</td><td>3318</td><td>Ω</td></tr>
+        <tr><td>IT</td><td>4.521</td><td>mA</td></tr>
+        <tr><td>VR1</td><td>1.492</td><td>V</td></tr>
+        <tr><td>VR2</td><td>1.456</td><td>V</td></tr>
+        <tr><td>VR3</td><td>2.105</td><td>V</td></tr>
+        <tr><td>VR4</td><td>1.424</td><td>V</td></tr>
+        <tr><td>VR5</td><td>2.137</td><td>V</td></tr>
+        <tr><td>VR6</td><td>9.947</td><td>V</td></tr>
+        <tr><td>IR1</td><td>4.521</td><td>mA</td></tr>
+        <tr><td>IR2</td><td>3.097</td><td>mA</td></tr>
+        <tr><td>IR3</td><td>3.097</td><td>mA</td></tr>
+        <tr><td>IR4</td><td>1.424</td><td>mA</td></tr>
+        <tr><td>IR5</td><td>1.424</td><td>mA</td></tr>
+        <tr><td>IR6</td><td>4.521</td><td>mA</td></tr>
+        <tr><td>PT</td><td>67.82</td><td>mW</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== EJERCICIO 3 ==================== -->
+<div class="ejercicio">
+  <div class="ejercicio-header morado">⚡ Ejercicio 3 — Fuente 9V</div>
+  <div class="ejercicio-body">
+    <div class="info-grid">
+      <div>
+        <h4>Lista de Componentes</h4>
+        <div class="componentes">R1 = 100 Ω<br>R2 = 220 Ω<br>R3 = 330 Ω<br>R4 = 470 Ω<br>R5 = 680 Ω<br>R6 = 1 kΩ = 1000 Ω</div>
+      </div>
+      <div>
+        <h4>Topología</h4>
+        <div class="topologia">R1 en <strong>serie</strong>.<br>R2 y R3 en <strong>paralelo</strong>.<br>R4, R5, R6 en <strong>serie</strong>.<br>Estructura: R1 + (R2‖R3) + R4 + R5 + R6</div>
+      </div>
+    </div>
+    <div class="formula-box">PASO 1: Paralelo R2 ‖ R3
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  R2‖R3 = (220×330)/(220+330) = 72600/550 = 132 Ω
+
+PASO 2: Serie total
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  REQ = 100 + 132 + 470 + 680 + 1000 = 2382 Ω
+
+PASO 3: Corriente Total
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  IT = 9/2382 = 3.778 mA
+
+PASO 4: Voltajes
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  VR1 = 3.778mA × 100 = 0.378 V
+  VR2 = VR3 = 3.778mA × 132 = 0.499 V
+  VR4 = 3.778mA × 470 = 1.776 V
+  VR5 = 3.778mA × 680 = 2.569 V
+  VR6 = 3.778mA × 1000 = 3.778 V
+  Verificación: 0.378+0.499+1.776+2.569+3.778 = 9.000 V ✓
+
+PASO 5: Corrientes
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  IR1 = IR4 = IR5 = IR6 = 3.778 mA
+  IR2 = 0.499/220 = 2.268 mA
+  IR3 = 0.499/330 = 1.511 mA
+  Verificación: 2.268 + 1.511 = 3.778 mA ✓
+
+PASO 6: Potencia Total
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  PT = 9×3.778mA = 34.00 mW</div>
+    <table class="tabla-resultados">
+      <thead><tr><th>Parámetro</th><th>Valor</th><th>Unidad</th></tr></thead>
+      <tbody>
+        <tr><td>REQ</td><td>2382</td><td>Ω</td></tr>
+        <tr><td>IT</td><td>3.778</td><td>mA</td></tr>
+        <tr><td>VR1</td><td>0.378</td><td>V</td></tr>
+        <tr><td>VR2</td><td>0.499</td><td>V</td></tr>
+        <tr><td>VR3</td><td>0.499</td><td>V</td></tr>
+        <tr><td>VR4</td><td>1.776</td><td>V</td></tr>
+        <tr><td>VR5</td><td>2.569</td><td>V</td></tr>
+        <tr><td>VR6</td><td>3.778</td><td>V</td></tr>
+        <tr><td>IR1</td><td>3.778</td><td>mA</td></tr>
+        <tr><td>IR2</td><td>2.268</td><td>mA</td></tr>
+        <tr><td>IR3</td><td>1.511</td><td>mA</td></tr>
+        <tr><td>IR4</td><td>3.778</td><td>mA</td></tr>
+        <tr><td>IR5</td><td>3.778</td><td>mA</td></tr>
+        <tr><td>IR6</td><td>3.778</td><td>mA</td></tr>
+        <tr><td>PT</td><td>34.00</td><td>mW</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== EJERCICIO 4 ==================== -->
+<div class="ejercicio">
+  <div class="ejercicio-header naranja">⚡ Ejercicio 4 — Fuente 18V</div>
+  <div class="ejercicio-body">
+    <div class="info-grid">
+      <div>
+        <h4>Lista de Componentes</h4>
+        <div class="componentes">R1 = 220 Ω<br>R2 = 390 Ω<br>R3 = 560 Ω<br>R4 = 820 Ω<br>R5 = 1 kΩ = 1000 Ω<br>R6 = 1.2 kΩ = 1200 Ω</div>
+      </div>
+      <div>
+        <h4>Topología</h4>
+        <div class="topologia">R1 en <strong>serie</strong>.<br>Rama sup: R3+R5 (serie).<br>Rama inf: R2+R4 (serie).<br>R6 en <strong>serie</strong> después del paralelo.<br>Estructura: R1 + [(R3+R5)‖(R2+R4)] + R6</div>
+      </div>
+    </div>
+    <div class="formula-box">PASO 1: Series internas
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  R35 = R3+R5 = 560+1000 = 1560 Ω
+  R24 = R2+R4 = 390+820 = 1210 Ω
+
+PASO 2: Paralelo R35 ‖ R24
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  R35‖24 = (1560×1210)/(1560+1210) = 1887600/2770 = 681.44 Ω
+
+PASO 3: Serie total
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  REQ = 220 + 681.44 + 1200 = 2101.44 Ω ≈ 2101 Ω
+
+PASO 4: Corriente Total
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  IT = 18/2101.44 = 8.565 mA
+
+PASO 5: Voltajes
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  VR1 = 8.565mA × 220 = 1.884 V
+  Vparalelo = 8.565mA × 681.44 = 5.837 V
+  VR6 = 8.565mA × 1200 = 10.279 V
+  Verificación: 1.884 + 5.837 + 10.279 = 18.000 V ✓
+
+PASO 6: Corrientes
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  IR1 = IR6 = 8.565 mA
+  IR3 = IR5 = 5.837/1560 = 3.742 mA
+  IR2 = IR4 = 5.837/1210 = 4.824 mA
+  Verificación: 3.742 + 4.824 = 8.565 mA ✓
+
+PASO 7: Potencia Total
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  PT = 18×8.565mA = 154.17 mW</div>
+    <table class="tabla-resultados">
+      <thead><tr><th>Parámetro</th><th>Valor</th><th>Unidad</th></tr></thead>
+      <tbody>
+        <tr><td>REQ</td><td>2101</td><td>Ω</td></tr>
+        <tr><td>IT</td><td>8.565</td><td>mA</td></tr>
+        <tr><td>VR1</td><td>1.884</td><td>V</td></tr>
+        <tr><td>VR2</td><td>1.881</td><td>V</td></tr>
+        <tr><td>VR3</td><td>4.118</td><td>V</td></tr>
+        <tr><td>VR4</td><td>3.955</td><td>V</td></tr>
+        <tr><td>VR5</td><td>1.718</td><td>V</td></tr>
+        <tr><td>VR6</td><td>10.279</td><td>V</td></tr>
+        <tr><td>IR1</td><td>8.565</td><td>mA</td></tr>
+        <tr><td>IR2</td><td>4.824</td><td>mA</td></tr>
+        <tr><td>IR3</td><td>3.742</td><td>mA</td></tr>
+        <tr><td>IR4</td><td>4.824</td><td>mA</td></tr>
+        <tr><td>IR5</td><td>3.742</td><td>mA</td></tr>
+        <tr><td>IR6</td><td>8.565</td><td>mA</td></tr>
+        <tr><td>PT</td><td>154.17</td><td>mW</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== EJERCICIO 5 ==================== -->
+<div class="ejercicio">
+  <div class="ejercicio-header rojo">⚡ Ejercicio 5 — Fuente 24V (Puente)</div>
+  <div class="ejercicio-body">
+    <div class="info-grid">
+      <div>
+        <h4>Lista de Componentes</h4>
+        <div class="componentes">R1 = 330 Ω<br>R2 = 470 Ω<br>R3 = 680 Ω<br>R4 = 1 kΩ = 1000 Ω<br>R5 = 1.5 kΩ = 1500 Ω<br>R6 = 2.2 kΩ = 2200 Ω</div>
+      </div>
+      <div>
+        <h4>Topología</h4>
+        <div class="topologia">R1 en <strong>serie</strong> con la fuente.<br><strong>Puente (bridge)</strong> formado por R2, R3, R4, R5, R6.<br>R4 conecta los puntos medios de las ramas (puente).<br>Requiere transformación Δ-Y para resolver.</div>
+      </div>
+    </div>
+    <div class="formula-box">PASO 1: Identificar triángulo para transformación Δ-Y
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Triángulo: R3 (680Ω), R4 (1000Ω), R5 (1500Ω)
+  Suma = 680 + 1000 + 1500 = 3180 Ω
+
+PASO 2: Transformación Δ → Y
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Ra = (R3×R4)/Suma = (680×1000)/3180 = 213.84 Ω
+  Rb = (R3×R5)/Suma = (680×1500)/3180 = 320.75 Ω
+  Rc = (R4×R5)/Suma = (1000×1500)/3180 = 471.70 Ω
+
+PASO 3: Circuito equivalente en Y
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Nueva rama superior: Ra + R2 = 213.84 + 470 = 683.84 Ω
+  Nueva rama inferior: Rb + R6 = 320.75 + 2200 = 2520.75 Ω
+  Rc queda en serie con la combinación paralela
+
+PASO 4: Paralelo de las dos ramas
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Rramas = (683.84 × 2520.75) / (683.84 + 2520.75) = 1723446/3204.59 = 537.80 Ω
+
+PASO 5: REQ total
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  REQ = R1 + Rramas + Rc = 330 + 537.80 + 471.70 = 1339.50 Ω
+
+PASO 6: Corriente Total
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  IT = 24/1339.50 = 17.92 mA
+
+PASO 7: Voltajes principales
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  VR1 = 17.92mA × 330 = 5.913 V
+  Vramas = 17.92mA × 537.80 = 9.635 V
+  VRc = 17.92mA × 471.70 = 8.451 V
+  Verificación: 5.913 + 9.635 + 8.451 = 24.000 V ✓
+
+PASO 8: Potencia Total
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  PT = 24 × 17.92mA = 430.0 mW</div>
+    <table class="tabla-resultados">
+      <thead><tr><th>Parámetro</th><th>Valor</th><th>Unidad</th></tr></thead>
+      <tbody>
+        <tr><td>REQ</td><td>1340</td><td>Ω</td></tr>
+        <tr><td>IT</td><td>17.92</td><td>mA</td></tr>
+        <tr><td>VR1</td><td>5.913</td><td>V</td></tr>
+        <tr><td>Vparalelo</td><td>9.635</td><td>V</td></tr>
+        <tr><td>VRc</td><td>8.451</td><td>V</td></tr>
+        <tr><td>PT</td><td>430.0</td><td>mW</td></tr>
+      </tbody>
+    </table>
+    <div class="nota">Este circuito es un <strong>puente de Wheatstone desequilibrado</strong>. Se resolvió aplicando transformación Δ-Y en el triángulo R3-R4-R5. Las corrientes individuales en cada rama del puente requieren análisis de mallas adicional.</div>
+  </div>
+</div>
+
+<!-- ==================== RESUMEN ==================== -->
+<div class="ejercicio" style="border-color: var(--primary);">
+  <div class="ejercicio-header" style="background: linear-gradient(135deg, #1a237e, #0d47a1);">📊 Resumen Comparativo</div>
+  <div class="ejercicio-body">
+    <table class="tabla-resultados">
+      <thead><tr><th>Ejercicio</th><th>Fuente</th><th>REQ</th><th>IT</th><th>PT</th><th>Topología</th></tr></thead>
+      <tbody>
+        <tr><td><strong style="color:var(--blue);">E1</strong></td><td>12V</td><td>2094 Ω</td><td>5.73 mA</td><td>68.8 mW</td><td>Mixto simple</td></tr>
+        <tr><td><strong style="color:var(--green);">E2</strong></td><td>15V</td><td>3318 Ω</td><td>4.52 mA</td><td>67.8 mW</td><td>Mixto con 2 paralelos</td></tr>
+        <tr><td><strong style="color:var(--purple);">E3</strong></td><td>9V</td><td>2382 Ω</td><td>3.78 mA</td><td>34.0 mW</td><td>Mixto simple</td></tr>
+        <tr><td><strong style="color:var(--orange);">E4</strong></td><td>18V</td><td>2101 Ω</td><td>8.57 mA</td><td>154.2 mW</td><td>Mixto con 2 paralelos</td></tr>
+        <tr><td><strong style="color:var(--red);">E5</strong></td><td>24V</td><td>1340 Ω</td><td>17.92 mA</td><td>430.0 mW</td><td>Puente (Δ-Y)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="footer">
+  <p><strong>5 Ejercicios de Circuitos Mixtos</strong> — Resueltos paso a paso</p>
+  <p>Electrónica — SENA | Método de reducción + Transformación Δ-Y</p>
+</div>
+
+</div>
+</body>
+</html>
