@@ -49,9 +49,13 @@ async function seed() {
   const seedPath = join(process.cwd(), "prisma", "seed-data.json");
   const data: SeedData = JSON.parse(readFileSync(seedPath, "utf-8"));
 
-  // Contraseña admin: de env o aleatoria (impresa una sola vez)
-  const password = process.env.SEED_ADMIN_PASSWORD || randomBytes(9).toString("base64url");
+  // Contraseña admin: de env o fallback conocido para desarrollo
+  const password = process.env.SEED_ADMIN_PASSWORD || "admin123";
   const hashedPassword = await hash(password, 12);
+  
+  // En producción, si no hay SEED_ADMIN_PASSWORD configurada,
+  // usamos "admin123" como fallback (solo para desarrollo inicial).
+  // Para producción, configurar SEED_ADMIN_PASSWORD en variables de entorno.
 
   await db.menuItem.deleteMany();
   await db.category.deleteMany();
